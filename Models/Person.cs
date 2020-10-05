@@ -54,5 +54,9 @@ namespace Timesheet_Tracker.Models
 
         // Password hashing to be added at later point, 
 
+
+        // Below this is the navigation property of one-to-one relationship, required and not null
+        [InverseProperty(nameof(Models.Employee.Person))]
+        public virtual Employee Employee { get; set; }
     }
 }
