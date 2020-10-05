@@ -13,7 +13,9 @@ namespace Timesheet_Tracker.Models
         // This initializes an empty list so we don't get null reference exceptions for our list.
         public Assignment()
         {
-            // PhoneNumbers = new HashSet<PhoneNumber>(); example
+            Employees = new HashSet<Employee>();
+            Projects = new HashSet<Project>();
+
         }
 
         [Key]

@@ -11,12 +11,6 @@ namespace Timesheet_Tracker.Models
     [Table("person")]
     public partial class Person
     {
-        // This initializes an empty list so we don't get null reference exceptions for our list.
-        public Person()
-        {
-            // PhoneNumbers = new HashSet<PhoneNumber>(); example
-        }
-
         [Key]
         // This is to describe unique id number related to person
         [Column("id", TypeName = "int(10)")]
