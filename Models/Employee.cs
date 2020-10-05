@@ -40,12 +40,15 @@ namespace Timesheet_Tracker.Models
         public int PersonID { get; set; }
 
         // This attribute specifies which database field is the foreign key. Typically in the child (many side of the 1-many).
-        [ForeignKey(nameof(PersonID))]
-
         // InverseProperty links the two virtual properties together.
         // One-to-one relationship required and not null
+        [ForeignKey(nameof(PersonID))]
         [InverseProperty(nameof(Models.Person.Employee))]
-
         public virtual Person Person { get; set; }
+
+        // Creating and inverse property of employee to assignment
+        // FK_Employee_Assignment
+        [InverseProperty(nameof(Models.Assignment.Employees))]
+        public virtual Assignment Assignment { get; set; }
     }
 }

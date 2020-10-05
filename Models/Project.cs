@@ -63,5 +63,11 @@ namespace Timesheet_Tracker.Models
         [Column("deliverables_hours", TypeName = "float(6,2)")]
         public float? DeliverablesHours { get; set; }
 
+        // navigation FK_Project_Assignment
+        [InverseProperty(nameof(Models.Assignment.Projects))]
+        public virtual Assignment Assignment { get; set; }
+
+
+
     }
 }
