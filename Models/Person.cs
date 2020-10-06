@@ -34,13 +34,14 @@ namespace Timesheet_Tracker.Models
         [Column("last_name", TypeName = "varchar(50)")]
         public string LastName { get; set; }
 
+        // Noted due to the way that password hash and salt created, the password has to be stored in byte. Hash wil generate 64 bytes, and salt will generate 128 bytes
 
-        [Column("password_hash", TypeName = "varchar(40)")]
-        public string PasswordHash { get; set; }
+        [Column("password_hash", TypeName = "varchar(64)")]
+        public byte[] PasswordHash { get; set; }
 
 
-        [Column("password_salt", TypeName = "varchar(10)")]
-        public string PasswordSalt { get; set; }
+        [Column("password_salt", TypeName = "varchar(128)")]
+        public byte[] PasswordSalt { get; set; }
 
         [Required]
         [Column("date_created", TypeName = "date")]
