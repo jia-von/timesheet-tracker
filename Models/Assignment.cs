@@ -12,14 +12,6 @@ namespace Timesheet_Tracker.Models
     {
         // Solution for many-to-many relationship: https://stackoverflow.com/questions/19342908/how-to-create-a-many-to-many-mapping-in-entity-framework
 
-        [Key]
-        // This is to describe unique id number related to person
-        [Column("id", TypeName = "int(10)")]
-
-        // Auto generate unique id number
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
-
         // FK_Project_Assignment
         [Required]
         [Column("project_id", TypeName = "int(10)")]

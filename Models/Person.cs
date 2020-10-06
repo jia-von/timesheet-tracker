@@ -34,11 +34,11 @@ namespace Timesheet_Tracker.Models
         [Column("last_name", TypeName = "varchar(50)")]
         public string LastName { get; set; }
 
-        [Required]
+
         [Column("password_hash", TypeName = "varchar(40)")]
         public string PasswordHash { get; set; }
 
-        [Required]
+
         [Column("password_salt", TypeName = "varchar(10)")]
         public string PasswordSalt { get; set; }
 

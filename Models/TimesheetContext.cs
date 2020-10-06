@@ -56,6 +56,8 @@ namespace Timesheet_Tracker.Models
                 .HasForeignKey(e => e.ProjectID)
                 .HasConstraintName("FK_" + nameof(Assignment) + "_" + nameof(Project));
 
+                entity.HasData(new Assignment() { EmployeeID = -1, ProjectID = -1});
+
             });
 
             modelBuilder.Entity<Person>(entity =>
@@ -66,17 +68,24 @@ namespace Timesheet_Tracker.Models
                 entity.Property(e => e.LastName).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
                 entity.Property(e => e.PasswordHash).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
                 entity.Property(e => e.PasswordSalt).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
+
+                entity.HasData(new Person() { ID = -1, Username = "admin", Email = "email@example.com", FirstName = "Jane", LastName = "Doe", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today},
+                    new Person() { ID = -2, Username = "admintwo", Email = "emailtwo@example.com", FirstName = "Jack", LastName = "Black", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today }
+                    );
             });
 
             modelBuilder.Entity<Project>(entity =>
             {
                 entity.Property(e => e.ProjectName).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
+                entity.HasData(new Project() { ProjectName = "Entity Framework MVC", ID = -1, DateCreated = DateTime.Today, DueDate = DateTime.Today});
             });
 
             modelBuilder.Entity<Employee>(entity =>
             {
                 entity.HasIndex(e => e.PersonID).HasName("FK_" + nameof(Employee) + "_" + nameof(Person));
                 entity.HasOne(child => child.Person).WithOne(parent => parent.Employee).HasForeignKey<Employee>(child => child.PersonID).OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_" + nameof(Employee) + "_" + nameof(Person));
+                entity.HasData(new Employee() { ID = -1, Instructor = true, PersonID = -1 },
+                    new Employee() { ID = -2, Instructor = false, Cohort = 4.1F, PersonID = -2 });
             });
 
             OnModelCreatingPartial(modelBuilder);
