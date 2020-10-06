@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Timesheet_Tracker.Models;
 
 namespace Timesheet_Tracker.Controllers
@@ -62,7 +63,7 @@ namespace Timesheet_Tracker.Controllers
 
         }
 
-        // get individual stuff, project id, project name
+        // get individual object, project id, project name
         public Project GetProject(int? projectID, string projectName)
         {
             using (TimesheetContext context = new TimesheetContext())
@@ -80,7 +81,21 @@ namespace Timesheet_Tracker.Controllers
 
         // Update
         // update hours based on the type of hours
-
+        public Project UpdateHours(int projectID, float design, float doing, float codeReview, float testing, float deliverables)
+        {
+            Project target;
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                target = context.Projects.Where(x => x.ID == projectID).SingleOrDefault();
+                target.DesignHours = design;
+                target.DoingHours = doing;
+                target.CodeReviewHours = codeReview;
+                target.TestingHours = testing;
+                target.DeliverablesHours = deliverables;
+                context.SaveChanges();
+            }
+            return target;
+        }
 
 
         // Delete
