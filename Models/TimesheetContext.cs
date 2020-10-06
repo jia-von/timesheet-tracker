@@ -44,11 +44,11 @@ namespace Timesheet_Tracker.Models
                 entity.Property(e => e.PasswordSalt).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
 
                 entity.HasData(
-                    new Person() { ID = -1, Username = "groot", Email = "groot@guardians.com", FirstName = "Groot", LastName = "Groot", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today},
-                    new Person() { ID = -2, Username = "starlord", Email = "starlord@guardians.com", FirstName = "Star", LastName = "Lord", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today},
-                    new Person() { ID = -3, Username = "gamora", Email = "gamora@guardians.com", FirstName = "Gamora", LastName = "Guardians", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today },
-                    new Person() { ID = -4, Username = "rocketraccoon", Email = "rocketraccoon@guardians.com", FirstName = "Rocket", LastName = "Raccoon", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today },
-                    new Person() { ID = -5, Username = "drax", Email = "drax@guardians.com", FirstName = "Drax", LastName = "Destroyer", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today }
+                    new Person() { ID = -1, Username = "groot", Email = "groot@guardians.com", FirstName = "Groot", LastName = "Groot", PasswordHash = new byte[] { 1, 2, 3, 4 }, PasswordSalt = new byte[] { 1,2,3,4}, DateCreated = DateTime.Today},
+                    new Person() { ID = -2, Username = "starlord", Email = "starlord@guardians.com", FirstName = "Star", LastName = "Lord", PasswordHash = new byte[] { 1, 2, 3, 4 }, PasswordSalt = new byte[] { 1, 2, 3, 4 }, DateCreated = DateTime.Today},
+                    new Person() { ID = -3, Username = "gamora", Email = "gamora@guardians.com", FirstName = "Gamora", LastName = "Guardians", PasswordHash = new byte[] { 1, 2, 3, 4 }, PasswordSalt = new byte[] { 1, 2, 3, 4 }, DateCreated = DateTime.Today },
+                    new Person() { ID = -4, Username = "rocketraccoon", Email = "rocketraccoon@guardians.com", FirstName = "Rocket", LastName = "Raccoon", PasswordHash = new byte[] { 1, 2, 3, 4 }, PasswordSalt = new byte[] { 1, 2, 3, 4 }, DateCreated = DateTime.Today },
+                    new Person() { ID = -5, Username = "drax", Email = "drax@guardians.com", FirstName = "Drax", LastName = "Destroyer", PasswordHash = new byte[] { 1, 2, 3, 4 }, PasswordSalt = new byte[] { 1, 2, 3, 4 }, DateCreated = DateTime.Today }
                     );
             });
 

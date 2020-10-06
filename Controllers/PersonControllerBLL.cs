@@ -111,6 +111,17 @@ namespace Timesheet_Tracker.Controllers
             return target;
         }
 
+        // Get person by username
+        public Person GetPersonByUsername(string username)
+        {
+            Person target;
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                target = context.Persons.Where(x => x.Username == username).SingleOrDefault();
+            }
+            return target;
+        }
+
         // Update
 
         public Person UpdateAccount(int personID, string firstName, string lastName, string password, string username, string email)
