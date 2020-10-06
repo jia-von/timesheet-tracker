@@ -37,6 +37,7 @@ namespace Timesheet_Tracker.Models
 
             // Assignment is considered a associative table, many to many relationship setup
             // To define the models/entities within the associative table
+            // https://www.tektutorialshub.com/entity-framework-core/ef-core-many-to-many-relationship/
             modelBuilder.Entity<Assignment>(entity =>
             {
                 entity.HasKey(e => new { e.EmployeeID, e.ProjectID});
