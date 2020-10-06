@@ -96,27 +96,39 @@ namespace Timesheet_Tracker.Migrations
             migrationBuilder.InsertData(
                 table: "person",
                 columns: new[] { "id", "date_archive", "date_created", "date_modified_profile", "email", "first_name", "last_name", "password_hash", "password_salt", "username" },
-                values: new object[] { -1, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "email@example.com", "Jane", "Doe", "admin", "admin", "admin" });
-
-            migrationBuilder.InsertData(
-                table: "person",
-                columns: new[] { "id", "date_archive", "date_created", "date_modified_profile", "email", "first_name", "last_name", "password_hash", "password_salt", "username" },
-                values: new object[] { -2, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "emailtwo@example.com", "Jack", "Black", "admin", "admin", "admintwo" });
-
-            migrationBuilder.InsertData(
-                table: "employee",
-                columns: new[] { "id", "cohort", "instructor", "person_id" },
-                values: new object[] { -1, 0f, true, -1 });
+                values: new object[,]
+                {
+                    { -1, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "groot@guardians.com", "Groot", "Groot", "admin", "admin", "groot" },
+                    { -2, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "starlord@guardians.com", "Star", "Lord", "admin", "admin", "starlord" },
+                    { -3, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "gamora@guardians.com", "Gamora", "Guardians", "admin", "admin", "gamora" },
+                    { -4, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "rocketraccoon@guardians.com", "Rocket", "Raccoon", "admin", "admin", "rocketraccoon" },
+                    { -5, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "drax@guardians.com", "Drax", "Destroyer", "admin", "admin", "drax" }
+                });
 
             migrationBuilder.InsertData(
                 table: "employee",
                 columns: new[] { "id", "cohort", "instructor", "person_id" },
-                values: new object[] { -2, 4.1f, false, -2 });
+                values: new object[,]
+                {
+                    { -2, 4.1f, false, -1 },
+                    { -1, 0f, true, -2 },
+                    { -3, 4.1f, false, -3 },
+                    { -4, 4.1f, false, -4 },
+                    { -5, 4.1f, false, -5 }
+                });
 
             migrationBuilder.InsertData(
                 table: "project",
                 columns: new[] { "id", "code_review_hours", "date_archive", "date_completed", "date_created", "deliverables_hours", "design_hours", "doing_hours", "due_date", "employee_id", "project_name", "testing_hours" },
-                values: new object[] { -1, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -2, "Entity Framework MVC", null });
+                values: new object[,]
+                {
+                    { -1, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -2, "C# OOP Practice", null },
+                    { -2, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -2, "React To-Do Planning", null },
+                    { -3, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -3, "PHP API Assignment", null },
+                    { -4, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -3, "Hello World", null },
+                    { -5, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -4, "Soft Skill Assignment", null },
+                    { -6, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -5, "Capstone", null }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "FK_Employee_Person",

@@ -9,8 +9,8 @@ using Timesheet_Tracker.Models;
 namespace Timesheet_Tracker.Migrations
 {
     [DbContext(typeof(TimesheetContext))]
-    [Migration("20201006172401_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20201006174641_SeedData")]
+    partial class SeedData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,14 +52,35 @@ namespace Timesheet_Tracker.Migrations
                             ID = -1,
                             Cohort = 0f,
                             Instructor = true,
-                            PersonID = -1
+                            PersonID = -2
                         },
                         new
                         {
                             ID = -2,
                             Cohort = 4.1f,
                             Instructor = false,
-                            PersonID = -2
+                            PersonID = -1
+                        },
+                        new
+                        {
+                            ID = -3,
+                            Cohort = 4.1f,
+                            Instructor = false,
+                            PersonID = -3
+                        },
+                        new
+                        {
+                            ID = -4,
+                            Cohort = 4.1f,
+                            Instructor = false,
+                            PersonID = -4
+                        },
+                        new
+                        {
+                            ID = -5,
+                            Cohort = 4.1f,
+                            Instructor = false,
+                            PersonID = -5
                         });
                 });
 
@@ -131,23 +152,56 @@ namespace Timesheet_Tracker.Migrations
                         {
                             ID = -1,
                             DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            Email = "email@example.com",
-                            FirstName = "Jane",
-                            LastName = "Doe",
+                            Email = "groot@guardians.com",
+                            FirstName = "Groot",
+                            LastName = "Groot",
                             PasswordHash = "admin",
                             PasswordSalt = "admin",
-                            Username = "admin"
+                            Username = "groot"
                         },
                         new
                         {
                             ID = -2,
                             DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            Email = "emailtwo@example.com",
-                            FirstName = "Jack",
-                            LastName = "Black",
+                            Email = "starlord@guardians.com",
+                            FirstName = "Star",
+                            LastName = "Lord",
                             PasswordHash = "admin",
                             PasswordSalt = "admin",
-                            Username = "admintwo"
+                            Username = "starlord"
+                        },
+                        new
+                        {
+                            ID = -3,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Email = "gamora@guardians.com",
+                            FirstName = "Gamora",
+                            LastName = "Guardians",
+                            PasswordHash = "admin",
+                            PasswordSalt = "admin",
+                            Username = "gamora"
+                        },
+                        new
+                        {
+                            ID = -4,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Email = "rocketraccoon@guardians.com",
+                            FirstName = "Rocket",
+                            LastName = "Raccoon",
+                            PasswordHash = "admin",
+                            PasswordSalt = "admin",
+                            Username = "rocketraccoon"
+                        },
+                        new
+                        {
+                            ID = -5,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Email = "drax@guardians.com",
+                            FirstName = "Drax",
+                            LastName = "Destroyer",
+                            PasswordHash = "admin",
+                            PasswordSalt = "admin",
+                            Username = "drax"
                         });
                 });
 
@@ -219,7 +273,71 @@ namespace Timesheet_Tracker.Migrations
                             DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             EmployeeID = -2,
-                            ProjectName = "Entity Framework MVC"
+                            ProjectName = "C# OOP Practice"
+                        },
+                        new
+                        {
+                            ID = -2,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -2,
+                            ProjectName = "React To-Do Planning"
+                        },
+                        new
+                        {
+                            ID = -3,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -3,
+                            ProjectName = "PHP API Assignment"
+                        },
+                        new
+                        {
+                            ID = -7,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -2,
+                            ProjectName = "PHP API Assignment"
+                        },
+                        new
+                        {
+                            ID = -8,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -4,
+                            ProjectName = "PHP API Assignment"
+                        },
+                        new
+                        {
+                            ID = -9,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -5,
+                            ProjectName = "PHP API Assignment"
+                        },
+                        new
+                        {
+                            ID = -4,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -3,
+                            ProjectName = "Hello World"
+                        },
+                        new
+                        {
+                            ID = -5,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -4,
+                            ProjectName = "Soft Skill Assignment"
+                        },
+                        new
+                        {
+                            ID = -6,
+                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -5,
+                            ProjectName = "Capstone"
                         });
                 });
 

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timesheet_Tracker.Models;
 
 namespace Timesheet_Tracker.Migrations
 {
     [DbContext(typeof(TimesheetContext))]
-    partial class TimesheetContextModelSnapshot : ModelSnapshot
+    [Migration("20201006174335_InitialCreation")]
+    partial class InitialCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -287,30 +289,6 @@ namespace Timesheet_Tracker.Migrations
                             DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             EmployeeID = -3,
-                            ProjectName = "PHP API Assignment"
-                        },
-                        new
-                        {
-                            ID = -7,
-                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            EmployeeID = -2,
-                            ProjectName = "PHP API Assignment"
-                        },
-                        new
-                        {
-                            ID = -8,
-                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            EmployeeID = -4,
-                            ProjectName = "PHP API Assignment"
-                        },
-                        new
-                        {
-                            ID = -9,
-                            DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            EmployeeID = -5,
                             ProjectName = "PHP API Assignment"
                         },
                         new
