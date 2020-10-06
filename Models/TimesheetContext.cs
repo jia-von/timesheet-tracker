@@ -22,7 +22,6 @@ namespace Timesheet_Tracker.Models
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<Assignment> Assignments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,31 +33,6 @@ namespace Timesheet_Tracker.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            // Assignment is considered a associative table, many to many relationship setup
-            // To define the models/entities within the associative table
-            // https://www.tektutorialshub.com/entity-framework-core/ef-core-many-to-many-relationship/
-            modelBuilder.Entity<Assignment>(entity =>
-            {
-                entity.HasKey(e => new { e.EmployeeID, e.ProjectID});
-
-                entity.HasIndex(e => e.EmployeeID).HasName("FK_" + nameof(Assignment) + "_" + nameof(Employee));
-                entity.HasOne<Employee>(e => e.Employee)
-                .WithMany(parent => parent.Assignments)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey(e => e.EmployeeID)
-                .HasConstraintName("FK_" + nameof(Assignment) + "_" + nameof(Employee));
-
-                entity.HasIndex(e => e.ProjectID).HasName("FK_" + nameof(Assignment) + "_" + nameof(Project));
-                entity.HasOne<Project>(e => e.Project)
-                .WithMany(parent => parent.Assignments)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey(e => e.ProjectID)
-                .HasConstraintName("FK_" + nameof(Assignment) + "_" + nameof(Project));
-
-                entity.HasData(new Assignment() { EmployeeID = -1, ProjectID = -1});
-
-            });
 
             modelBuilder.Entity<Person>(entity =>
             {
@@ -74,11 +48,6 @@ namespace Timesheet_Tracker.Models
                     );
             });
 
-            modelBuilder.Entity<Project>(entity =>
-            {
-                entity.Property(e => e.ProjectName).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
-                entity.HasData(new Project() { ProjectName = "Entity Framework MVC", ID = -1, DateCreated = DateTime.Today, DueDate = DateTime.Today});
-            });
 
             modelBuilder.Entity<Employee>(entity =>
             {
@@ -86,6 +55,14 @@ namespace Timesheet_Tracker.Models
                 entity.HasOne(child => child.Person).WithOne(parent => parent.Employee).HasForeignKey<Employee>(child => child.PersonID).OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_" + nameof(Employee) + "_" + nameof(Person));
                 entity.HasData(new Employee() { ID = -1, Instructor = true, PersonID = -1 },
                     new Employee() { ID = -2, Instructor = false, Cohort = 4.1F, PersonID = -2 });
+            });
+
+            modelBuilder.Entity<Project>(entity =>
+            {
+                entity.HasIndex(e => e.EmployeeID).HasName("FK_" + nameof(Project) + "_" + nameof(Employee));
+                entity.HasOne(child => child.Employee).WithMany(parent => parent.Projects).HasForeignKey(child => child.EmployeeID).OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_" + nameof(Project) + "_" + nameof(Employee));
+                entity.Property(e => e.ProjectName).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
+                entity.HasData(new Project() { ProjectName = "Entity Framework MVC", ID = -1, DateCreated = DateTime.Today, DueDate = DateTime.Today, EmployeeID = -2 });
             });
 
             OnModelCreatingPartial(modelBuilder);

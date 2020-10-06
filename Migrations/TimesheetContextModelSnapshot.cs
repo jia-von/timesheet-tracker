@@ -17,34 +17,6 @@ namespace Timesheet_Tracker.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Timesheet_Tracker.Models.Assignment", b =>
-                {
-                    b.Property<int>("EmployeeID")
-                        .HasColumnName("employee_id")
-                        .HasColumnType("int(10)");
-
-                    b.Property<int>("ProjectID")
-                        .HasColumnName("project_id")
-                        .HasColumnType("int(10)");
-
-                    b.HasKey("EmployeeID", "ProjectID");
-
-                    b.HasIndex("EmployeeID")
-                        .HasName("FK_Assignment_Employee");
-
-                    b.HasIndex("ProjectID")
-                        .HasName("FK_Assignment_Project");
-
-                    b.ToTable("assignment");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeeID = -1,
-                            ProjectID = -1
-                        });
-                });
-
             modelBuilder.Entity("Timesheet_Tracker.Models.Employee", b =>
                 {
                     b.Property<int>("ID")
@@ -216,6 +188,10 @@ namespace Timesheet_Tracker.Migrations
                         .HasColumnName("due_date")
                         .HasColumnType("datetime");
 
+                    b.Property<int>("EmployeeID")
+                        .HasColumnName("employee_id")
+                        .HasColumnType("int(10)");
+
                     b.Property<string>("ProjectName")
                         .IsRequired()
                         .HasColumnName("project_name")
@@ -229,6 +205,9 @@ namespace Timesheet_Tracker.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("EmployeeID")
+                        .HasName("FK_Project_Employee");
+
                     b.ToTable("project");
 
                     b.HasData(
@@ -237,25 +216,9 @@ namespace Timesheet_Tracker.Migrations
                             ID = -1,
                             DateCreated = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             DueDate = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeID = -2,
                             ProjectName = "Entity Framework MVC"
                         });
-                });
-
-            modelBuilder.Entity("Timesheet_Tracker.Models.Assignment", b =>
-                {
-                    b.HasOne("Timesheet_Tracker.Models.Employee", "Employee")
-                        .WithMany("Assignments")
-                        .HasForeignKey("EmployeeID")
-                        .HasConstraintName("FK_Assignment_Employee")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Timesheet_Tracker.Models.Project", "Project")
-                        .WithMany("Assignments")
-                        .HasForeignKey("ProjectID")
-                        .HasConstraintName("FK_Assignment_Project")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Timesheet_Tracker.Models.Employee", b =>
@@ -264,6 +227,16 @@ namespace Timesheet_Tracker.Migrations
                         .WithOne("Employee")
                         .HasForeignKey("Timesheet_Tracker.Models.Employee", "PersonID")
                         .HasConstraintName("FK_Employee_Person")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Timesheet_Tracker.Models.Project", b =>
+                {
+                    b.HasOne("Timesheet_Tracker.Models.Employee", "Employee")
+                        .WithMany("Projects")
+                        .HasForeignKey("EmployeeID")
+                        .HasConstraintName("FK_Project_Employee")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

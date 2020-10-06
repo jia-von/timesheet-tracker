@@ -12,10 +12,6 @@ namespace Timesheet_Tracker.Models
     public partial class Project
     {
         // This initializes an empty list so we don't get null reference exceptions for our list.
-        public Project()
-        {
-            Assignments = new HashSet<Assignment>();
-        }
         [Key]
         [Column("id", TypeName = "int(10)")]
 
@@ -62,10 +58,14 @@ namespace Timesheet_Tracker.Models
         [Column("deliverables_hours", TypeName = "float(6,2)")]
         public float? DeliverablesHours { get; set; }
 
-        // navigation FK_Project_Assignment
-        [InverseProperty(nameof(Models.Assignment.Project))]
-        public virtual ICollection<Assignment> Assignments { get; set; }
+        // navigation FK_Project-Employee
+        [Required]
+        [Column("employee_id", TypeName = "int(10)")]
+        public int EmployeeID { get; set; }
 
+        [ForeignKey(nameof(EmployeeID))]
+        [InverseProperty(nameof(Models.Employee.Projects))]
+        public virtual Employee Employee { get; set; }
 
 
     }

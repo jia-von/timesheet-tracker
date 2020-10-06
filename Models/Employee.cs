@@ -13,7 +13,7 @@ namespace Timesheet_Tracker.Models
         // This initializes an empty list so we don't get null reference exceptions for our list.
         public Employee()
         {
-            Assignments = new HashSet<Assignment>();
+            Projects = new HashSet<Project>();
         }
         [Key]
         // This is to describe unique id number related to person
@@ -48,7 +48,7 @@ namespace Timesheet_Tracker.Models
 
         // Creating and inverse property of employee to assignment
         // FK_Assignment_Employee
-        [InverseProperty(nameof(Models.Assignment.Employee))]
-        public virtual ICollection<Assignment> Assignments { get; set; }
+        [InverseProperty(nameof(Models.Project.Employee))]
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }
