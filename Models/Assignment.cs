@@ -10,13 +10,7 @@ namespace Timesheet_Tracker.Models
     [Table("assignment")]
     public partial class Assignment
     {
-        // This initializes an empty list so we don't get null reference exceptions for our list.
-        public Assignment()
-        {
-            Employees = new HashSet<Employee>();
-            Projects = new HashSet<Project>();
-
-        }
+        // Solution for many-to-many relationship: https://stackoverflow.com/questions/19342908/how-to-create-a-many-to-many-mapping-in-entity-framework
 
         [Key]
         // This is to describe unique id number related to person
@@ -26,25 +20,22 @@ namespace Timesheet_Tracker.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        // Navigation properties are listed in the code block below, this code block belongs to one-to-many relationship between employeeID and assignment
-        // FK_Employee_Assignment
-        [Required]
-        [Column("employee_id", TypeName = "int(10)")]
-        public int EmployeeID { get; set; }
-        [ForeignKey(nameof(EmployeeID))]
-        [InverseProperty(nameof(Models.Employee.Assignment))]
-        public virtual ICollection<Employee> Employees { get; set; }
-
-        // Navigation properties are listed in the code block below, this code block belong to one-to-many relationship between projectID and assignment
         // FK_Project_Assignment
         [Required]
         [Column("project_id", TypeName = "int(10)")]
         public int ProjectID { get; set; }
+
+        // FK_Employee_Assignment
+        [Required]
+        [Column("employee_id", TypeName = "int(10)")]
+        public int EmployeeID { get; set; }
+
+        [ForeignKey(nameof(EmployeeID))]
+        [InverseProperty(nameof(Models.Employee.Assignments))]
+        public virtual Employee Employee { get; set; }
+
         [ForeignKey(nameof(ProjectID))]
-        [InverseProperty(nameof(Models.Project.Assignment))]
-        public virtual ICollection<Project> Projects { get; set; }
-
-
-
+        [InverseProperty(nameof(Models.Project.Assignments))]
+        public virtual Project Project { get; set; }
     }
 }

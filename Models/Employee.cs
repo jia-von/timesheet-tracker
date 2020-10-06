@@ -29,6 +29,7 @@ namespace Timesheet_Tracker.Models
         // According to Complex Data Tutorial: https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/complex-data-model?view=aspnetcore-3.1,
         // The code below will be identified as Navigation Properties which include foreign keys, etc...
         // have yet to determine whether this is a nullable type, however for now I will be putting one-to-one required. 
+        // FK_Employee_Person
         [Required]
         [Column("person_id", TypeName = "int(10)")]
         public int PersonID { get; set; }
@@ -41,8 +42,8 @@ namespace Timesheet_Tracker.Models
         public virtual Person Person { get; set; }
 
         // Creating and inverse property of employee to assignment
-        // FK_Employee_Assignment
-        [InverseProperty(nameof(Models.Assignment.Employees))]
-        public virtual Assignment Assignment { get; set; }
+        // FK_Assignment_Employee
+        [InverseProperty(nameof(Models.Assignment.Employee))]
+        public virtual ICollection<Assignment> Assignments { get; set; }
     }
 }

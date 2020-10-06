@@ -58,8 +58,8 @@ namespace Timesheet_Tracker.Models
         public float? DeliverablesHours { get; set; }
 
         // navigation FK_Project_Assignment
-        [InverseProperty(nameof(Models.Assignment.Projects))]
-        public virtual Assignment Assignment { get; set; }
+        [InverseProperty(nameof(Models.Assignment.Project))]
+        public virtual ICollection<Assignment> Assignments { get; set; }
 
 
 
