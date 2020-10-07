@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -16,8 +17,24 @@ namespace Timesheet_Tracker.Controllers
         public int CreateProject(string projectName, DateTime dueDate, int employeeID)
         {
             int target;
+
+            // Create Validation Exception to catch any exceptions that is related to database error such as taken email, taken id, and taken name.
+            ValidationException exception = new ValidationException();
+
             using (TimesheetContext context = new TimesheetContext())
             {
+                // The project cannot be assigned to employee twice
+                // Example: JavaScript Assignment cannot be assigned twice
+                // Any employee that have that project assigned, the project cannot be created and an response will be created.
+                // Find the employee first
+                // Find the employee's project name assigned
+
+                if(context.Projects.Where(x => x.EmployeeID == employeeID).SingleOrDefault().ProjectName == projectName)
+                {
+
+                }
+
+
                 Project newProject = new Project()
                 {
                     ProjectName = projectName,
