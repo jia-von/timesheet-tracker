@@ -26,15 +26,44 @@
   margin-bottom: 10px;
 }
 
-.index .login form input {
+.index .login form > div {
+  margin-bottom: 10px;
+}
+.error-message {
+  /* style the error context below fields */
+  width: 100%;
+  font-size: 70%;
+  height: 10px;
+  color: #c80909;
+}
+.index .login form > div.instructor-row {
+  /* style the "im an instructor" checkbox*/
+  display: flex;
+  margin-bottom: 3px;
+  align-items: center;
+}
+.index .login form > div.instructor-row label {
+  margin-bottom: 0;
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.index .login form input[type="text"],
+.index .login form input[type="email"],
+.index .login form input[type="password"] {
   border: 1px solid #e1e4e8;
   border-radius: 5px;
   padding: 5px 10px;
-  margin-bottom: 10px;
+  width: 100%;
   transition: all 0.4s ease-in-out;
 }
 .index .login form input:hover {
   border: 1px solid #0284fe;
+}
+
+.index .login form input.error {
+  border: 1px solid #c80909;
+  color: #c80909;
 }
 
 .index .login form button {
@@ -115,9 +144,17 @@
   border: 1px solid #c80909;
 }
 
-/* style the div with the sign up form fields */
+/* style the container div with the sign up form fields */
 .signUp > div:last-of-type {
-  background: #ffffffed;
+  background: #ffffffbf;
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff00,
+    #ffffff1f,
+    #ffffff,
+    #ffffff,
+    #ffffff
+  );
   padding: 40px 5px;
 }
 
@@ -161,5 +198,6 @@
   .index .desktopImage > img {
     width: calc(130vw - 10vw - 450px);
     height: auto;
+    margin-right: 40px;
   }
 }

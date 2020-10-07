@@ -20,12 +20,19 @@ class Index extends React.Component {
       emailSignUp: "",
       passwordSignUp: "",
       confirmPasswordSignUp: "",
+      isInstructor: false,
+      cohortSignUp: "",
     };
   }
 
   handleSignIn(event) {
     event.preventDefault();
     console.log("sign in");
+  }
+
+  // update the state when a form field is changed
+  handleFormInputChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   render() {
@@ -48,30 +55,37 @@ class Index extends React.Component {
               this.handleSignIn(e);
             }}
           >
-            <label htmlFor="emailSignIn" className="sr-only">
-              Email Address
-            </label>
-            <input
-              type="email"
-              placeholder="Email"
-              name="emailSignIn"
-              id="emailSignIn"
-              value={this.state.emailSignIn}
-              onChange={(e) => this.setState({ emailSignIn: e.target.value })}
-            />
-            <label htmlFor="passwordSignIn" className="sr-only">
-              Password
-            </label>
-            <input
-              type="password"
-              placeholder="Password"
-              name="passwordSignIn"
-              id="passwordSignIn"
-              value={this.state.passwordSignIn}
-              onChange={(e) =>
-                this.setState({ passwordSignIn: e.target.value })
-              }
-            />
+            <div>
+              <label htmlFor="emailSignIn" className="sr-only">
+                Email Address
+              </label>
+              <input
+                className=""
+                type="email"
+                placeholder="Email"
+                name="emailSignIn"
+                id="emailSignIn"
+                value={this.state.emailSignIn}
+                onChange={(e) => this.handleFormInputChange(e)}
+              />
+              <div className="error-message"></div>
+            </div>
+
+            <div>
+              <label htmlFor="passwordSignIn" className="sr-only">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="Password"
+                name="passwordSignIn"
+                id="passwordSignIn"
+                value={this.state.passwordSignIn}
+                onChange={(e) => this.handleFormInputChange(e)}
+              />
+              <div className="error-message"></div>
+            </div>
+
             <button type="submit">Go</button>
           </form>
 
@@ -101,75 +115,109 @@ class Index extends React.Component {
             <div>
               <h2>Sign Up</h2>
               <form>
-                <label htmlFor="firstNameSignUp" className="sr-only">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  name="firstNameSignUp"
-                  id="firstNameSignUp"
-                  value={this.state.firstNameSignUp}
-                  onChange={(e) =>
-                    this.setState({ firstNameSignUp: e.target.value })
-                  }
-                />
+                <div>
+                  <label htmlFor="firstNameSignUp" className="sr-only">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    name="firstNameSignUp"
+                    id="firstNameSignUp"
+                    value={this.state.firstNameSignUp}
+                    onChange={(e) => this.handleFormInputChange(e)}
+                  />
+                  <div className="error-message"></div>
+                </div>
 
-                <label htmlFor="lastNameSignUp" className="sr-only">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  name="lastNameSignUp"
-                  id="lastNameSignUp"
-                  value={this.state.lastNameSignUp}
-                  onChange={(e) =>
-                    this.setState({ lastNameSignUp: e.target.value })
-                  }
-                />
+                <div>
+                  <label htmlFor="lastNameSignUp" className="sr-only">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    name="lastNameSignUp"
+                    id="lastNameSignUp"
+                    value={this.state.lastNameSignUp}
+                    onChange={(e) => this.handleFormInputChange(e)}
+                  />
+                  <div className="error-message"></div>
+                </div>
 
-                <label htmlFor="emailSignUp" className="sr-only">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  name="emailSignUp"
-                  id="emailSignUp"
-                  value={this.state.emailSignUp}
-                  onChange={(e) =>
-                    this.setState({ emailSignUp: e.target.value })
-                  }
-                />
+                <div>
+                  <label htmlFor="emailSignUp" className="sr-only">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    name="emailSignUp"
+                    id="emailSignUp"
+                    value={this.state.emailSignUp}
+                    onChange={(e) => this.handleFormInputChange(e)}
+                  />
+                  <div className="error-message"></div>
+                </div>
 
-                <label htmlFor="passwordSignUp" className="sr-only">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  name="passwordSignUp"
-                  id="passwordSignUp"
-                  value={this.state.passwordSignUp}
-                  onChange={(e) =>
-                    this.setState({ passwordSignUp: e.target.value })
-                  }
-                />
+                <div>
+                  <label htmlFor="passwordSignUp" className="sr-only">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    name="passwordSignUp"
+                    id="passwordSignUp"
+                    value={this.state.passwordSignUp}
+                    onChange={(e) => this.handleFormInputChange(e)}
+                  />
+                  <div className="error-message"></div>
+                </div>
 
-                <label htmlFor="confirmPasswordSignUp" className="sr-only">
-                  Confirim Password
-                </label>
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  name="confirmPasswordSignUp"
-                  id="confirmPasswordSignUp"
-                  value={this.state.confirmPasswordSignUp}
-                  onChange={(e) =>
-                    this.setState({ confirmPasswordSignUp: e.target.value })
-                  }
-                />
+                <div>
+                  <label htmlFor="confirmPasswordSignUp" className="sr-only">
+                    Confirim Password
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    name="confirmPasswordSignUp"
+                    id="confirmPasswordSignUp"
+                    value={this.state.confirmPasswordSignUp}
+                    onChange={(e) => this.handleFormInputChange(e)}
+                  />
+                  <div className="error-message"></div>
+                </div>
+
+                <div className="instructor-row">
+                  <input
+                    checked={this.state.isInstructor}
+                    type="checkbox"
+                    name="isInstructor"
+                    id="isInstructor"
+                    onChange={(e) =>
+                      this.setState({ isInstructor: !this.state.isInstructor })
+                    }
+                  />
+                  <label htmlFor="isInstructor">I'm an Instructor</label>
+                </div>
+
+                <div>
+                  <label htmlFor="cohortSignUp" className="sr-only">
+                    Cohort
+                  </label>
+                  <input
+                    disabled={this.state.isInstructor}
+                    type="text"
+                    placeholder="Cohort"
+                    name="cohortSignUp"
+                    id="cohortSignUp"
+                    value={this.state.cohortSignUp}
+                    onChange={(e) => this.handleFormInputChange(e)}
+                  />
+                  <div className="error-message"></div>
+                </div>
 
                 <button type="submit">Create Account</button>
               </form>
