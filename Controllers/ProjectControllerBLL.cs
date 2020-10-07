@@ -72,7 +72,6 @@ namespace Timesheet_Tracker.Controllers
         // Get all list of the projects and students for instructors, it can further filtered by: project name, studentID, duedate, ordered by total hours
         public List<Project> GetAllProjects(string input)
         {
-            ValidationExceptions exceptions = new ValidationExceptions();
             using(TimesheetContext context = new TimesheetContext())
             {
                 switch (input)
