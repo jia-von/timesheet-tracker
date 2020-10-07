@@ -79,6 +79,23 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
+        // Calculate the average hours for each project
+        public void AverageHours(string projectName)
+        {
+            List<Project> target;
+            float averageTotal, averageDesign, averageDoing, averageCodeReview, averageTesting, averageDeliverables;
+            using(TimesheetContext context = new TimesheetContext())
+            {
+                target = context.Projects.Where(x => x.ProjectName == projectName).ToList();
+                averageDesign = target.Average(x => x.DesignHours).Value;
+                averageDoing = target.Average(x => x.DesignHours).Value;
+                averageCodeReview = target.Average(x => x.CodeReviewHours).Value;
+                averageTesting = target.Average(x => x.TestingHours).Value;
+                averageDeliverables = target.Average(x => x.DeliverablesHours).Value;
+                averageTotal = averageDesign + averageDoing + averageCodeReview + averageTesting + averageDeliverables;
+            }
+        }
+
         // Update
         // update hours based on the type of hours
         public Project UpdateHours(int projectID, float design, float doing, float codeReview, float testing, float deliverables)
@@ -97,7 +114,19 @@ namespace Timesheet_Tracker.Controllers
             return target;
         }
 
-
         // Delete
+
+        // Calculate the total hours for each unique ProjectID
+        public float TotalHours(int projectID)
+        {
+            Project target;
+            float sumHours;
+            using(TimesheetContext context = new TimesheetContext())
+            {
+                target = context.Projects.Where(x => x.ID == projectID).SingleOrDefault();
+                sumHours = target.DesignHours.Value + target.DoingHours.Value + target.CodeReviewHours.Value + target.TestingHours.Value + target.DeliverablesHours.Value;
+            }
+            return sumHours;
+        }
     }
 }
