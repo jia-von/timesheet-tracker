@@ -1,0 +1,165 @@
+/* style the container for the index page */
+.index {
+  display: flex;
+  height: 100vh;
+}
+
+/* style the containter with the login components */
+.index .login {
+  margin: auto;
+  position: relative; /* this is added to make the sign up form with absolute position inherit height and width from login div */
+  padding: 5px;
+  background-color: #ffffff;
+}
+
+/* style the mobile login display image */
+.index .login img {
+  width: 300px;
+  height: 300px;
+}
+
+/* style the login and sign up forms */
+.index .login form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.index .login form input {
+  border: 1px solid #e1e4e8;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  transition: all 0.4s ease-in-out;
+}
+.index .login form input:hover {
+  border: 1px solid #0284fe;
+}
+
+.index .login form button {
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  color: #0067c8;
+  background: #dceeff;
+  border: 1px solid transparent;
+}
+.index .login form button:hover {
+  box-shadow: 0 0 1px 0 rgba(8, 11, 14, 0.06),
+    0 3px 3px -1px rgba(8, 11, 14, 0.1);
+}
+.index .login form button:focus {
+  outline: none;
+  border: 1px solid #0284fe;
+}
+
+/* Style the open Create New account form button*/
+.index .login > p > button {
+  border: none;
+  background: none;
+  padding: 0;
+  font-weight: 500;
+  color: #0284fe;
+}
+.index .login > p > button:hover {
+  text-decoration: underline;
+}
+.index .login > p > button:focus {
+  outline: none;
+  text-decoration: underline;
+}
+
+/* style the sign up overlay */
+.signUp {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  width: 100%;
+  overflow-y: hidden;
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-delay: 0s;
+  background: #ffffff4a;
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.signUp.active {
+  height: 100%;
+  overflow-y: visible;
+}
+
+/* style the close sign up form button */
+.signUp > div:first-of-type > button {
+  all: unset;
+  color: #c80909;
+  border: 1px solid transparent;
+  border-radius: 500px;
+  padding: 0px 10px;
+  font-size: 30px;
+  transition: all 0.4s ease-in-out;
+}
+.signUp > div:first-of-type > button:hover {
+  border: 1px solid #c80909;
+}
+.signUp > div:first-of-type > button:focus {
+  border: 1px solid #c80909;
+}
+
+/* style the div with the sign up form fields */
+.signUp > div:last-of-type {
+  background: #ffffffed;
+  padding: 40px 5px;
+}
+
+/* style the image for desktop views */
+.index .desktopImage {
+  display: none;
+}
+
+/* TABLET SCREEN SIZE styles */
+@media screen and (min-width: 650px) {
+  .index .login img {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+/* DESKTOP SCREEN SIZE styles */
+@media screen and (min-width: 1025px) {
+  /* style the containter with the login components */
+  .index .login {
+    margin-left: 10%;
+    padding: 25px;
+  }
+
+  .index .login img {
+    width: 400px;
+    height: 400px;
+  }
+
+  /* style the div with the sign up form fields */
+  .signUp > div:last-of-type {
+    padding: 60px 25px;
+  }
+
+  /* style the image for desktop views */
+  .index .desktopImage {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .index .desktopImage > img {
+    width: calc(130vw - 10vw - 450px);
+    height: auto;
+  }
+}

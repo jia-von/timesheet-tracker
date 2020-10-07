@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { sample } from "../actions/timesheetTracker";
+import { NavMenu } from './NavMenu';
 
 class Counter extends Component {
   static displayName = Counter.name;
@@ -19,7 +20,8 @@ class Counter extends Component {
 
   render() {
     return (
-      <div>
+        <div>
+        <NavMenu />
         <h1>Counter</h1>
 
         <p>This is a simple example of a React component.</p>
