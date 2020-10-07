@@ -14,7 +14,7 @@ namespace Timesheet_Tracker.Controllers
 
         // Create an account that accept name, password, username, and email
 
-        public int Create(string username, string firstName,string lastName, string password, string email)
+        public int Create(string firstName,string lastName, string password, string email)
         {
             int target;
 
@@ -24,7 +24,6 @@ namespace Timesheet_Tracker.Controllers
 
             Person newPerson = new Person()
             {
-                Username = username,
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
@@ -45,14 +44,14 @@ namespace Timesheet_Tracker.Controllers
         // READ
         // Authetnntiate
 
-        public Person Authenticate(string username, string password)
+        public Person Authenticate(string email, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                 return null;
 
             using (TimesheetContext context = new TimesheetContext())
             {
-               Person returnUser = context.Persons.Where(x => x.Username == username).SingleOrDefault();
+               Person returnUser = context.Persons.Where(x => x.Email == email).SingleOrDefault();
 
                 // check if username exist
                 if(returnUser == null) { return null;  }
@@ -111,20 +110,9 @@ namespace Timesheet_Tracker.Controllers
             return target;
         }
 
-        // Get person by username
-        public Person GetPersonByUsername(string username)
-        {
-            Person target;
-            using (TimesheetContext context = new TimesheetContext())
-            {
-                target = context.Persons.Where(x => x.Username == username).SingleOrDefault();
-            }
-            return target;
-        }
-
         // Update
 
-        public Person UpdateAccount(int personID, string firstName, string lastName, string password, string username, string email)
+        public Person UpdateAccount(int personID, string firstName, string lastName, string password, string email)
         {
             Person target;
             byte[] passwordHash, passwordSalt;
@@ -135,7 +123,6 @@ namespace Timesheet_Tracker.Controllers
                 target = context.Persons.Where(x => x.ID == personID).SingleOrDefault();
                 target.FirstName = firstName;
                 target.LastName = lastName;
-                target.Username = username;
                 target.Email = email;
                 target.PasswordHash = passwordHash;
                 target.PasswordSalt = passwordSalt;

@@ -20,10 +20,6 @@ namespace Timesheet_Tracker.Models
         public int ID { get; set; }
 
         [Required]
-        [Column("username", TypeName = "varchar(50)")]
-        public string Username { get; set; }
-
-        [Required]
         [Column("email", TypeName = "varchar(50)")]
         public string Email { get; set; }
 
