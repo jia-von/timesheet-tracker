@@ -15,8 +15,12 @@ class Index extends React.Component {
     this.state = {
       emailSignIn: "",
       passwordSignIn: "",
+      emailSignInError: "",
+      passwordSignInError: "",
+      signInHasErrors: false,
       signUpForm: "",
       firstNameSignUp: "",
+      lastNameSignUp: "",
       emailSignUp: "",
       passwordSignUp: "",
       confirmPasswordSignUp: "",
@@ -27,12 +31,49 @@ class Index extends React.Component {
 
   handleSignIn(event) {
     event.preventDefault();
+    this.validateSignIn();
     console.log("sign in");
   }
 
   // update the state when a form field is changed
   handleFormInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value,
+      [event.target.name + "Error"]: "",
+    });
+  }
+
+  // validate sign in form
+  validateSignIn() {
+    let emailSignInError = "";
+    let passwordSignInError = "";
+    let signInHasErrors = false;
+    switch (this.state.emailSignIn.trim()) {
+      case "":
+        signInHasErrors = true;
+        emailSignInError = "Email address cannot be empty.";
+        break;
+      default:
+        /* CITATION: BORROWED REGEX FOR VALIDATING EMAIL ADDRESSES BELOW */
+        const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        /* END CITATION */
+        if (!this.state.emailSignIn.match(emailRegex)) {
+          signInHasErrors = true;
+          emailSignInError = "A valid email address is required.";
+        }
+    }
+
+    switch (this.state.passwordSignIn.trim()) {
+      case "":
+        signInHasErrors = true;
+        passwordSignInError = "Password cannot be empty.";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ signInHasErrors, emailSignInError, passwordSignInError });
+    return signInHasErrors;
   }
 
   render() {
@@ -60,7 +101,9 @@ class Index extends React.Component {
                 Email Address
               </label>
               <input
-                className=""
+                className={
+                  this.state.emailSignInError.length > 0 ? "error" : ""
+                }
                 type="email"
                 placeholder="Email"
                 name="emailSignIn"
@@ -68,7 +111,7 @@ class Index extends React.Component {
                 value={this.state.emailSignIn}
                 onChange={(e) => this.handleFormInputChange(e)}
               />
-              <div className="error-message"></div>
+              <div className="error-message">{this.state.emailSignInError}</div>
             </div>
 
             <div>
@@ -76,6 +119,9 @@ class Index extends React.Component {
                 Password
               </label>
               <input
+                className={
+                  this.state.passwordSignInError.length > 0 ? "error" : ""
+                }
                 type="password"
                 placeholder="Password"
                 name="passwordSignIn"
@@ -83,7 +129,9 @@ class Index extends React.Component {
                 value={this.state.passwordSignIn}
                 onChange={(e) => this.handleFormInputChange(e)}
               />
-              <div className="error-message"></div>
+              <div className="error-message">
+                {this.state.passwordSignInError}
+              </div>
             </div>
 
             <button type="submit">Go</button>
