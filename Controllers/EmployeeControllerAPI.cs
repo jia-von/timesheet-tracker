@@ -20,11 +20,10 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult<List<EmployeeDTO>> GetList(string input)
         {
             ActionResult<List<EmployeeDTO>> response;
-            EmployeeController list = new EmployeeController();
 
             try
             {
-                response = list.GetAllEmployees(input);
+                response = new EmployeeController().GetAllEmployees(input);
             }
             catch (Exception e)
             {
@@ -38,11 +37,10 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult<List<EmployeeDTO>> GetCohort(string input)
         {
             ActionResult<List<EmployeeDTO>> response;
-            EmployeeController list = new EmployeeController();
             float cohort = float.Parse(input);
             try
             {
-                response = list.GetAllStudentsByCohort(cohort);
+                response = new EmployeeController().GetAllStudentsByCohort(cohort);
             }
             catch (Exception e)
             {
@@ -55,12 +53,11 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult <Employee> GetEmployeeByID(string id)
         {
             ActionResult<Employee> response;
-            EmployeeController list = new EmployeeController();
             int employeeID = int.Parse(id);
 
             try
             {
-                response = list.GetEmployeeByID(employeeID);
+                response = new EmployeeController().GetEmployeeByID(employeeID);
             }
             catch (Exception e)
             {
@@ -74,14 +71,14 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult CreateEmployee(string personID, string instructor, string cohort)
         {
             ActionResult response;
-            EmployeeController list = new EmployeeController();
+
             int ID = int.Parse(personID);
             bool instructorYesNo = instructor == "true" ? true : false;
             float cohortNumber = int.Parse(cohort);
 
             try
             {
-                list.CreateEmployee(ID, instructorYesNo, cohortNumber);
+                new EmployeeController().CreateEmployee(ID, instructorYesNo, cohortNumber);
                 response = Ok(new { message = $"Successfully created an employee."});
 
             }
@@ -91,5 +88,45 @@ namespace Timesheet_Tracker.Controllers
             }
             return response;
         }
+
+        [HttpPatch("Update")]
+        public ActionResult UpdateEmployee(string id, string instructor, string cohort)
+        {
+            ActionResult response;
+            int employeeID = int.Parse(id);
+            bool _instructor = instructor == "true" ? true : false;
+            float _cohort = float.Parse(cohort);
+
+            try
+            {
+                new EmployeeController().UpdateEmployee(employeeID, _instructor, _cohort);
+                response = Ok(new { message = $"Successfully updated an employee with ID, {id}."});
+            }
+            catch (Exception e)
+            {
+                response = StatusCode(422, e.Message);
+            }
+            return response;
+        }
+
+        [HttpPatch("Archive")]
+        public ActionResult ArchiveEmployee(string id)
+        {
+            ActionResult response;
+            int employeeID = int.Parse(id);
+
+            try
+            {
+                new EmployeeController().Archive(employeeID);
+                response = Ok(new { message = $"Successfully archive an employee with ID, {id}." });
+            }
+            catch (Exception e)
+            {
+                response = StatusCode(422, e.Message);
+            }
+
+            return response;
+        }
+
     }
 }

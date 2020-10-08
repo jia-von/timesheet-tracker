@@ -160,8 +160,8 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
-        // Archive
-        public int Archive (int employeeID)
+        // Archive, it will also archive the many child projects the employeeID has. 
+        public int Archive(int employeeID)
         {
             Employee target;
             using(TimesheetContext context = new TimesheetContext())
@@ -174,6 +174,9 @@ namespace Timesheet_Tracker.Controllers
                 {
                     target = context.Employees.Where(x => x.ID == employeeID).Single();
                     target.Archive = true;
+
+                    // for each project that the employeeID has , the project the have will be archived to true
+                    target.Projects.Select(x => x).ToList().ForEach(y => y.Archive = true);
                     context.SaveChanges();
                 }
                 return target.ID;
