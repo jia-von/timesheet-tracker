@@ -111,56 +111,37 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // Get list of students by cohort
-        public List<Employee> GetAllStudentsByCohort(float input)
+        public List<EmployeeDTO> GetAllStudentsByCohort(float input)
         {
             using (TimesheetContext context = new TimesheetContext())
             {
                 if(!context.Employees.Any(x =>x.Cohort == input))
                 {
-                    throw new ArgumentNullException($"No cohort, {input} recorded in the employee database.");
+                    throw new ArgumentException($"No cohort, {input} recorded in the employee database.");
                 }
                 else
                 {
-                    return context.Employees.Where(x => x.Cohort == input).ToList();
+                    return GetAll().Where(x => x.Cohort == input).ToList();
                 }
             }
         }
 
         // Get employee by id
-        public int GetEmployeeByID(int employeeID)
+        public Employee GetEmployeeByID(int employeeID)
         {
             Employee target;
             using (TimesheetContext context = new TimesheetContext())
             {
                 if(!context.Employees.Any(x => x.ID == employeeID))
                 {
-                    throw new ArgumentNullException($"No employee with {employeeID} recorded in the employee database.");
+                    throw new ArgumentException($"No employee with ID,{employeeID} recorded in the employee database.");
                 }
                 else
                 {
                     target = context.Employees.Where(x => x.ID == employeeID).Single();
                 }
             }
-            return target.ID;
-        }
-
-        // Display first name and last name for instructor use
-        public string GetFullName(int employeeID)
-        {
-            string firstName, lastName;
-            using(TimesheetContext context = new TimesheetContext())
-            {
-                if (!context.Employees.Any(x => x.ID == employeeID))
-                {
-                    throw new ArgumentNullException($"No employee with {employeeID} recorded in the employee database.");
-                }
-                else
-                {
-                    firstName = context.Employees.Where(x => x.ID == employeeID).Single().Person.FirstName;
-                    lastName = context.Employees.Where(x => x.ID == employeeID).Single().Person.LastName;
-                }
-                return $"{firstName} {lastName}";
-            }
+            return target;
         }
 
         // Update
