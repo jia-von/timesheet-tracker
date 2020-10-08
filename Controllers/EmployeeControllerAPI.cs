@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -170,19 +171,58 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult UpdateEmployee(string id, string instructor, string cohort)
         {
             ActionResult response;
-
-            int employeeID = int.Parse(id);
-            bool _instructor = instructor == "true" ? true : false;
-            float _cohort = float.Parse(cohort);
+            ValidationExceptions exceptions = new ValidationExceptions();
+            id = id != null ? id.Trim().ToLower() : null;
+            instructor = instructor != null ? instructor.Trim().ToLower() : null;
+            cohort = cohort != null ? cohort.Trim().ToLower() : null;
 
             try
             {
-                new EmployeeController().UpdateEmployee(employeeID, _instructor, _cohort);
-                response = Ok(new { message = $"Successfully updated an employee with ID, {id}."});
+                if (string.IsNullOrEmpty(id))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("Employee ID is required when updating employee."));
+                }
+                else
+                if (!int.TryParse(id, out int employeeID))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("Employee ID has to be a number."));
+                }
+
+                if (string.IsNullOrWhiteSpace(instructor))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("Need to determine whether to update the employee to instructor or not."));
+                }
+                else
+                if (!bool.TryParse(instructor, out bool _instructor))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("Need to determine whether to update the employee to instructor or not."));
+                }
+
+                if (!float.TryParse(cohort, out float _cohort))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("Cohort need to be a number such as 4.1."));
+                }
+
+                if (exceptions.SubExceptions.Count > 0)
+                {
+                    throw exceptions;
+                }
+                else
+                {
+                    try
+                    {
+                        new EmployeeController().UpdateEmployee(int.Parse(id), bool.Parse(instructor), float.Parse(cohort));
+                        response = Ok(new { message = $"Successfully updated an employee with ID, {id}." });
+                    }
+                    catch (Exception e)
+                    {
+                        response = StatusCode(422, e.Message);
+                    }
+                }
             }
-            catch (Exception e)
+            catch (ValidationExceptions e)
             {
-                response = StatusCode(422, e.Message);
+                response = UnprocessableEntity(new { errors = e.SubExceptions.Select(x => x.Message) });
             }
             return response;
         }
