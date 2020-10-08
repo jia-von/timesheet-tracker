@@ -25,12 +25,7 @@ namespace Timesheet_Tracker.Controllers
                 // has to validate that Employee cannot be created twice for the same PersonID
                 if(context.Employees.Any(x => x.PersonID == personID))
                 {
-                    exceptions.SubExceptions.Add(new ArgumentException($"This person with ID, {personID} is already an employee of the database."));
-                }
-
-                if(exceptions.SubExceptions.Count>0)
-                {
-                    throw exceptions;
+                    throw new ArgumentException($"This person with ID, {personID} is already an employee of the database.");
                 }
                 
                 if(instructor == true)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Timesheet_Tracker.Models;
 using Timesheet_Tracker.Models.DTO;
 using Timesheet_Tracker.Models.Exceptions;
@@ -60,6 +61,29 @@ namespace Timesheet_Tracker.Controllers
             try
             {
                 response = list.GetEmployeeByID(employeeID);
+            }
+            catch (Exception e)
+            {
+                response = StatusCode(422, e.Message);
+            }
+            return response;
+        }
+
+        [HttpPost("Create")]
+        // instructor can be a yes or no button, or check box. 
+        public ActionResult CreateEmployee(string personID, string instructor, string cohort)
+        {
+            ActionResult response;
+            EmployeeController list = new EmployeeController();
+            int ID = int.Parse(personID);
+            bool instructorYesNo = instructor == "true" ? true : false;
+            float cohortNumber = int.Parse(cohort);
+
+            try
+            {
+                list.CreateEmployee(ID, instructorYesNo, cohortNumber);
+                response = Ok(new { message = $"Successfully created an employee."});
+
             }
             catch (Exception e)
             {
