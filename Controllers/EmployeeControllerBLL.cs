@@ -19,7 +19,7 @@ namespace Timesheet_Tracker.Controllers
         public int CreateEmployee(int personID, bool instructor, float cohort)
         {
             Employee target;
-            ValidationExceptions exceptions = new ValidationExceptions();
+            ValidationExceptions exceptions = new ValidationExceptions(); /// delete this later
             using(TimesheetContext context = new TimesheetContext())
             {
                 // has to validate that Employee cannot be created twice for the same PersonID
