@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Timesheet_Tracker.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ProjectControllerAPI : ControllerBase
     {

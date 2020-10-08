@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.EntityFrameworkCore;
 using Timesheet_Tracker.Models;
+using Timesheet_Tracker.Models.DTO;
 using Timesheet_Tracker.Models.Exceptions;
 
 namespace Timesheet_Tracker.Controllers
@@ -63,11 +65,10 @@ namespace Timesheet_Tracker.Controllers
 
         // Read
         // Get a list of employees based on input: all, intructor, student
-        public List<Employee> GetAllEmployees(string input)
+        public List<EmployeeDTO> GetAllEmployees(string input)
         {
             using(TimesheetContext context = new TimesheetContext())
             {
-
                 switch (input)
                 {
                     case "instructor":
@@ -77,8 +78,7 @@ namespace Timesheet_Tracker.Controllers
                         }
                         else
                         {
-                            return context.Employees.Where(x => x.Instructor == true).ToList();
-                            
+                            return GetAll().Where(x => x.Instructor == true).ToList();
                         }
                     case "student":
                         if(!context.Employees.Any(x => x.Instructor == false))
@@ -87,11 +87,26 @@ namespace Timesheet_Tracker.Controllers
                         }
                         else
                         {
-                            return context.Employees.Where(x => x.Instructor == false).ToList();
+                            return GetAll().Where(x => x.Instructor == false).ToList();
                         }
                     default:
-                        return context.Employees.Select(x => x).ToList();
+                        return GetAll();
                 }
+            }
+        }
+
+        // Get all the list with model DTO to generate 
+        public List<EmployeeDTO> GetAll()
+        {
+            using(TimesheetContext context = new TimesheetContext())
+            {
+                return context.Employees.Include(x => x.Person).Select(x => new EmployeeDTO
+                {
+                    ID = x.ID,
+                    FullName = $"{x.Person.FirstName}  {x.Person.LastName}",
+                    Instructor = x.Instructor,
+                    Cohort = x.Cohort
+                }).ToList();
             }
         }
 
