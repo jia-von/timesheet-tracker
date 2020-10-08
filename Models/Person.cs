@@ -24,21 +24,17 @@ namespace Timesheet_Tracker.Models
         public string Email { get; set; }
 
         [Required]
-        [Column("first_name",TypeName = "varchar(50)")]
+        [Column("first_name", TypeName = "varchar(50)")]
         public string FirstName { get; set; }
         [Required]
         [Column("last_name", TypeName = "varchar(50)")]
         public string LastName { get; set; }
 
-        // Noted due to the way that password hash and salt created, the password has to be stored in byte. Hash wil generate 64 bytes, and salt will generate 128 bytes
+        [Column("password_hash", TypeName = "varchar(40)")]
+        public string PasswordHash { get; set; }
 
-        [Column("password_hash", TypeName = "varchar(64)")]
-        public byte[] PasswordHash { get; set; }
-
-
-        [Column("password_salt", TypeName = "varchar(128)")]
-        public byte[] PasswordSalt { get; set; }
-
+        [Column("password_salt", TypeName = "varchar(10)")]
+        public string PasswordSalt { get; set; }
         [Required]
         [Column("date_created", TypeName = "date")]
         public DateTime DateCreated { get; set; }
@@ -51,7 +47,8 @@ namespace Timesheet_Tracker.Models
         [Column("date_modified_profile", TypeName = "timestamp")]
         public DateTime? DateModifiedProfile { get; set; }
 
-        // Password hashing to be added at later point, 
+        [Column("archive", TypeName = "tinyint(1)")]
+        public bool Archive { get; set; }
 
 
         // Below this is the navigation property of one-to-one relationship, required and not null
