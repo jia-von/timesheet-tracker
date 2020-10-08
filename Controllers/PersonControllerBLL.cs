@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Timesheet_Tracker.Controllers.Utils;
 using Timesheet_Tracker.Models;
 
 namespace Timesheet_Tracker.Controllers
@@ -16,11 +18,54 @@ namespace Timesheet_Tracker.Controllers
 
         public int Create(string firstName,string lastName, string password, string email)
         {
+
+            // validate the inputs
+            switch (true)
+            {
+                case bool _ when firstName == "":
+                    throw new ArgumentException("First Name cannot be an empty string");
+                case bool _ when Regex.IsMatch(firstName, @"[0-9]"):
+                    throw new ArgumentException("First Name cannot contain any numbers");
+                case bool _ when firstName.Length > 50:
+                    throw new ArgumentException("First Name cannot be more than 50 characters long");
+
+                case bool _ when lastName == "":
+                    throw new ArgumentException("Last Name cannot be an empty string");
+                case bool _ when Regex.IsMatch(lastName, @"[0-9]"):
+                    throw new ArgumentException("Last Name cannot contain any numbers");
+                case bool _ when lastName.Length > 50:
+                    throw new ArgumentException("Last Name cannot be more than 50 characters long");
+
+                case bool _ when password == "":
+                    throw new ArgumentException("Password cannot be an empty string");
+                case bool _ when password.Length < 6:
+                    throw new ArgumentException("Minimum Password length is 6 characters long");
+                case bool _ when password.Length > 50:
+                    throw new ArgumentException("Password cannot be more than 50 characters long");
+
+                case bool _ when email == "":
+                    throw new ArgumentException("Email cannot be an empty string");
+                case bool _ when !Regex.IsMatch(email, @"[@]"):
+                    throw new ArgumentException("Invalid email. Ensure you have email@email.tld format");
+                case bool _ when password.Length > 50:
+                    throw new ArgumentException("Email cannot be more than 50 characters long");
+            }
+
+            // ensure the email has not been used for another account
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                if (context.Persons.Where(x => x.Email == email).Count() > 0)
+                {
+                    throw new ArgumentException("An account with the email provided already exists.");
+                }
+            }
+
             int target;
 
             // Call upon create password Hash to generate Hash and Salt for the password
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var hashResult = Hasher.HashWithSalt(password);
+            string passwordHash = hashResult["password"];
+            string passwordSalt = hashResult["salt"];
 
             Person newPerson = new Person()
             {
@@ -29,7 +74,8 @@ namespace Timesheet_Tracker.Controllers
                 Email = email,
                 DateCreated = DateTime.Today,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                Archived = false
             };
 
             using (TimesheetContext context = new TimesheetContext())
@@ -43,21 +89,21 @@ namespace Timesheet_Tracker.Controllers
 
         // READ
         // Authetnntiate
-
+        // return a person whose authentication info matches or throw an error
         public Person Authenticate(string email, string password)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-                return null;
-
             using (TimesheetContext context = new TimesheetContext())
             {
-               Person returnUser = context.Persons.Where(x => x.Email == email).SingleOrDefault();
+               Person returnUser = context.Persons.Where(x => x.Email == email && x.Archived == false).SingleOrDefault();
 
                 // check if username exist
                 if(returnUser == null) { return null;  }
 
                 // check if password is correct
-                if(!VerifyPasswordHash(password, returnUser.PasswordHash, returnUser.PasswordSalt)) { return null; }
+                if(Hasher.ValidatePassword(password, returnUser.PasswordSalt, returnUser.PasswordHash))
+                {
+                    return null; 
+                }
 
                 // authentication successful
                 return returnUser;
@@ -71,7 +117,7 @@ namespace Timesheet_Tracker.Controllers
             List<Person> target;
             using (TimesheetContext context = new TimesheetContext())
             {
-                target = context.Persons.ToList();
+                target = context.Persons.Where(x => x.Archived == false).ToList();
             }
             return target;
         }
@@ -82,7 +128,7 @@ namespace Timesheet_Tracker.Controllers
             Person target;
             using(TimesheetContext context = new TimesheetContext())
             {
-                target = context.Persons.Where(x => x.ID == id).SingleOrDefault();
+                target = context.Persons.Where(x => x.ID == id && x.Archived == false).SingleOrDefault();
             }
             return target;
         }
@@ -94,7 +140,7 @@ namespace Timesheet_Tracker.Controllers
 
             using (TimesheetContext context = new TimesheetContext())
             {
-                target = context.Persons.Where(x => x.FirstName == firstName && x.LastName == lastName).SingleOrDefault();
+                target = context.Persons.Where(x => x.FirstName == firstName && x.LastName == lastName && x.Archived == false).SingleOrDefault();
             }
             return target;
         }
@@ -105,7 +151,7 @@ namespace Timesheet_Tracker.Controllers
             Person target;
             using (TimesheetContext context = new TimesheetContext())
             {
-                target = context.Persons.Where(x => x.Email == email).SingleOrDefault();
+                target = context.Persons.Where(x => x.Email == email && x.Archived == false).SingleOrDefault();
             }
             return target;
         }
@@ -115,8 +161,9 @@ namespace Timesheet_Tracker.Controllers
         public Person UpdateAccount(int personID, string firstName, string lastName, string password, string email)
         {
             Person target;
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var hashResult = Hasher.HashWithSalt(password);
+            string passwordHash = hashResult["password"];
+            string passwordSalt = hashResult["salt"];
 
             using (TimesheetContext context = new TimesheetContext())
             {

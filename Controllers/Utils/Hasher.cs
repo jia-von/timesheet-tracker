@@ -51,6 +51,7 @@ namespace Timesheet_Tracker.Controllers.Utils
             };
         }
 
+        // returns true if password is valid else returns false
         public static bool ValidatePassword(string passwordPlainText, string salt, string passwordHashed )
         {
             // convert all values back to byte strings
