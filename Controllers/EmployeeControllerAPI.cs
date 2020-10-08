@@ -20,32 +20,56 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult<List<EmployeeDTO>> GetList(string input)
         {
             ActionResult<List<EmployeeDTO>> response;
+            input = input != null ? input.Trim().ToLower() : null;
 
-            try
+            if(string.IsNullOrWhiteSpace(input))
             {
-                response = new EmployeeController().GetAllEmployees(input);
+                response = StatusCode(400, "The input cannot be empty.");
             }
-            catch (Exception e)
+            else
             {
-                response = StatusCode(422, e.Message);
+                try
+                {
+                    response = new EmployeeController().GetAllEmployees(input);
+                }
+                catch (Exception e)
+                {
+                    response = StatusCode(422, e.Message);
+                }
             }
+
             return response;
         }
 
         // input can be cohort number format must be made sure that it has been formatted correctly as 4.1
         [HttpGet("Instructor/GetCohort")]
-        public ActionResult<List<EmployeeDTO>> GetCohort(string input)
+        public ActionResult<List<EmployeeDTO>> GetCohort(string cohort)
         {
             ActionResult<List<EmployeeDTO>> response;
-            float cohort = float.Parse(input);
-            try
+            cohort = cohort != null ? cohort.Trim().ToLower() : null;
+            float _cohort;
+
+            if(string.IsNullOrWhiteSpace(cohort))
             {
-                response = new EmployeeController().GetAllStudentsByCohort(cohort);
+                response = StatusCode(400, "Cohort cannot be empty.");
             }
-            catch (Exception e)
+            else
+            if(!float.TryParse(cohort, out _cohort))
             {
-                response = StatusCode(422, e.Message);
+                response = StatusCode(400, "Cohort has to be a number, example 4.1.");
             }
+            else
+            {
+                try
+                {
+                    response = new EmployeeController().GetAllStudentsByCohort(float.Parse(cohort));
+                }
+                catch (Exception e)
+                {
+                    response = StatusCode(422, e.Message);
+                }
+            }
+
             return response;
         }
 
@@ -53,16 +77,29 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult <Employee> GetEmployeeByID(string id)
         {
             ActionResult<Employee> response;
-            int employeeID = int.Parse(id);
+            id = id != null ? id.Trim().ToLower() : null;
+            int employeeID;
+            if(string.IsNullOrWhiteSpace(id))
+            {
+                response = StatusCode(400, "Employee ID cannot be empty.");
+            }
+            else
+            if(!int.TryParse(id, out employeeID))
+            {
+                response = StatusCode(400, "Employee ID has to be a number.");
+            }
+            else
+            {
+                try
+                {
+                    response = new EmployeeController().GetEmployeeByID(employeeID);
+                }
+                catch (Exception e)
+                {
+                    response = StatusCode(422, e.Message);
+                }
+            }
 
-            try
-            {
-                response = new EmployeeController().GetEmployeeByID(employeeID);
-            }
-            catch (Exception e)
-            {
-                response = StatusCode(422, e.Message);
-            }
             return response;
         }
 
@@ -71,21 +108,61 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult CreateEmployee(string personID, string instructor, string cohort)
         {
             ActionResult response;
+            ValidationExceptions exceptions = new ValidationExceptions();
 
-            int ID = int.Parse(personID);
-            bool instructorYesNo = instructor == "true" ? true : false;
-            float cohortNumber = int.Parse(cohort);
+            personID = personID != null ? personID.Trim().ToLower() : null;
+            instructor = instructor != null ? instructor.Trim().ToLower() : null;
+            cohort = cohort != null ? instructor.Trim().ToLower() : null;
 
             try
             {
-                new EmployeeController().CreateEmployee(ID, instructorYesNo, cohortNumber);
-                response = Ok(new { message = $"Successfully created an employee."});
+                if (string.IsNullOrEmpty(personID))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("To create an employee requires a person ID."));
+                }
+                else
+                if (!int.TryParse(personID, out int _personID))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("The person ID has to be a number."));
+                }
 
+                if (string.IsNullOrEmpty(instructor))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("Please determine whether the employee is an instructor or student."));
+                }
+                else
+                if (!bool.TryParse(instructor, out bool _instructor))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("Please determine whether the employee is an instructor or student."));
+                }
+
+                if (!float.TryParse(cohort, out float _cohort))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("Please enter a valid cohort number such as 4.1."));
+                }
+
+                if (exceptions.SubExceptions.Count > 0)
+                {
+                    throw exceptions;
+                }
+                else
+                {
+                    try
+                    {
+                        new EmployeeController().CreateEmployee(int.Parse(personID), bool.Parse(instructor), float.Parse(cohort));
+                        response = Ok(new { message = $"Successfully created an employee." });
+                    }
+                    catch (Exception e)
+                    {
+                        response = StatusCode(422, e.Message);
+                    }
+                }
             }
-            catch (Exception e)
-            {
-                response = StatusCode(422, e.Message);
+            catch(ValidationExceptions e)
+            { 
+                response = UnprocessableEntity(new { errors = e.SubExceptions.Select(x => x.Message) });
             }
+
             return response;
         }
 
@@ -93,6 +170,7 @@ namespace Timesheet_Tracker.Controllers
         public ActionResult UpdateEmployee(string id, string instructor, string cohort)
         {
             ActionResult response;
+
             int employeeID = int.Parse(id);
             bool _instructor = instructor == "true" ? true : false;
             float _cohort = float.Parse(cohort);
