@@ -30,7 +30,7 @@ namespace Timesheet_Tracker.Models
         [Column("last_name", TypeName = "varchar(50)")]
         public string LastName { get; set; }
 
-        [Column("password_hash", TypeName = "varchar(40)")]
+        [Column("password_hash", TypeName = "varchar(90)")]
         public string PasswordHash { get; set; }
 
         [Column("password_salt", TypeName = "varchar(10)")]
