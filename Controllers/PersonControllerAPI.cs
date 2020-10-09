@@ -116,7 +116,11 @@ namespace Timesheet_Tracker.Controllers
                 if (person != null)
                 {
                     EmployeeController employeeController = new EmployeeController();
-                    Employee employeeInfo = employeeController.GetEmployeeByID(person.ID);
+                    // TODO Get the employee record
+                    // this need to either use context to find employee whose person ID matches person.ID
+                    // OR needs a GetEmployeeByPersonID method in the EmployeeController
+                    // TODO
+                    //Employee employeeInfo = employeeController.GetEmployeeByPersonID(person.ID);
                     // use the DTO to avoid sending back the pass hash and salt
                     PersonDTO authenticatedUser = new PersonDTO()
                     {
@@ -124,8 +128,8 @@ namespace Timesheet_Tracker.Controllers
                         Email = person.Email,
                         FirstName = person.FirstName,
                         LastName = person.LastName,
-                        Cohort = employeeInfo.Cohort,
-                        Instructor = employeeInfo.Instructor,
+                        //Cohort = employeeInfo.Cohort,
+                        //Instructor = employeeInfo.Instructor,
                         //Projects = GET a list of projects belonging to this person
                     };
 
