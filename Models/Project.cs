@@ -58,6 +58,9 @@ namespace Timesheet_Tracker.Models
         [Column("deliverables_hours", TypeName = "float(6,2)")]
         public float? DeliverablesHours { get; set; }
 
+        [Column("archive", TypeName = "tinyint(1)")]
+        public bool Archive { get; set; }
+
         // navigation FK_Project-Employee
         [Required]
         [Column("employee_id", TypeName = "int(10)")]

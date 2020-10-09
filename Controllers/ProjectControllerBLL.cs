@@ -171,7 +171,25 @@ namespace Timesheet_Tracker.Controllers
             return project.ID;
         }
 
-        // Delete
+        // Archive
+        public int Archive(int projectID)
+        {
+            Project target;
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                if (!context.Projects.Any(x => x.ID == projectID))
+                {
+                    throw new ArgumentNullException($"No project with {projectID} recorded in the employee database.");
+                }
+                else
+                {
+                    target = context.Projects.Where(x => x.ID == projectID).Single();
+                    target.Archive = true;
+                    context.SaveChanges();
+                }
+                return target.ID;
+            }
+        }
 
 
         // Hours calculation and analysis

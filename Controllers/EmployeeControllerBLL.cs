@@ -19,7 +19,7 @@ namespace Timesheet_Tracker.Controllers
         public int CreateEmployee(int personID, bool instructor, float cohort)
         {
             Employee target;
-            ValidationExceptions exceptions = new ValidationExceptions(); /// delete this later
+
             using(TimesheetContext context = new TimesheetContext())
             {
                 // has to validate that Employee cannot be created twice for the same PersonID
@@ -106,17 +106,17 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // Get list of students by cohort
-        public List<EmployeeDTO> GetAllStudentsByCohort(float input)
+        public List<EmployeeDTO> GetAllStudentsByCohort(float cohort)
         {
             using (TimesheetContext context = new TimesheetContext())
             {
-                if(!context.Employees.Any(x =>x.Cohort == input))
+                if(!context.Employees.Any(x =>x.Cohort == cohort))
                 {
-                    throw new ArgumentException($"No cohort, {input} recorded in the employee database.");
+                    throw new ArgumentException($"No cohort, {cohort} recorded in the employee database.");
                 }
                 else
                 {
-                    return GetAll().Where(x => x.Cohort == input).ToList();
+                    return GetAll().Where(x => x.Cohort == cohort).ToList();
                 }
             }
         }
@@ -159,6 +159,28 @@ namespace Timesheet_Tracker.Controllers
                 return target.ID;
             }
         }
-        // Delete
+
+        // Archive, it will also archive the many child projects the employeeID has. 
+        public int Archive(int employeeID)
+        {
+            Employee target;
+            using(TimesheetContext context = new TimesheetContext())
+            {
+                if(!context.Employees.Any(x => x.ID == employeeID))
+                {
+                    throw new ArgumentNullException($"No employee with {employeeID} recorded in the employee database.");
+                }
+                else
+                {
+                    target = context.Employees.Where(x => x.ID == employeeID).Single();
+                    target.Archive = true;
+
+                    // for each project that the employeeID has , the project the have will be archived to true
+                    target.Projects.Select(x => x).ToList().ForEach(y => y.Archive = true);
+                    context.SaveChanges();
+                }
+                return target.ID;
+            }
+        }
     }
 }

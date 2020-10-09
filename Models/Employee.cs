@@ -39,6 +39,9 @@ namespace Timesheet_Tracker.Models
         [Column("person_id", TypeName = "int(10)")]
         public int PersonID { get; set; }
 
+        [Column("archive", TypeName = "tinyint(1)")]
+        public bool Archive { get; set; }
+
         // This attribute specifies which database field is the foreign key. Typically in the child (many side of the 1-many).
         // InverseProperty links the two virtual properties together.
         // One-to-one relationship required and not null
