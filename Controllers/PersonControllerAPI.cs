@@ -16,8 +16,8 @@ namespace Timesheet_Tracker.Controllers
     public class PersonControllerAPI : ControllerBase
     {
         // /Person => List of all entries in Person table
-        [HttpGet("/")]
-        public ActionResult<Object> GetAll()
+        [HttpGet("")]
+        public ActionResult<List<Person>> GetAll()
         {
             PersonController controller = new PersonController();
             var people = controller.GetAllPerson();
@@ -25,37 +25,56 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // /Person?id=1 => Person with the id = 1
-        [HttpGet("ID/")]
-        public ActionResult<Person> GetPersonByID(string id)
+        [HttpGet("ID")]
+        public ActionResult<PersonDTO> GetPersonByID(string id)
         {
-            // attempt to parse the id into an int
-            try
+            if (id != null)
             {
-                int ID = Convert.ToInt32(id);
-                PersonController controller = new PersonController();
-                Person person = controller.GetPersonByID(ID);
-
-                if (person == null)
+                // attempt to parse the id into an int
+                try
                 {
-                    return StatusCode(400, new { NotFound = $"Person with ID: {id} was not found" });
-                }
-                else
-                {
-                    return person;
-                }
+                    int ID = Convert.ToInt32(id);
+                    PersonController controller = new PersonController();
+                    Person person = controller.GetPersonByID(ID);
 
-            }
-            catch (Exception)
+                    if (person == null)
+                    {
+                        return StatusCode(400, $"Person with ID: {id} was not found");
+                    }
+                    else
+                    {
+                        // create a DTO to prevent returning a person's authentication credentials
+                        EmployeeController employeeController = new EmployeeController();
+                        Employee employeeInfo = employeeController.GetEmployeeByID(person.ID);
+                        PersonDTO personDTO = new PersonDTO()
+                        {
+                            ID = person.ID,
+                            Email = person.Email,
+                            FirstName = person.FirstName,
+                            LastName = person.LastName,
+                            Cohort = employeeInfo.Cohort,
+                            Instructor = employeeInfo.Instructor,
+                            //Projects = GET a list of projects belonging to this person
+                        };
+                        return personDTO;
+                    }
+
+                }
+                catch (Exception)
+                {
+                    return StatusCode(400, $"ID: {id} is not valid. Use integers only");
+                }
+            } else
             {
-                return StatusCode(400, new { IDError = $"ID: {id} is not valid. Use integers only" });
+                return StatusCode(400, "A valid id must be provided");
             }
         }
 
         // /Person/Create?email=&firstName=&lastName=&password= => ID = {id of the new person created}
-        [HttpPost("/Create")]
+        [HttpPost("Create")]
         public ActionResult CreatePerson(string email, string firstName, string lastName, string password, bool isIntructor, float? cohort)
         {
-            if (email != null && firstName != null && lastName != null && email != null && cohort != null)
+            if (email != null && firstName != null && lastName != null && password != null && cohort != null)
             {
                 // attempt to create the new person or return errors
                 try
@@ -69,7 +88,7 @@ namespace Timesheet_Tracker.Controllers
                 }
                 catch (Exception e)
                 {
-                    return StatusCode(400, new { InputError = e.Message });
+                    return StatusCode(400, e.Message );
                 }
 
             }
@@ -82,11 +101,11 @@ namespace Timesheet_Tracker.Controllers
                 if (firstName == null) badInputs.Add("first name");
                 if (lastName == null) badInputs.Add("lastname");
                 if (isIntructor == false && cohort == null) badInputs.Add("cohort");
-                return StatusCode(400, new { InputError = $"Values for {String.Join(", ", badInputs)} must be provided" });
+                return StatusCode(400, $"Values for {String.Join(", ", badInputs)} must be provided");
             }
         }
 
-        [HttpPost("/Authenticate")]
+        [HttpPost("Authenticate")]
         public ActionResult<PersonDTO> Authenticate(string email, string password)
         {
             if (email != null && password != null)
@@ -114,10 +133,7 @@ namespace Timesheet_Tracker.Controllers
                 }
                 else
                 {
-                    return StatusCode(400, new
-                    {
-                        AuthenticationError = $"Username or Password did not match any records"
-                    });
+                    return StatusCode(400, $"Username or Password did not match any records");
                 }
             }
             else
@@ -126,18 +142,33 @@ namespace Timesheet_Tracker.Controllers
                 List<string> badInputs = new List<string>();
                 if (email == null) badInputs.Add("email");
                 if (password == null) badInputs.Add("password");
-                return StatusCode(400, new
-                {
-                    InputError = $"Values for {String.Join(", ", badInputs)} must be provided"
-                });
+                return StatusCode(400, $"Values for {String.Join(", ", badInputs)} must be provided");
             }
         }
 
         // archive the person, their projects and their employee records
-        [HttpDelete("/Delete")]
+        [HttpDelete("Delete")]
         public ActionResult DeletePerson(string id)
         {
+            try
+            {
+                int ID = Convert.ToInt32(id);
+                PersonController controller = new PersonController();
+                // attempt to archive the account, return an error if this fails
+                try
+                {
+                    String result = controller.DeletePersonByID(ID);
+                    return Ok(new { result });
+                } catch (Exception e)
+                {
+                    return StatusCode(400, e.Message);
+                }
 
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, $"ID: {id} is not valid. Use integers only");
+            }
         }
     }
 }

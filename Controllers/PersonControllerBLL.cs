@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -75,7 +76,7 @@ namespace Timesheet_Tracker.Controllers
                 DateCreated = DateTime.Today,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Archived = false
+                Archive = false
             };
 
             using (TimesheetContext context = new TimesheetContext())
@@ -94,13 +95,13 @@ namespace Timesheet_Tracker.Controllers
         {
             using (TimesheetContext context = new TimesheetContext())
             {
-               Person returnUser = context.Persons.Where(x => x.Email == email && x.Archived == false).SingleOrDefault();
+               Person returnUser = context.Persons.Where(x => x.Email == email && x.Archive == false).SingleOrDefault();
 
                 // check if username exist
                 if(returnUser == null) { return null;  }
 
                 // check if password is correct
-                if(Hasher.ValidatePassword(password, returnUser.PasswordSalt, returnUser.PasswordHash))
+                if(!Hasher.ValidatePassword(password, returnUser.PasswordSalt, returnUser.PasswordHash))
                 {
                     return null; 
                 }
@@ -117,7 +118,7 @@ namespace Timesheet_Tracker.Controllers
             List<Person> target;
             using (TimesheetContext context = new TimesheetContext())
             {
-                target = context.Persons.Where(x => x.Archived == false).ToList();
+                target = context.Persons.Where(x => x.Archive == false).ToList();
             }
             return target;
         }
@@ -128,7 +129,7 @@ namespace Timesheet_Tracker.Controllers
             Person target;
             using(TimesheetContext context = new TimesheetContext())
             {
-                target = context.Persons.Where(x => x.ID == id && x.Archived == false).SingleOrDefault();
+                target = context.Persons.Where(x => x.ID == id && x.Archive == false).SingleOrDefault();
             }
             return target;
         }
@@ -140,7 +141,7 @@ namespace Timesheet_Tracker.Controllers
 
             using (TimesheetContext context = new TimesheetContext())
             {
-                target = context.Persons.Where(x => x.FirstName == firstName && x.LastName == lastName && x.Archived == false).SingleOrDefault();
+                target = context.Persons.Where(x => x.FirstName == firstName && x.LastName == lastName && x.Archive == false).SingleOrDefault();
             }
             return target;
         }
@@ -151,13 +152,12 @@ namespace Timesheet_Tracker.Controllers
             Person target;
             using (TimesheetContext context = new TimesheetContext())
             {
-                target = context.Persons.Where(x => x.Email == email && x.Archived == false).SingleOrDefault();
+                target = context.Persons.Where(x => x.Email == email && x.Archive == false).SingleOrDefault();
             }
             return target;
         }
 
         // Update
-
         public Person UpdateAccount(int personID, string firstName, string lastName, string password, string email)
         {
             Person target;
@@ -179,10 +179,35 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // Delete/Archive
+        public string DeletePersonByID(int id)
+        {
+            string result;
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                // archive this person throw error if they arent found
+                Person target = context.Persons.Where(x => x.ID == id && x.Archive == false).SingleOrDefault();
+                if (target == null)
+                {
+                    throw new Exception($"Person with ID: {id} was not found.");
+                }
+                target.Archive = true;
+                // archive this persons employee record
+                Employee targetEmployee = context.Employees.Where(x => x.PersonID == target.ID).SingleOrDefault();
+                targetEmployee.Archive = true;
+                // loop through and archive all projects for this person
+                List<Project> targetProjects = context.Projects.Where(x => x.EmployeeID == targetEmployee.ID).ToList();
+                foreach (Project targetProject in targetProjects)
+                {
+                    targetProject.Archive = true;
+                }
+                context.SaveChanges();
+                result = "User account successfully archived.";
+            }
+            return result;
+        }
 
 
-
-
+        /*
         // Below this line, all code blocks are methods to call upon, these accessors are all private. All of these codes are cited from Jason Watmore 
 
         // Create password hash @link: https://jasonwatmore.com/post/2020/01/10/react-aspnet-core-on-azure-with-sql-server-how-to-deploy-a-full-stack-app-to-microsoft-azure
@@ -216,6 +241,7 @@ namespace Timesheet_Tracker.Controllers
             }
             return true;
         }
+        */
 
     }
 }
