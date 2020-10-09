@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Planning\Images\" />
+    <Folder Include="Planning\Design\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
