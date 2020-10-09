@@ -65,7 +65,7 @@ This project was completed using [Kanban](https://en.wikipedia.org/wiki/Kanban) 
   - LinkedIn
 
 ## Acknowledgement
-Timesheet Tracker is part of a Capstone Project issued by TECHCareers for students to create a primary portfolio from this TECHCareers Full-Stack Software Developer Program. This project will help students to develop a professional level quality portfolio piece with the guidance from TECHCareers instructors. We would like to say thank you to TECHCareers, University of Alberta, and Cohort 4.1 Students for teaching and sharing their experiences with us. 
+Timesheet Tracker is part of a Capstone Project issued by TECHCareers for students to create a primary portfolio from this TECHCareers Full-Stack Software Developer Program. This project will help students to develop a professional level quality portfolio piece with the guidance from TECHCareers instructors. We would like to say thank you to [TECHCareers](http://www.techcareers.ca), [University of Alberta](https://www.ualberta.ca/information-services-and-technology/index.html), and Cohort 4.1 Students for teaching and sharing their experiences with us. 
 
 ## License
 
