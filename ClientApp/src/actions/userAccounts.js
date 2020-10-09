@@ -8,7 +8,8 @@ const signIn = async (dispatch, email, password) => {
 
     // try the request
     try {
-        const response = await axios.get(); // TODO use email and password here ?should this be get or post
+        // use post to send the passwords in the data vs the url
+        const response = await axios.post("blah.com", {}); // TODO use email and password here ?should this be get or post
         const data = await response.data;
         dispatch({ type: actionType.SIGN_IN_SUCCESS, value: data });
     } catch (error) {
