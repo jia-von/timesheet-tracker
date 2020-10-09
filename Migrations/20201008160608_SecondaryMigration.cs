@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Timesheet_Tracker.Migrations
 {
-    public partial class InitialCreation : Migration
+    public partial class SecondaryMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +14,6 @@ namespace Timesheet_Tracker.Migrations
                 {
                     id = table.Column<int>(type: "int(10)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    username = table.Column<string>(type: "varchar(50)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                        .Annotation("MySql:Collation", "utf8mb4_general_ci"),
                     email = table.Column<string>(type: "varchar(50)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                         .Annotation("MySql:Collation", "utf8mb4_general_ci"),
@@ -34,7 +31,8 @@ namespace Timesheet_Tracker.Migrations
                         .Annotation("MySql:Collation", "utf8mb4_general_ci"),
                     date_created = table.Column<DateTime>(type: "date", nullable: false),
                     date_archive = table.Column<DateTime>(type: "date", nullable: true),
-                    date_modified_profile = table.Column<DateTime>(type: "timestamp", nullable: true)
+                    date_modified_profile = table.Column<DateTime>(type: "timestamp", nullable: true),
+                    archive = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,7 +47,8 @@ namespace Timesheet_Tracker.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     instructor = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     cohort = table.Column<float>(type: "float(2,1)", nullable: false),
-                    person_id = table.Column<int>(type: "int(10)", nullable: false)
+                    person_id = table.Column<int>(type: "int(10)", nullable: false),
+                    archive = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,6 +79,7 @@ namespace Timesheet_Tracker.Migrations
                     code_review_hours = table.Column<float>(type: "float(6,2)", nullable: true),
                     testing_hours = table.Column<float>(type: "float(6,2)", nullable: true),
                     deliverables_hours = table.Column<float>(type: "float(6,2)", nullable: true),
+                    archive = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     employee_id = table.Column<int>(type: "int(10)", nullable: false)
                 },
                 constraints: table =>
@@ -95,39 +95,42 @@ namespace Timesheet_Tracker.Migrations
 
             migrationBuilder.InsertData(
                 table: "person",
-                columns: new[] { "id", "date_archive", "date_created", "date_modified_profile", "email", "first_name", "last_name", "password_hash", "password_salt", "username" },
+                columns: new[] { "id", "archive", "date_archive", "date_created", "date_modified_profile", "email", "first_name", "last_name", "password_hash", "password_salt" },
                 values: new object[,]
                 {
-                    { -1, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "groot@guardians.com", "Groot", "Groot", "admin", "admin", "groot" },
-                    { -2, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "starlord@guardians.com", "Star", "Lord", "admin", "admin", "starlord" },
-                    { -3, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "gamora@guardians.com", "Gamora", "Guardians", "admin", "admin", "gamora" },
-                    { -4, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "rocketraccoon@guardians.com", "Rocket", "Raccoon", "admin", "admin", "rocketraccoon" },
-                    { -5, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, "drax@guardians.com", "Drax", "Destroyer", "admin", "admin", "drax" }
+                    { -1, false, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, "groot@guardians.com", "Groot", "Groot", "admin", "admin" },
+                    { -2, false, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, "starlord@guardians.com", "Star", "Lord", "admin", "admin" },
+                    { -3, false, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, "gamora@guardians.com", "Gamora", "Guardians", "admin", "admin" },
+                    { -4, false, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, "rocketraccoon@guardians.com", "Rocket", "Raccoon", "admin", "admin" },
+                    { -5, false, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, "drax@guardians.com", "Drax", "Destroyer", "admin", "admin" }
                 });
 
             migrationBuilder.InsertData(
                 table: "employee",
-                columns: new[] { "id", "cohort", "instructor", "person_id" },
+                columns: new[] { "id", "archive", "cohort", "instructor", "person_id" },
                 values: new object[,]
                 {
-                    { -2, 4.1f, false, -1 },
-                    { -1, 0f, true, -2 },
-                    { -3, 4.1f, false, -3 },
-                    { -4, 4.1f, false, -4 },
-                    { -5, 4.1f, false, -5 }
+                    { -2, false, 4.1f, false, -1 },
+                    { -1, false, 0f, true, -2 },
+                    { -3, false, 4.1f, false, -3 },
+                    { -4, false, 4.1f, false, -4 },
+                    { -5, false, 4.1f, false, -5 }
                 });
 
             migrationBuilder.InsertData(
                 table: "project",
-                columns: new[] { "id", "code_review_hours", "date_archive", "date_completed", "date_created", "deliverables_hours", "design_hours", "doing_hours", "due_date", "employee_id", "project_name", "testing_hours" },
+                columns: new[] { "id", "archive", "code_review_hours", "date_archive", "date_completed", "date_created", "deliverables_hours", "design_hours", "doing_hours", "due_date", "employee_id", "project_name", "testing_hours" },
                 values: new object[,]
                 {
-                    { -1, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -2, "C# OOP Practice", null },
-                    { -2, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -2, "React To-Do Planning", null },
-                    { -3, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -3, "PHP API Assignment", null },
-                    { -4, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -3, "Hello World", null },
-                    { -5, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -4, "Soft Skill Assignment", null },
-                    { -6, null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local), -5, "Capstone", null }
+                    { -1, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -2, "C# OOP Practice", null },
+                    { -2, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -2, "React To-Do Planning", null },
+                    { -7, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -2, "PHP API Assignment", null },
+                    { -3, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -3, "PHP API Assignment", null },
+                    { -4, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -3, "Hello World", null },
+                    { -8, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -4, "PHP API Assignment", null },
+                    { -5, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -4, "Soft Skill Assignment", null },
+                    { -9, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -5, "PHP API Assignment", null },
+                    { -6, false, null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), null, null, null, new DateTime(2020, 10, 8, 0, 0, 0, 0, DateTimeKind.Local), -5, "Capstone", null }
                 });
 
             migrationBuilder.CreateIndex(
