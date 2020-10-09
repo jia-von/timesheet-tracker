@@ -6,6 +6,8 @@ import workers from "./workers.svg";
 import metrics from "./metrics.svg";
 
 import "./Index.css";
+// import the function factories so we can use them when mapping dispatch to props
+import { signInFunc, signUpFunc } from "../../actions/userAccounts";
 
 class Index extends React.Component {
   static displayName = Index.name;
@@ -424,10 +426,18 @@ class Index extends React.Component {
   }
 }
 
-// map redux to this component's props
+// map only values from userAccountsReducer in redux to this component's props
 function mapStateToProps(state) {
   return {
-    store: state,
+    store: state.userAccountsReducer,
   };
 }
-export default connect(mapStateToProps)(Index);
+
+// map the function "factories" from dispatch to this component's props
+function mapDispatchToProps(dispatch) {
+    return {
+        signIn: signInFunc(dispatch),
+        signUp: signUpFunc(dispatch)
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
