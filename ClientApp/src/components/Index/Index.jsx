@@ -270,7 +270,7 @@ class Index extends React.Component {
               </div>
             </div>
 
-            <button type="submit">Go</button>
+            <button type="submit" disabled={this.props.store.signIn.isLoading}>Go</button>
           </form>
 
           <p className="text-center">
@@ -421,7 +421,7 @@ class Index extends React.Component {
                   <div className="error-message">{this.state.cohortSignUpError}</div>
                 </div>
 
-                <button type="submit">Create Account</button>
+                <button type="submit" disabled={this.props.store.signUp.isLoading}>Create Account</button>
               </form>
             </div>
           </div>
