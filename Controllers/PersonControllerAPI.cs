@@ -72,10 +72,12 @@ namespace Timesheet_Tracker.Controllers
 
         // /Person/Create?email=&firstName=&lastName=&password= => ID = {id of the new person created}
         [HttpPost("Create")]
-        public ActionResult CreatePerson(string email, string firstName, string lastName, string password, bool isIntructor, float? cohort)
+        public ActionResult CreatePerson(string email, string firstName, string lastName, string password, string isInstructorString, float? cohort)
         {
-            if (email != null && firstName != null && lastName != null && password != null && cohort != null)
+            if (email != null && firstName != null && lastName != null && password != null && isInstructorString != null && cohort != null)
             {
+                // convert the is instructor string to a boolean value
+                bool isInstructor = isInstructorString == "instructor";
                 // attempt to create the new person or return errors
                 try
                 {
@@ -83,7 +85,7 @@ namespace Timesheet_Tracker.Controllers
                     int ID = controller.Create(firstName.Trim(), lastName.Trim(), password.Trim(), email.Trim());
                     // create the corresponding employee record
                     EmployeeController employeeController = new EmployeeController();
-                    int _ = employeeController.CreateEmployee(ID, isIntructor, (float)cohort);
+                    int _ = employeeController.CreateEmployee(ID, isInstructor, (float)cohort);
                     return Ok(new { ID });
                 }
                 catch (Exception e)
@@ -100,7 +102,8 @@ namespace Timesheet_Tracker.Controllers
                 if (password == null) badInputs.Add("password");
                 if (firstName == null) badInputs.Add("first name");
                 if (lastName == null) badInputs.Add("lastname");
-                if (isIntructor == false && cohort == null) badInputs.Add("cohort");
+                if (isInstructorString == null) badInputs.Add("isInstructorString");
+                if (isInstructorString != null && isInstructorString == "student"  && cohort == null) badInputs.Add("cohort");
                 return StatusCode(400, $"Values for {String.Join(", ", badInputs)} must be provided");
             }
         }

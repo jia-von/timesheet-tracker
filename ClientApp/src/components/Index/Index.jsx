@@ -41,16 +41,26 @@ class Index extends React.Component {
   // validate sign in form and dispatch redux action on 
   handleSignIn(event) {
     event.preventDefault();
-    let isInalid = this.validateSignIn();
-    if (!isInalid) {console.log("sign in");}
+      let isInalid = this.validateSignIn();
+      // if the form fields arent invalid, dispatch signIn from props
+      if (!isInalid) { this.props.signIn(this.state.emailSignIn, this.state.passwordSignIn); }
   }
 
   // validate sign up form and dispatch redux action on 
   handleSignUp(event) {
-    event.preventDefault();
+      event.preventDefault();
+      // if the form fields arent invalid, dispatch the signUp from props
     let isInalid = this.validateSignUp();
-    if (!isInalid) console.log("sign up");
-    console.log(parseFloat(this.state.cohortSignUp.trim()))
+      if (!isInalid) {
+          this.props.signUp(
+              this.state.firstNameSignUp,
+              this.state.lastNameSignUp,
+              this.state.emailSignUp,
+              this.state.passwordSignUp,
+              (this.state.isInstructor ? "instructor" : "student"),
+              this.state.cohortSignUp
+          );
+      }
   }
 
   // update the state when a form field is changed

@@ -9,7 +9,14 @@ const signIn = async (dispatch, email, password) => {
     // try the request
     try {
         // use post to send the passwords in the data vs the url
-        const response = await axios.post("blah.com", {}); // TODO use email and password here ?should this be get or post
+        const response = await axios({
+            url: "person/authenticate",
+            method: "post",
+            params: {
+                email,
+                password
+            }
+        }); // TODO use email and password here
         const data = await response.data;
         dispatch({ type: actionType.SIGN_IN_SUCCESS, value: data });
     } catch (error) {
@@ -23,17 +30,39 @@ const signInFunc = dispatch => {
 }
 
 // create the action to handle sign up requests
-const signUp = async (dispatch, firstName, lastName, email, password, isInstructor, cohort) => {
+const signUp = async (dispatch, firstName, lastName, email, password, isInstructorString, cohort) => {
     // dispatch to signal start of request
     dispatch({ type: actionType.SIGN_UP_REQUEST });
 
     // try the request
     try {
         let response;
-        if (isInstructor) {
-            response = await axios.post(); // TODO use sign up data here for instructor
+        if (isInstructorString === "instructor") {
+            response = await axios({
+                url: "person/create",
+                method: "post",
+                params: {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    isInstructorString,
+                    cohort: 0
+                }
+            }); // TODO use sign up data here for instructor
         } else {
-            response = await axios.post(); // TODO use sign up data here for student
+            response = await axios({
+                url: "/person/create",
+                method: "post",
+                params: {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    isInstructorString,
+                    cohort
+                }
+            }); // TODO use sign up data here for student
         }
         const data = await response.data;
         dispatch({ type: actionType.SIGN_UP_SUCCESS, value: data });
