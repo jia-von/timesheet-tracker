@@ -6,6 +6,8 @@ import workers from "./workers.svg";
 import metrics from "./metrics.svg";
 
 import "./Index.css";
+// import the function factories so we can use them when mapping dispatch to props
+import { signInFunc, signUpFunc } from "../../actions/userAccounts";
 
 class Index extends React.Component {
   static displayName = Index.name;
@@ -15,24 +17,189 @@ class Index extends React.Component {
     this.state = {
       emailSignIn: "",
       passwordSignIn: "",
+      emailSignInError: "",
+      passwordSignInError: "",
+      signInHasErrors: false,
       signUpForm: "",
       firstNameSignUp: "",
+      lastNameSignUp: "",
       emailSignUp: "",
       passwordSignUp: "",
       confirmPasswordSignUp: "",
       isInstructor: false,
       cohortSignUp: "",
+      firstNameSignUpError : "",
+      lastNameSignUpError: "",
+      emailSignUpError: "",
+      passwordSignUpError: "",
+      confirmPasswordSignUpError: "",
+      cohortSignUpError: "",
+      signUpHasErrors: false
     };
   }
 
+  // validate sign in form and dispatch redux action on 
   handleSignIn(event) {
     event.preventDefault();
-    console.log("sign in");
+    let isInalid = this.validateSignIn();
+    if (!isInalid) {console.log("sign in");}
+  }
+
+  // validate sign up form and dispatch redux action on 
+  handleSignUp(event) {
+    event.preventDefault();
+    let isInalid = this.validateSignUp();
+    if (!isInalid) console.log("sign up");
+    console.log(parseFloat(this.state.cohortSignUp.trim()))
   }
 
   // update the state when a form field is changed
   handleFormInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value,
+      [event.target.name + "Error"]: "",
+    });
+  }
+
+  // validate sign in form
+  validateSignIn() {
+    let emailSignInError = "";
+    let passwordSignInError = "";
+    let signInHasErrors = false;
+    // validate email field 
+    switch (this.state.emailSignIn.trim()) {
+      case "":
+        signInHasErrors = true;
+        emailSignInError = "Email address cannot be empty/whitespace.";
+        break;
+      default:
+        /* CITATION: BORROWED REGEX FOR VALIDATING EMAIL ADDRESSES BELOW */
+        const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        /* END CITATION */
+        if (!this.state.emailSignIn.match(emailRegex)) {
+          signInHasErrors = true;
+          emailSignInError = "A valid email address is required.";
+        }
+        break;
+    }
+// validate password field
+    switch (this.state.passwordSignIn.trim()) {
+      case "":
+        signInHasErrors = true;
+        passwordSignInError = "Password cannot be empty/whitespace.";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ signInHasErrors, emailSignInError, passwordSignInError });
+    return signInHasErrors;
+  }
+
+  // validate sign up form
+  validateSignUp() {
+    let signUpHasErrors = false;
+    let firstNameSignUpError  = "";
+    let lastNameSignUpError = "";
+    let emailSignUpError = "";
+    let passwordSignUpError = "";
+    let confirmPasswordSignUpError = "";
+    let cohortSignUpError = "";
+
+    // validate first name field
+    switch(this.state.firstNameSignUp.trim()){
+      case "":
+        signUpHasErrors = true;
+        firstNameSignUpError = "First Name cannot be empty/whitespace";
+        break;
+      default:
+        if (this.state.firstNameSignUp.match(/[0-9]/)) {
+          signUpHasErrors = true;
+          firstNameSignUpError = "First Name cannot contain numbers";
+        } else if (this.state.firstNameSignUp.trim().length > 50 ) {
+          signUpHasErrors = true;
+          firstNameSignUpError = "First Name must be less than 50 characters";
+        }
+        break;
+    }
+
+    // validate last name field
+    switch(this.state.lastNameSignUp.trim()){
+      case "":
+        signUpHasErrors = true;
+        lastNameSignUpError = "Last Name cannot be empty/whitespace";
+        break;
+      default:
+        if (this.state.lastNameSignUp.match(/[0-9]/)) {
+          signUpHasErrors = true;
+          lastNameSignUpError = "Last Name cannot contain numbers";
+        } else if (this.state.lastNameSignUp.trim().length > 50 ) {
+          signUpHasErrors = true;
+          lastNameSignUpError = "Last Name must be less than 50 characters";
+        }
+        break;
+    }
+
+    // validate email field
+    switch(this.state.emailSignUp.trim()){
+      case "":
+        signUpHasErrors = true;
+        emailSignUpError = "Email cannot be empty/whitespace";
+        break;
+      default:
+        if (!this.state.emailSignUp.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+          signUpHasErrors = true;
+          emailSignUpError = "A valid email is required";
+        } else if (this.state.emailSignUp.trim().length > 50 ) {
+          signUpHasErrors = true;
+          emailSignUpError = "Email must be less than 50 characters";
+        }
+        break;
+    }
+
+    // validate the password field
+    switch(this.state.passwordSignUp.trim()){
+      case "":
+        signUpHasErrors = true;
+        passwordSignUpError = "Password cannot be empty/whitespace";
+        break;
+      default:
+        if (this.state.passwordSignUp.trim().length < 6) {
+          signUpHasErrors = true;
+          passwordSignUpError = "Password cannot be less than 6 characters";
+        } else if (this.state.passwordSignUp.trim().length > 50 ) {
+          signUpHasErrors = true;
+          passwordSignUpError = "Password must be less than 50 characters";
+        }
+        break;
+    }
+
+    // confirm passwords match in both password fields
+    if (this.state.passwordSignUp.trim() !== this.state.confirmPasswordSignUp.trim()){
+      signUpHasErrors = true;
+      confirmPasswordSignUpError = "Passwords do not match";
+    }
+
+    // validate cohort field if this not an instructor
+    if (!this.state.isInstructor){
+      if (this.state.cohortSignUp.trim() === "") {
+        signUpHasErrors = true;
+        cohortSignUpError = "Cohorts are required for students";
+      }
+      // ensure no alphabets in cohort
+      else if (this.state.cohortSignUp.trim().toLowerCase().match(/[a-z]/)){
+        signUpHasErrors = true;
+        cohortSignUpError = "Cohorts cannot contain alphabets";
+      }
+      // ensure can be parsed to a float
+      else if (isNaN(parseFloat(this.state.cohortSignUp.trim()))){
+        signUpHasErrors = true;
+        cohortSignUpError = "Cohorts must be floats (eg 4.1)";
+      }
+    }
+
+    this.setState({ signUpHasErrors, firstNameSignUpError, lastNameSignUpError, emailSignUpError, passwordSignUpError, confirmPasswordSignUpError, cohortSignUpError });
+    return signUpHasErrors;
   }
 
   render() {
@@ -60,7 +227,9 @@ class Index extends React.Component {
                 Email Address
               </label>
               <input
-                className=""
+                className={
+                  this.state.emailSignInError.length > 0 ? "error" : ""
+                }
                 type="email"
                 placeholder="Email"
                 name="emailSignIn"
@@ -68,7 +237,7 @@ class Index extends React.Component {
                 value={this.state.emailSignIn}
                 onChange={(e) => this.handleFormInputChange(e)}
               />
-              <div className="error-message"></div>
+              <div className="error-message">{this.state.emailSignInError}</div>
             </div>
 
             <div>
@@ -76,6 +245,9 @@ class Index extends React.Component {
                 Password
               </label>
               <input
+                className={
+                  this.state.passwordSignInError.length > 0 ? "error" : ""
+                }
                 type="password"
                 placeholder="Password"
                 name="passwordSignIn"
@@ -83,7 +255,9 @@ class Index extends React.Component {
                 value={this.state.passwordSignIn}
                 onChange={(e) => this.handleFormInputChange(e)}
               />
-              <div className="error-message"></div>
+              <div className="error-message">
+                {this.state.passwordSignInError}
+              </div>
             </div>
 
             <button type="submit">Go</button>
@@ -114,12 +288,15 @@ class Index extends React.Component {
             </div>
             <div>
               <h2>Sign Up</h2>
-              <form>
+              <form onSubmit={(e) => this.handleSignUp(e)}>
                 <div>
                   <label htmlFor="firstNameSignUp" className="sr-only">
                     First Name
                   </label>
                   <input
+                  className={
+                    this.state.firstNameSignUpError.length > 0 ? "error" : ""
+                  }
                     type="text"
                     placeholder="First Name"
                     name="firstNameSignUp"
@@ -127,7 +304,7 @@ class Index extends React.Component {
                     value={this.state.firstNameSignUp}
                     onChange={(e) => this.handleFormInputChange(e)}
                   />
-                  <div className="error-message"></div>
+                  <div className="error-message">{this.state.firstNameSignUpError}</div>
                 </div>
 
                 <div>
@@ -135,6 +312,9 @@ class Index extends React.Component {
                     Last Name
                   </label>
                   <input
+                  className={
+                    this.state.lastNameSignUpError.length > 0 ? "error" : ""
+                  }
                     type="text"
                     placeholder="Last Name"
                     name="lastNameSignUp"
@@ -142,7 +322,7 @@ class Index extends React.Component {
                     value={this.state.lastNameSignUp}
                     onChange={(e) => this.handleFormInputChange(e)}
                   />
-                  <div className="error-message"></div>
+                  <div className="error-message">{this.state.lastNameSignUpError}</div>
                 </div>
 
                 <div>
@@ -150,6 +330,9 @@ class Index extends React.Component {
                     Email
                   </label>
                   <input
+                  className={
+                    this.state.emailSignUpError.length > 0 ? "error" : ""
+                  }
                     type="email"
                     placeholder="Email"
                     name="emailSignUp"
@@ -157,7 +340,7 @@ class Index extends React.Component {
                     value={this.state.emailSignUp}
                     onChange={(e) => this.handleFormInputChange(e)}
                   />
-                  <div className="error-message"></div>
+                  <div className="error-message">{this.state.emailSignUpError}</div>
                 </div>
 
                 <div>
@@ -165,6 +348,9 @@ class Index extends React.Component {
                     Password
                   </label>
                   <input
+                  className={
+                    this.state.passwordSignUpError.length > 0 ? "error" : ""
+                  }
                     type="password"
                     placeholder="Password"
                     name="passwordSignUp"
@@ -172,7 +358,7 @@ class Index extends React.Component {
                     value={this.state.passwordSignUp}
                     onChange={(e) => this.handleFormInputChange(e)}
                   />
-                  <div className="error-message"></div>
+                  <div className="error-message">{this.state.passwordSignUpError}</div>
                 </div>
 
                 <div>
@@ -180,6 +366,9 @@ class Index extends React.Component {
                     Confirim Password
                   </label>
                   <input
+                  className={
+                    this.state.confirmPasswordSignUpError.length > 0 ? "error" : ""
+                  }
                     type="password"
                     placeholder="Confirm Password"
                     name="confirmPasswordSignUp"
@@ -187,7 +376,7 @@ class Index extends React.Component {
                     value={this.state.confirmPasswordSignUp}
                     onChange={(e) => this.handleFormInputChange(e)}
                   />
-                  <div className="error-message"></div>
+                  <div className="error-message">{this.state.confirmPasswordSignUpError}</div>
                 </div>
 
                 <div className="instructor-row">
@@ -208,6 +397,9 @@ class Index extends React.Component {
                     Cohort
                   </label>
                   <input
+                  className={
+                    this.state.cohortSignUpError.length > 0 ? "error" : ""
+                  }
                     disabled={this.state.isInstructor}
                     type="text"
                     placeholder="Cohort"
@@ -216,7 +408,7 @@ class Index extends React.Component {
                     value={this.state.cohortSignUp}
                     onChange={(e) => this.handleFormInputChange(e)}
                   />
-                  <div className="error-message"></div>
+                  <div className="error-message">{this.state.cohortSignUpError}</div>
                 </div>
 
                 <button type="submit">Create Account</button>
@@ -234,10 +426,18 @@ class Index extends React.Component {
   }
 }
 
-// map redux to this component's props
+// map only values from userAccountsReducer in redux to this component's props
 function mapStateToProps(state) {
   return {
-    store: state,
+    store: state.userAccountsReducer,
   };
 }
-export default connect(mapStateToProps)(Index);
+
+// map the function "factories" from dispatch to this component's props
+function mapDispatchToProps(dispatch) {
+    return {
+        signIn: signInFunc(dispatch),
+        signUp: signUpFunc(dispatch)
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

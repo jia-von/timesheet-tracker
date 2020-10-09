@@ -1,11 +1,23 @@
 ﻿/**
- * sample action to set up redux
+ * sign a user in
+ * @param {object} value an object with email and password
  */
-const sample = () => {
+const sample = (value) => {
   return {
-    type: "SAMPLE",
-    value: "Hello Scripts",
+    type: "SIGN_IN",
+    value: value,
   };
 };
+
+/**
+ * sign a new user up
+ * @param {object} value an object with all fields required for a new user
+ */
+const signUp = (value) => {
+    return {
+        type: "SIGN_UP",
+        value: value
+    }
+}
 
 export { sample };

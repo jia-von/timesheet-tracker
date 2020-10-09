@@ -1,0 +1,10 @@
+﻿// declare constansts to be used to determine type for async reducer actions
+const SIGN_IN_REQUEST = "SIGN_IN_REQUEST";
+const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
+const SIGN_IN_FAIL = "SIGN_IN_FAIL";
+
+const SIGN_UP_REQUEST = "SIGN_UP_REQUEST";
+const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+const SIGN_UP_FAIL = "SIGN_UP_FAIL";
+
+export { SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAIL, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAIL }
