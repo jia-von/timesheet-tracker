@@ -14,7 +14,7 @@ namespace Timesheet_Tracker.Controllers.Utils
             // create an instance of the crypto service provider
             RNGCryptoServiceProvider saltGenerator = new RNGCryptoServiceProvider();
             // create a 10 byte long byte array
-            byte[] salt = new byte[10];
+            byte[] salt = new byte[6];
             // use the crypto service provider to fill the byte array with crytographically strong random values
             saltGenerator.GetBytes(salt);
 
@@ -51,6 +51,7 @@ namespace Timesheet_Tracker.Controllers.Utils
             };
         }
 
+        // returns true if password is valid else returns false
         public static bool ValidatePassword(string passwordPlainText, string salt, string passwordHashed )
         {
             // convert all values back to byte strings

@@ -4,16 +4,20 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import timesheetTrackerReducer from "./reducers/timesheetTracker";
+import userAccountsReducer from "./reducers/userAccounts";
 
 // specify base url and root element to inject jsx into
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");
 
-// create the redux store
-const timesheetTrackerStore = createStore(timesheetTrackerReducer);
+// combine all reducers we want to use
+const combinedReducer = combineReducers({ userAccountsReducer, timesheetTrackerReducer })
+
+// create the redux store with the combination of all reducers
+const timesheetTrackerStore = createStore(combinedReducer);
 
 // perform this action everytime the store changes
 timesheetTrackerStore.subscribe(() => {

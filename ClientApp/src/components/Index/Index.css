@@ -23,7 +23,6 @@
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  margin-bottom: 10px;
 }
 
 .index .login form > div {
@@ -84,6 +83,16 @@
 .index .login form button:focus {
   outline: none;
   border: 1px solid #0284fe;
+}
+
+/* Style the sign up status message */
+
+.index form div.statusMessage {
+  font-size: small;
+  font-weight: bold;
+  color: #a0a0a0;
+  margin-top: 4px;
+  margin-bottom: 0;
 }
 
 /* Style the open Create New account form button*/
