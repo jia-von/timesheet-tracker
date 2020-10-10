@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Timesheet_Tracker.Models;
@@ -11,16 +12,24 @@ using Timesheet_Tracker.Models.DTO;
 
 namespace Timesheet_Tracker.Controllers
 {
+    [Authorize]
     [Route("Person")]
     [ApiController]
     public class PersonControllerAPI : ControllerBase
     {
+        // assing a private person controller which is set when an instance of this api controller is created 
+        private PersonController _personController;
+        public PersonControllerAPI(PersonController personController)
+        {
+            _personController = personController;
+        }
+
         // /Person => List of all entries in Person table
+        [Authorize(Roles = Roles.Instructor)]
         [HttpGet("")]
         public ActionResult<List<Person>> GetAll()
         {
-            PersonController controller = new PersonController();
-            var people = controller.GetAllPerson();
+            var people = _personController.GetAllPerson();
             return people;
         }
 
@@ -34,8 +43,8 @@ namespace Timesheet_Tracker.Controllers
                 try
                 {
                     int ID = Convert.ToInt32(id);
-                    PersonController controller = new PersonController();
-                    Person person = controller.GetPersonByID(ID);
+                    //PersonController controller = new PersonController();
+                    Person person = _personController.GetPersonByID(ID);
 
                     if (person == null)
                     {
@@ -70,7 +79,9 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
+
         // /Person/Create?email=&firstName=&lastName=&password= => ID = {id of the new person created}
+        [AllowAnonymous]
         [HttpPost("Create")]
         public ActionResult CreatePerson(string email, string firstName, string lastName, string password, string isInstructorString, float? cohort)
         {
@@ -81,8 +92,8 @@ namespace Timesheet_Tracker.Controllers
                 // attempt to create the new person or return errors
                 try
                 {
-                    PersonController controller = new PersonController();
-                    int ID = controller.Create(firstName.Trim(), lastName.Trim(), password.Trim(), email.Trim());
+                    //PersonController controller = new PersonController();
+                    int ID = _personController.Create(firstName.Trim(), lastName.Trim(), password.Trim(), email.Trim());
                     // create the corresponding employee record
                     EmployeeController employeeController = new EmployeeController();
                     int _ = employeeController.CreateEmployee(ID, isInstructor, (float)cohort);
@@ -108,13 +119,14 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("Authenticate")]
         public ActionResult<PersonDTO> Authenticate(string email, string password)
         {
             if (email != null && password != null)
             {
-                PersonController controller = new PersonController();
-                Person person = controller.Authenticate(email, password);
+                //PersonController controller = new PersonController();
+                Person person = _personController.Authenticate(email, password);
 
                 if (person != null)
                 {
@@ -153,18 +165,21 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
+        
         // archive the person, their projects and their employee records
+        [Authorize(Roles = Roles.Instructor)] // TODO replace only instructors can delete to allow students delete as well
         [HttpDelete("Delete")]
         public ActionResult DeletePerson(string id)
         {
+            // TODO ensure the user calling delete has the ID of the entity being deleted
             try
             {
                 int ID = Convert.ToInt32(id);
-                PersonController controller = new PersonController();
+                //PersonController controller = new PersonController();
                 // attempt to archive the account, return an error if this fails
                 try
                 {
-                    String result = controller.DeletePersonByID(ID);
+                    String result = _personController.DeletePersonByID(ID);
                     return Ok(new { result });
                 } catch (Exception e)
                 {

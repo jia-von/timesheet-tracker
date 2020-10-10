@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Timesheet_Tracker.Controllers.Utils;
 using Timesheet_Tracker.Models;
 
@@ -13,6 +18,13 @@ namespace Timesheet_Tracker.Controllers
 {
     public class PersonController : Controller
     {
+        // Add the app settings to the Personcontroller -JasonWatmore
+        private readonly AppSettings _appSettings; 
+        public PersonController(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
+
         // Using CRUD system to develop a BLL for PersonController
 
         // Create an account that accept name, password, username, and email
@@ -100,11 +112,29 @@ namespace Timesheet_Tracker.Controllers
                 // check if username exist
                 if(returnUser == null) { return null;  }
 
-                // check if password is correct
+                // if user isnt authenticated, return null
                 if(!Hasher.ValidatePassword(password, returnUser.PasswordSalt, returnUser.PasswordHash))
                 {
                     return null; 
                 }
+
+                // if we get to this point, then the user was authenticated
+                // create a JWT token and add it to the user
+                JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+                byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, returnUser.ID.ToString()),
+                    new Claim(ClaimTypes.Role, "Instructor")// returnUser.Role) // TODO add string role field for users
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                string okToken = tokenHandler.WriteToken(token);
+                //returnUser.Token = tokenHandler.WriteToken(token); // TODO add a string token field for user tokens varchar needs to be long (100?)
 
                 // authentication successful
                 return returnUser;
