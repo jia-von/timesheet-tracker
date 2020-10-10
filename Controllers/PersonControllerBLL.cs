@@ -30,7 +30,7 @@ namespace Timesheet_Tracker.Controllers
 
         // Create an account that accept name, password, username, and email
 
-        public int Create(string firstName,string lastName, string password, string email)
+        public int Create(string firstName,string lastName, string password, string email, bool isInstructor)
         {
 
             // validate the inputs
@@ -89,7 +89,8 @@ namespace Timesheet_Tracker.Controllers
                 DateCreated = DateTime.Today,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Archive = false
+                Archive = false,
+                Role = isInstructor ? Roles.Instructor : Roles.Student
             };
 
             using (TimesheetContext context = new TimesheetContext())

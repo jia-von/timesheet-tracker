@@ -93,7 +93,7 @@ namespace Timesheet_Tracker.Controllers
                 try
                 {
                     //PersonController controller = new PersonController();
-                    int ID = _personController.Create(firstName.Trim(), lastName.Trim(), password.Trim(), email.Trim());
+                    int ID = _personController.Create(firstName.Trim(), lastName.Trim(), password.Trim(), email.Trim(), isInstructor);
                     // create the corresponding employee record
                     EmployeeController employeeController = new EmployeeController();
                     int _ = employeeController.CreateEmployee(ID, isInstructor, (float)cohort);
