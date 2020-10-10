@@ -126,7 +126,7 @@ namespace Timesheet_Tracker.Controllers
             if (email != null && password != null)
             {
                 //PersonController controller = new PersonController();
-                Person person = _personController.Authenticate(email, password);
+                PersonDTO person = _personController.Authenticate(email, password);
 
                 if (person != null)
                 {
@@ -137,18 +137,9 @@ namespace Timesheet_Tracker.Controllers
                     // TODO
                     //Employee employeeInfo = employeeController.GetEmployeeByPersonID(person.ID);
                     // use the DTO to avoid sending back the pass hash and salt
-                    PersonDTO authenticatedUser = new PersonDTO()
-                    {
-                        ID = person.ID,
-                        Email = person.Email,
-                        FirstName = person.FirstName,
-                        LastName = person.LastName,
-                        //Cohort = employeeInfo.Cohort,
-                        //Instructor = employeeInfo.Instructor,
-                        //Projects = GET a list of projects belonging to this person
-                    };
+                    
 
-                    return authenticatedUser;
+                    return person;
                 }
                 else
                 {

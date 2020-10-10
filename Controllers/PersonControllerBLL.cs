@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Timesheet_Tracker.Controllers.Utils;
 using Timesheet_Tracker.Models;
+using Timesheet_Tracker.Models.DTO;
 
 namespace Timesheet_Tracker.Controllers
 {
@@ -102,8 +103,8 @@ namespace Timesheet_Tracker.Controllers
 
         // READ
         // Authetnntiate
-        // return a person whose authentication info matches or throw an error
-        public Person Authenticate(string email, string password)
+        // return a personDTO whose authentication info matches or throw an error
+        public PersonDTO Authenticate(string email, string password)
         {
             using (TimesheetContext context = new TimesheetContext())
             {
@@ -132,12 +133,24 @@ namespace Timesheet_Tracker.Controllers
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                string okToken = tokenHandler.WriteToken(token);
+                SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+                
                 //returnUser.Token = tokenHandler.WriteToken(token); // TODO add a string token field for user tokens varchar needs to be long (100?)
 
+                PersonDTO authenticatedUser = new PersonDTO()
+                {
+                    ID = returnUser.ID,
+                    Email = returnUser.Email,
+                    FirstName = returnUser.FirstName,
+                    LastName = returnUser.LastName,
+                    //Cohort = employeeInfo.Cohort,
+                    //Instructor = employeeInfo.Instructor,
+                    //Projects = GET a list of projects belonging to this person,
+                    Token = tokenHandler.WriteToken(token)
+            };
+
                 // authentication successful
-                return returnUser;
+                return authenticatedUser;
             }
 
         }

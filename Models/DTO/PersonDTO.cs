@@ -14,6 +14,7 @@ namespace Timesheet_Tracker.Models.DTO
         public string LastName { get; set; }
         public bool Instructor { get; set; }
         public float Cohort { get; set; }
+        public string Token { get; set; }
         public List<string> Projects { get; set; }
     }
 }
