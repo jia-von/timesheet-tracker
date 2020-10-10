@@ -41,17 +41,18 @@ class Index extends React.Component {
   // validate sign in form and dispatch redux action on 
   handleSignIn(event) {
     event.preventDefault();
-      let isInalid = this.validateSignIn();
+      let isInvalid = this.validateSignIn();
       // if the form fields arent invalid, dispatch signIn from props
-      if (!isInalid) { this.props.signIn(this.state.emailSignIn, this.state.passwordSignIn); }
+      if (!isInvalid) { this.props.signIn(this.state.emailSignIn, this.state.passwordSignIn); }
+
   }
 
   // validate sign up form and dispatch redux action on 
   handleSignUp(event) {
       event.preventDefault();
       // if the form fields arent invalid, dispatch the signUp from props
-    let isInalid = this.validateSignUp();
-      if (!isInalid) {
+    let isInvalid = this.validateSignUp();
+      if (!isInvalid) {
           this.props.signUp(
               this.state.firstNameSignUp,
               this.state.lastNameSignUp,
@@ -210,15 +211,57 @@ class Index extends React.Component {
 
     this.setState({ signUpHasErrors, firstNameSignUpError, lastNameSignUpError, emailSignUpError, passwordSignUpError, confirmPasswordSignUpError, cohortSignUpError });
     return signUpHasErrors;
-  }
+    }
+
+  
+
+    // this will be responsible for dismissing the form values and closing the sign up form if successful
+    // note a conditional is required when setting state in component did update to prevent infiniteloop
+    componentDidUpdate(perviousProps) {
+      // if we were loading previously, have now completed and have no errors, lets close the form and delete the entries in fields
+      if (perviousProps.store.signUp.isLoading === true && this.props.store.signUp.isCompleted === true && this.props.store.signUp.error == null) {
+        this.setState({
+          signUpForm: "",
+          firstNameSignUp: "",
+          lastNameSignUp: "",
+          emailSignUp: "",
+          passwordSignUp: "",
+          confirmPasswordSignUp: "",
+          isInstructor: false,
+          cohortSignUp: "",
+        });
+      }
+
+      // if we were loading, have completed and have no sign in errors, clear the form fields OPTIONAL: move user to the home page
+      if (perviousProps.store.signIn.isLoading === true && this.props.store.signIn.isCompleted === true && this.props.store.signIn.error == null) {
+        this.setState({
+          emailSignIn: "",
+          passwordSignIn: ""
+        });
+      }
+    }
+
 
   render() {
-    /*
-        let message =
-      this.props.store.message === ""
-        ? "Default message"
-        : this.props.store.message;
-    */
+    
+     // specify the status message to show for sign up form
+      let signUpStatusMessage = "";
+      if (this.props.store.signUp.isLoading) { signUpStatusMessage = "Loading"; }
+      else {
+          if (this.props.store.signUp.isCompleted && this.props.store.signUp.error != null) {
+              signUpStatusMessage = this.props.store.signUp.error;
+          } else if (this.props.store.signUp.isCompleted && this.props.store.signUp.data != null) {
+              signUpStatusMessage = "Success";
+          }
+      }
+
+      // specify the status message to show for sign up form
+      let signInStatusMessage = "";
+      if (this.props.store.signIn.isLoading) { signInStatusMessage = "Loading"; }
+      else if (this.props.store.signIn.isCompleted && this.props.store.signIn.error != null) {
+              signInStatusMessage = this.props.store.signIn.error;
+          }
+        
 
     return (
       <div className="index">
@@ -271,6 +314,7 @@ class Index extends React.Component {
             </div>
 
             <button type="submit" disabled={this.props.store.signIn.isLoading}>Go</button>
+            <div className="statusMessage">{signInStatusMessage}</div>
           </form>
 
           <p className="text-center">
@@ -422,6 +466,8 @@ class Index extends React.Component {
                 </div>
 
                 <button type="submit" disabled={this.props.store.signUp.isLoading}>Create Account</button>
+
+                <div className="statusMessage">{signUpStatusMessage}</div>
               </form>
             </div>
           </div>
