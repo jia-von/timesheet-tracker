@@ -35,6 +35,9 @@ namespace Timesheet_Tracker.Models
 
         [Column("password_salt", TypeName = "varchar(10)")]
         public string PasswordSalt { get; set; }
+
+        [Column("role", TypeName = "varchar(20)")]
+        public string Role { get; set; }
         [Required]
         [Column("date_created", TypeName = "date")]
         public DateTime DateCreated { get; set; }

@@ -39,11 +39,12 @@ namespace Timesheet_Tracker.Models
                 entity.Property(e => e.Email).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
                 entity.Property(e => e.FirstName).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
                 entity.Property(e => e.LastName).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
+                entity.Property(e => e.Role).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
                 entity.Property(e => e.PasswordHash).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
                 entity.Property(e => e.PasswordSalt).HasCharSet("utf8mb4").HasCollation("utf8mb4_general_ci");
 
                 entity.HasData(
-                    new Person() { ID = -1, Email = "groot@guardians.com", FirstName = "Groot", LastName = "Groot", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today},
+                    new Person() { ID = -1, Email = "groot@guardians.com", Role = "instructor", FirstName = "Groot", LastName = "Groot", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today},
                     new Person() { ID = -2, Email = "starlord@guardians.com", FirstName = "Star", LastName = "Lord", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today},
                     new Person() { ID = -3, Email = "gamora@guardians.com", FirstName = "Gamora", LastName = "Guardians", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today },
                     new Person() { ID = -4, Email = "rocketraccoon@guardians.com", FirstName = "Rocket", LastName = "Raccoon", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = DateTime.Today },
