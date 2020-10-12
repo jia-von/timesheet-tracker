@@ -54,7 +54,7 @@ namespace Timesheet_Tracker.Controllers
                     {
                         // create a DTO to prevent returning a person's authentication credentials
                         EmployeeController employeeController = new EmployeeController();
-                        Employee employeeInfo = employeeController.GetEmployeeByID(person.ID);
+                        Employee employeeInfo = employeeController.GetEmployeeIDByPersonID(person.ID);
                         PersonDTO personDTO = new PersonDTO()
                         {
                             ID = person.ID,

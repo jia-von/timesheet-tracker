@@ -70,7 +70,7 @@ Timesheet Tracker is part of a Capstone Project issued by TECHCareers for studen
 ## License
 
 ## References
-- [ASP.NET Core 3.1 - Simple API for Authentication, Registration and User Management by Jason Watmore](https://jasonwatmore.com/post/2019/10/14/aspnet-core-3-simple-api-for-authentication-registration-and-user-management)
+
 - [Basic writing and formatting syntax by GitHub](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/basic-writing-and-formatting-syntax#lists)
 - [Code Repository Badges by dwyl](https://github.com/dwyl/repo-badges)
 - [Database design basics by Microsoft](https://support.microsoft.com/en-us/office/database-design-basics-eb2159cf-1e30-401a-8084-bd4f9c9ca1f5)
@@ -78,6 +78,8 @@ Timesheet Tracker is part of a Capstone Project issued by TECHCareers for studen
 - [How to write a kickass README by James Scott](https://dev.to/scottydocs/how-to-write-a-kickass-readme-5af9)
 - [How I Write SQL, Part 1: Naming Conventions by Launch by Lunch](https://launchbylunch.com/posts/2014/Feb/16/sql-naming-conventions/)
 - [HTTP request methods by Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+- [Role Based Authorization Tutorial with Example API by Jason Watmore](https://jasonwatmore.com/post/2019/10/16/aspnet-core-3-role-based-authorization-tutorial-with-example-api#authenticate-model-cs)
 - [README.md IDE by Dillinger](https://dillinger.io/)
+- [Simple API for Authentication, Registration and User Management by Jason Watmore](https://jasonwatmore.com/post/2019/10/14/aspnet-core-3-simple-api-for-authentication-registration-and-user-management)
 - [Tutorial: Create a complex data model - ASP.NET MVC with EF Core](https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/complex-data-model?view=aspnetcore-3.1)
 - [Wireframing in Figma by Figma](https://www.figma.com)
