@@ -9,12 +9,25 @@ namespace Timesheet_Tracker.Models.DTO
     {
         public int ID { get; set; }
         public string ProjectName { get; set; }
+        public string FullName { get; set; }
+        public float Cohort { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime DateCreated { get; set; }
         public float? DesignHours { get; set; }
+        public float? DoingHours { get; set; }
         public float? CodeReviewHours { get; set; }
         public float? TestingHours { get; set; }
         public float? DeliverablesHours { get; set; }
-        public float? TotalHours { get; set; }
+        public float? TotalHours
+        {
+            get
+            {
+                return DesignHours.Value + DoingHours.Value + CodeReviewHours.Value + TestingHours.Value + DeliverablesHours.Value;
+            }
+            set
+            {
+
+            }
+        }
     }
 }

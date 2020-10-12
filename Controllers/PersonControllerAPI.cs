@@ -54,7 +54,12 @@ namespace Timesheet_Tracker.Controllers
                     {
                         // create a DTO to prevent returning a person's authentication credentials
                         EmployeeController employeeController = new EmployeeController();
-                        Employee employeeInfo = employeeController.GetEmployeeByID(person.ID);
+                        Employee employeeInfo = employeeController.GetEmployeeIDByPersonID(person.ID); // changed by Jia, October 12, 2020
+
+                        // Jia added GET a list for projects belonging to this person, get a list of project related to the person.
+                        ProjectController projectController = new ProjectController();
+                        List<string> employeeProjects = projectController.GetProjectListForStudent(employeeInfo.ID).Select(x => x.ProjectName).ToList();
+
                         PersonDTO personDTO = new PersonDTO()
                         {
                             ID = person.ID,
@@ -63,7 +68,10 @@ namespace Timesheet_Tracker.Controllers
                             LastName = person.LastName,
                             Cohort = employeeInfo.Cohort,
                             Instructor = employeeInfo.Instructor,
-                            //Projects = GET a list of projects belonging to this person
+                            // Projects = GET a list of projects belonging to this person
+                            // Added by Jia, October 12, 2020
+                            Projects = employeeProjects
+
                         };
                         return personDTO;
                     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Constraints;
@@ -98,9 +99,12 @@ namespace Timesheet_Tracker.Controllers
                 return context.Employees.Include(x => x.Person).Select(x => new EmployeeDTO
                 {
                     ID = x.ID,
-                    FullName = $"{x.Person.FirstName}  {x.Person.LastName}",
+                    FirstName = x.Person.FirstName,
+                    LastName = x.Person.LastName,
+                    Email = x.Person.Email,
                     Instructor = x.Instructor,
-                    Cohort = x.Cohort
+                    Cohort = x.Cohort,
+                    Archive = x.Archive
                 }).ToList();
             }
         }
@@ -121,10 +125,27 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
-        // Get employee by id
-        public Employee GetEmployeeByID(int employeeID)
+        public Employee GetEmployeeIDByPersonID(int personID)
         {
             Employee target;
+            using(TimesheetContext context = new TimesheetContext())
+            {
+                if (!context.Employees.Any(x => x.PersonID == personID))
+                {
+                    throw new ArgumentException($"No employee with ID,{personID} recorded in the employee database.");
+                }
+                else
+                {
+                    target = context.Employees.Where(x => x.PersonID == personID).Single();
+                }
+            }
+            return target;
+        }
+
+        // Get employee by id
+        public EmployeeDTO GetEmployeeByID(int employeeID)
+        {
+            EmployeeDTO target;
             using (TimesheetContext context = new TimesheetContext())
             {
                 if(!context.Employees.Any(x => x.ID == employeeID))
@@ -133,7 +154,16 @@ namespace Timesheet_Tracker.Controllers
                 }
                 else
                 {
-                    target = context.Employees.Where(x => x.ID == employeeID).Single();
+                    target = context.Employees.Where(x => x.ID == employeeID).Include(x => x.Person).Select(x => new EmployeeDTO
+                    {
+                        ID = x.ID,
+                        FirstName = x.Person.FirstName,
+                        LastName = x.Person.LastName,
+                        Email = x.Person.Email,
+                        Instructor = x.Instructor,
+                        Cohort = x.Cohort,
+                        Archive = x.Archive
+                    }).Single();
                 }
             }
             return target;
