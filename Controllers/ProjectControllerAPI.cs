@@ -216,5 +216,87 @@ namespace Timesheet_Tracker.Controllers
         {
             return new ProjectController().GetAllProjects();
         }
+
+        [HttpGet("Instructor/Cohort")]
+        // filtered by cohort
+        public ActionResult<List<ProjectDTO>> GetAllProjectByCohort(string cohort)
+        {
+            cohort = cohort != null ? cohort.Trim().ToLower() : null;
+            if(!string.IsNullOrEmpty(cohort))
+            {
+                return StatusCode(400, "Please enter a cohort.");
+            }
+            else
+            if(!float.TryParse(cohort, out float _cohort))
+            {
+                return StatusCode(400, "Cohort has to be a number format.");
+            }
+            else
+            {
+                try
+                {
+                    return new ProjectController().GetAllProjectByCohort(_cohort);
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(422, e.Message);
+                }
+            }
+
+        }
+
+        // Filter by project name
+        [HttpGet("Instructor/ProjectName")]
+        public ActionResult <List<ProjectDTO>> GetAllByProjectName (string projectName)
+        {
+            projectName = projectName != null ? projectName.Trim().ToLower() : null;
+
+            if (!string.IsNullOrEmpty(projectName))
+            {
+                return StatusCode(400, "Please enter a project name.");
+            }
+            else
+            {
+                try
+                {
+                    return new ProjectController().GetAllByProjectName(projectName);
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(422, e.Message);
+                }
+            }
+        }
+
+        // Filter by student name
+        [HttpGet("Instructor/StudentName")]
+        public ActionResult<List<ProjectDTO>> GetAllProjectByStudentName(string studentName)
+        {
+            studentName = studentName != null ? studentName.Trim().ToLower() : null;
+
+            if (!string.IsNullOrEmpty(studentName))
+            {
+                return StatusCode(400, "Please enter a student name.");
+            }
+            else
+            {
+                try
+                {
+                    return new ProjectController().GetAllProjectByStudentName(studentName);
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(422, e.Message);
+                }
+            }
+        }
+
+        // Order Hours by Descending
+        [HttpGet("Instructor/OrderByTotalHours")]
+        public ActionResult<List<ProjectDTO>> GetAllProjectByTotalHours()
+        {
+            return new ProjectController().GetAllProjectByTotalHours();
+        }
+
     }
 }
