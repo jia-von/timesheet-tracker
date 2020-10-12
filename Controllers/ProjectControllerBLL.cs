@@ -71,46 +71,86 @@ namespace Timesheet_Tracker.Controllers
 
         // Read
         // Get all list of the projects and students for instructors, it can further filtered by: project name, studentID, duedate, ordered by total hours
-        public List<Project> GetAllProjects(string input)
+        public List<ProjectDTO> GetAllProjects()
+        {
+            List<ProjectDTO> target;
+            using(TimesheetContext context = new TimesheetContext())
+            {
+               target = context.Projects.Select(x => new ProjectDTO()
+                {
+                    ID = x.ID,
+                    ProjectName = x.ProjectName,
+                    FullName = $"{x.Employee.Person.FirstName} {x.Employee.Person.LastName}",
+                    DueDate = x.DueDate,
+                    DateCreated = x.DateCreated,
+                    DesignHours = x.DesignHours != null ? x.DesignHours : 0,
+                    DoingHours = x.DoingHours != null ? x.DoingHours : 0,
+                    CodeReviewHours = x.CodeReviewHours != null ? x.CodeReviewHours : 0,
+                    TestingHours = x.TestingHours != null ? x.TestingHours : 0,
+                    DeliverablesHours = x.DeliverablesHours != null ? x.DeliverablesHours : 0
+                }
+                ).ToList();
+            }
+            return target;
+        }
+
+        // Filter by Cohort
+        public List<ProjectDTO> GetAllProjectByCohort(float cohort)
         {
             using(TimesheetContext context = new TimesheetContext())
             {
-                switch (input)
+                if(!context.Employees.Any(x => x.Cohort == cohort))
                 {
-                    case "projectname":
-                        if (!context.Projects.Any(x => x.ProjectName == input))
-                        {
-                            throw new ArgumentNullException($"This project {input} does not exist.");
-                        }
-                        else
-                        {
-                            return context.Projects.Where(x => x.ProjectName == input).ToList();
-                        }
-                    case "employeeID":
-                        if (!context.Projects.Any(x => x.EmployeeID == int.Parse(input)))
-                        {
-                            throw new ArgumentNullException($"This student with ID, {input} does not exist in the current database.");
-                        }
-                        else
-                        {
-                            return context.Projects.Where(x => x.EmployeeID == int.Parse(input)).ToList();
-                        }
-                    case "duedate":
-                        if (!context.Projects.Any(x => x.DueDate == DateTime.Parse(input)))
-                        {
-                            throw new ArgumentNullException($"The date entered, {input} is unavailable.");
-                        }
-                        else
-                        {
-                            return context.Projects.Where(x => x.DueDate == DateTime.Parse(input)).ToList();
-                        }
-                    default:
-                        return context.Projects.Select(x => x).ToList();
-
+                    throw new ArgumentException($"There is no cohort of {cohort} recorded in the database.");
+                }
+                else
+                {
+                    return GetAllProjects().Where(x => x.Cohort == cohort).ToList();
                 }
             }
         }
 
+        // Filter by Project Name
+        public List<ProjectDTO> GetAllByProjectName(string projectName)
+        {
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                if (!context.Projects.Any(x => x.ProjectName.ToLower() == projectName))
+                {
+                    throw new ArgumentException($"There is no project with name of {projectName} recorded in the database.");
+                }
+                else
+                {
+                    return GetAllProjects().Where(x => x.ProjectName.ToLower() == projectName).ToList();
+                }
+            }
+        }
+
+        // Filter by Student Name
+        public List<ProjectDTO> GetAllProjectByStudentName(string studentName)
+        {
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                if (!GetAllProjects().Any(x => x.FullName.ToLower() == studentName))
+                {
+                    throw new ArgumentException($"There is no project with name of {studentName} recorded in the database.");
+                }
+                else
+                {
+                    return GetAllProjects().Where(x => x.FullName.ToLower() == studentName).ToList();
+                }
+            }
+        }
+
+        // Filter by Descending order for total hours
+
+        public List<ProjectDTO> GetAllProjectByTotalHours()
+        {
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                return GetAllProjects().OrderByDescending(x => x.TotalHours).ToList();
+            }
+        }
 
         // Get a list of projects based on employeeID of student, for student to view their projects
         public List<ProjectDTO> GetProjectListForStudent(int employeeID)

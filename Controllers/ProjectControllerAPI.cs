@@ -210,5 +210,11 @@ namespace Timesheet_Tracker.Controllers
             return response;
         }
 
+        [HttpGet("Instructor")]
+        // get a list of all the projects
+        public ActionResult<List<ProjectDTO>> GetAllProjects()
+        {
+            return new ProjectController().GetAllProjects();
+        }
     }
 }

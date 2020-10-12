@@ -9,6 +9,8 @@ namespace Timesheet_Tracker.Models.DTO
     {
         public int ID { get; set; }
         public string ProjectName { get; set; }
+        public string FullName { get; set; }
+        public float Cohort { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime DateCreated { get; set; }
         public float? DesignHours { get; set; }
