@@ -152,6 +152,28 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
+        // For instructor Only
+        public ProjectDTO ProjectDetail(int projectID)
+        {
+            Project target;
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                target = context.Projects.Where(x => x.ID == projectID).Single();
+                return new ProjectDTO()
+                {
+                    ID = target.ID,
+                    ProjectName = target.ProjectName,
+                    FullName = $"{target.Employee.Person.FirstName} and {target.Employee.Person.LastName}",
+                    DueDate = target.DueDate,
+                    DesignHours = target.DesignHours,
+                    DoingHours = target.DoingHours,
+                    CodeReviewHours = target.CodeReviewHours,
+                    TestingHours = target.TestingHours,
+                    DeliverablesHours = target.DeliverablesHours
+                };
+            }
+        }
+
         // Get a list of projects based on employeeID of student, for student to view their projects
         public List<ProjectDTO> GetProjectListForStudent(int employeeID)
         {
