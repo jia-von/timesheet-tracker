@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Update.Internal;
+using Timesheet_Tracker.Models;
 using Timesheet_Tracker.Models.DTO;
 using Timesheet_Tracker.Models.Exceptions;
 
 namespace Timesheet_Tracker.Controllers
 {
+    [Authorize]
     [Route("Project")]
     [ApiController]
     public class ProjectControllerAPI : ControllerBase
@@ -210,6 +213,7 @@ namespace Timesheet_Tracker.Controllers
             return response;
         }
 
+        [Authorize(Roles = Roles.Instructor)]
         [HttpGet("Instructor")]
         // get a list of all the projects
         public ActionResult<List<ProjectDTO>> GetAllProjects()
@@ -217,6 +221,7 @@ namespace Timesheet_Tracker.Controllers
             return new ProjectController().GetAllProjects();
         }
 
+        [Authorize(Roles = Roles.Instructor)]
         [HttpGet("Instructor/Cohort")]
         // filtered by cohort
         public ActionResult<List<ProjectDTO>> GetAllProjectByCohort(string cohort)
@@ -246,6 +251,7 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // Filter by project name
+        [Authorize(Roles = Roles.Instructor)]
         [HttpGet("Instructor/ProjectName")]
         public ActionResult <List<ProjectDTO>> GetAllByProjectName (string projectName)
         {
@@ -269,6 +275,7 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // Filter by student name
+        [Authorize(Roles = Roles.Instructor)]
         [HttpGet("Instructor/StudentName")]
         public ActionResult<List<ProjectDTO>> GetAllProjectByStudentName(string studentName)
         {
@@ -292,6 +299,7 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // Order Hours by Descending
+        [Authorize(Roles = Roles.Instructor)]
         [HttpGet("Instructor/OrderByTotalHours")]
         public ActionResult<List<ProjectDTO>> GetAllProjectByTotalHours()
         {
@@ -299,6 +307,7 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // Instructor to reacte project
+        [Authorize(Roles = Roles.Instructor)]
         [HttpPost("Instructor/Create")]
         public ActionResult CreateProject(string projectName, string dueDate, string time, string employeeID)
         {
@@ -369,6 +378,7 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // to view individual project.
+        [Authorize(Roles = Roles.Instructor)]
         [HttpGet("Instructor/Detail")]
         public ActionResult<ProjectDTO> ViewStudentByID(string projectID)
         {
