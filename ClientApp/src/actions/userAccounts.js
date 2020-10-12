@@ -29,6 +29,18 @@ const signInFunc = dispatch => {
     return (email, password) => signIn(dispatch, email, password);
 }
 
+// create the action which handles sign out
+const signOut = async (dispatch) => {
+    // dispatch the request so we know we are beginning a new request
+    dispatch({ type: actionType.SIGN_OUT });
+}
+
+// create a function "factory" which will pass the handler action when called
+const signOutFunc = dispatch => {
+    return () => dispatch({ type: actionType.SIGN_OUT });
+}
+
+
 // create the action to handle sign up requests
 const signUp = async (dispatch, firstName, lastName, email, password, isInstructorString, cohort) => {
     // dispatch to signal start of request
@@ -76,4 +88,4 @@ const signUpFunc = dispatch => {
     return (firstName, lastName, email, password, isInstructor, cohort) => signUp(dispatch, firstName, lastName, email, password, isInstructor, cohort )
 }
 
-export {signInFunc, signUpFunc}
+export { signInFunc, signUpFunc, signOutFunc }

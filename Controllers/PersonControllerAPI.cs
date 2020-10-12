@@ -99,6 +99,10 @@ namespace Timesheet_Tracker.Controllers
                     int _ = employeeController.CreateEmployee(ID, isInstructor, (float)cohort);
                     return Ok(new { ID });
                 }
+                catch (InvalidOperationException)
+                {
+                    return StatusCode(400, "Something went wrong. Please check your internet/database connection");
+                }
                 catch (Exception e)
                 {
                     return StatusCode(400, e.Message );
@@ -125,25 +129,32 @@ namespace Timesheet_Tracker.Controllers
         {
             if (email != null && password != null)
             {
-                //PersonController controller = new PersonController();
-                PersonDTO person = _personController.Authenticate(email, password);
-
-                if (person != null)
+                try
                 {
-                    EmployeeController employeeController = new EmployeeController();
-                    // TODO Get the employee record
-                    // this need to either use context to find employee whose person ID matches person.ID
-                    // OR needs a GetEmployeeByPersonID method in the EmployeeController
-                    // TODO
-                    //Employee employeeInfo = employeeController.GetEmployeeByPersonID(person.ID);
-                    // use the DTO to avoid sending back the pass hash and salt
-                    
+                    //PersonController controller = new PersonController();
+                    PersonDTO person = _personController.Authenticate(email, password);
 
-                    return person;
+                    if (person != null)
+                    {
+                        EmployeeController employeeController = new EmployeeController();
+                        // TODO Get the employee record
+                        // this need to either use context to find employee whose person ID matches person.ID
+                        // OR needs a GetEmployeeByPersonID method in the EmployeeController
+                        // TODO
+                        //Employee employeeInfo = employeeController.GetEmployeeByPersonID(person.ID);
+                        // use the DTO to avoid sending back the pass hash and salt
+
+
+                        return person;
+                    }
+                    else
+                    {
+                        return StatusCode(400, $"Username or Password did not match any records");
+                    }
                 }
-                else
+                catch (InvalidOperationException)
                 {
-                    return StatusCode(400, $"Username or Password did not match any records");
+                    return StatusCode(400, "Something went wrong. Please check your internet/database connection");
                 }
             }
             else

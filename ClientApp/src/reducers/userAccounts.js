@@ -54,6 +54,16 @@ const userAccountsReducer = (state = defaultState, action) => {
             };
             return tempState;
 
+        // SIGN OUT CASE
+        case actionType.SIGN_OUT:
+            tempState.signIn = {
+                isLoading: false,
+                isCompleted: false,
+                error: null,
+                data: null
+            }
+            return tempState;
+
         // SIGN UP CASES 
         case actionType.SIGN_UP_REQUEST:
             tempState.signUp = {

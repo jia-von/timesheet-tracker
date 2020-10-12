@@ -1,0 +1,50 @@
+﻿.home .headerText {
+    padding: 10px 5%;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 0 4px 10px -5px #e0e0e0;
+}
+
+/* style the container for the projects */
+.home .projectsContainer {
+}
+
+
+/* style the projects being displayed */
+.home .project {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
+    box-shadow: 0px 5px 5px -5px #ececec;
+}
+
+.home .projectBody {
+    display: flex;
+    align-items: center
+}
+
+.home .projectCheck {
+    margin: 0 15px;
+    border: 3px solid #cecece;
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+}
+
+.home .projectTitle {
+    padding-top: 10px;
+}
+
+.home .projectLabel {
+    width: 10px;
+}
+
+.home .complete {
+    background-color: #3f923f;
+}
+
+.home .overdue {
+    background-color: #aa3636;
+}

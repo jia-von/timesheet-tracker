@@ -8,13 +8,16 @@ import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import timesheetTrackerReducer from "./reducers/timesheetTracker";
 import userAccountsReducer from "./reducers/userAccounts";
+import projectsReducer from "./reducers/projects";
+
+
 
 // specify base url and root element to inject jsx into
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");
 
 // combine all reducers we want to use
-const combinedReducer = combineReducers({ userAccountsReducer, timesheetTrackerReducer })
+const combinedReducer = combineReducers({ userAccountsReducer, timesheetTrackerReducer, projectsReducer })
 
 // create the redux store with the combination of all reducers
 const timesheetTrackerStore = createStore(combinedReducer);

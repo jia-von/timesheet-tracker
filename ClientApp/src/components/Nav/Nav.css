@@ -1,0 +1,29 @@
+﻿/* style the nav bar */
+.navBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-filter: blur(5px);
+}
+
+/* style the main content of the nav bar */
+.navBar .primary {
+    display: flex;
+    justify-content: space-between;
+    padding: 5%;
+}
+
+/* style the secondary content of the nav bar*/
+.navBar .secondary {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* make the secondary content of the nav bar visible */
+.navBar .active {
+    display: flex;
+}
+
+
