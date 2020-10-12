@@ -298,5 +298,95 @@ namespace Timesheet_Tracker.Controllers
             return new ProjectController().GetAllProjectByTotalHours();
         }
 
+        // Instructor to reacte project
+        [HttpPost("Instructor/Create")]
+        public ActionResult CreateProject(string projectName, string dueDate, string time, string employeeID)
+        {
+            ValidationExceptions exceptions = new ValidationExceptions();
+            projectName = projectName != null ? projectName.Trim() : null;
+            dueDate = dueDate != null ? dueDate.Trim() : null;
+            employeeID = employeeID != null ? employeeID.Trim() : null;
+            time = time != null ? time.Trim() : null;
+            
+            if(string.IsNullOrEmpty(projectName))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Must include project name."));
+            }
+
+            if (string.IsNullOrEmpty(dueDate))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Must include due date."));
+            }
+            else
+            if(!DateTime.TryParse(dueDate, out DateTime _dueDate))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("The date format is not correct."));
+            }
+            else
+            if(DateTime.Compare(_dueDate, DateTime.Today)<0)
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("The due date has to be in the future."));
+            }
+
+            if(string.IsNullOrEmpty(time))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Must have a time for the project deadline."));
+            }
+            else
+            if(!DateTime.TryParse(time, out DateTime _time))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Time must be a proper time format."));
+            }
+
+            if(string.IsNullOrEmpty(employeeID))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Employee ID must be included to assign the project."));
+            }
+            else
+            if(!int.TryParse(employeeID, out int _employeeID))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("The employee ID must be in number format."));
+            }
+
+            if(exceptions.SubExceptions.Count>0)
+            {
+                return UnprocessableEntity(new { errors = exceptions.SubExceptions.Select(x => x.Message) });
+            }
+            else
+            {
+                try
+                {
+                    new ProjectController().CreateProject(projectName, DateTime.Parse(dueDate), int.Parse(employeeID));
+                    return StatusCode(200, $"Project {projectName} succesfully created. It has deadline of {dueDate} and it is assigned to student with ID of {employeeID}");
+                }
+                catch (ValidationExceptions)
+                {
+
+                    return UnprocessableEntity(new { errors = exceptions.SubExceptions.Select(x => x.Message) });
+                }
+            }
+
+        }
+
+        // to view individual project.
+        [HttpGet("Instructor/Detail")]
+        public ActionResult<ProjectDTO> ViewStudentByID(string projectID)
+        {
+            projectID = projectID != null ? projectID.Trim() : null;
+
+            if(string.IsNullOrEmpty(projectID))
+            {
+                return StatusCode(400, "Please enter a project ID.");
+            }
+            else 
+            if(!int.TryParse(projectID, out int _projectID))
+            {
+                return StatusCode(400, "Please enter a number format.");
+            }
+            else
+            {
+                return new ProjectController().ProjectDetail(_projectID);
+            }
+        }
     }
 }
