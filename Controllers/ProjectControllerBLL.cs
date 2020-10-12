@@ -152,12 +152,30 @@ namespace Timesheet_Tracker.Controllers
         public ProjectDTO GetProjectForStudent(int projectID, int employeeID)
         {
             ProjectDTO studentProject;
-            List<ProjectDTO> projectList; 
+            List<ProjectDTO> projectList;
+            ValidationExceptions exceptions = new ValidationExceptions();
+
             using(TimesheetContext context = new TimesheetContext())
             {
-                
-                projectList = GetProjectListForStudent(employeeID);
-                studentProject = projectList.Where(x => x.ID == projectID).Single();
+                if(!context.Projects.Any(x => x.ID == projectID))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("There so such project ID exist."));
+                }
+
+                if(!context.Projects.Any(x => x.EmployeeID == employeeID))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("There is no such employee ID recorded in the database."));
+                }
+
+                if (exceptions.SubExceptions.Count > 0)
+                {
+                    throw exceptions;
+                }
+                else
+                {
+                    projectList = GetProjectListForStudent(employeeID);
+                    studentProject = projectList.Where(x => x.ID == projectID).Single();
+                }
             }
 
             return studentProject;
@@ -179,7 +197,7 @@ namespace Timesheet_Tracker.Controllers
         // Student must have asignments to add hours to project
         // Only student can add hours to their project, such as JavaScript
 
-        public int UpdateHours(int projectID, float? design, float? doing, float? codeReview, float? testing, float? deliverables)
+        public Project UpdateHours(int projectID, float? design, float? doing, float? codeReview, float? testing, float? deliverables)
         {
             Project project;
             using(TimesheetContext context = new TimesheetContext())
@@ -192,7 +210,8 @@ namespace Timesheet_Tracker.Controllers
                 project.DeliverablesHours += deliverables;
                 context.SaveChanges();
             }
-            return project.ID;
+
+            return project;
         }
 
         // Archive
