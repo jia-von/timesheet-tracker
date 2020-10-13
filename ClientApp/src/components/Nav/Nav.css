@@ -4,22 +4,46 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-filter: blur(5px);
+    background: #ffffff96;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
 }
 
 /* style the main content of the nav bar */
 .navBar .primary {
     display: flex;
     justify-content: space-between;
-    padding: 5%;
+    padding: 10px 5%;
 }
+
+    .navBar .home {
+        color: #6610f2;
+        font-size: 24px;
+    }
+
+    .navBar .menu {
+        border: none;
+        background: none;
+        color: #6610f2;
+        font-size: 24px;
+    }
 
 /* style the secondary content of the nav bar*/
 .navBar .secondary {
     display: none;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 5px;
 }
+
+/* style the nav links */
+.navBar .secondary .navLink {
+        border: none;
+        background: none;
+        padding: 0;
+        font-weight: 700;
+        color: #0284fe;
+    }
 
 /* make the secondary content of the nav bar visible */
 .navBar .active {

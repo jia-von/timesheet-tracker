@@ -24,14 +24,15 @@ class Nav extends React.Component {
 
         return (<nav className="navBar">
             <div className="primary">
-                <Link className="" to="/home" sr-only="Home"><i className="fas fa-home"></i></Link>
-                <button className="" onClick={(e) => { this.toggleLinks(); }} sr-only="Expand Nav Bar"><i class="fas fa-bars"></i></button>
+                <Link className="home" to="/home" sr-only="Home"><i className="fas fa-home"></i></Link>
+                <Link className="navButton" to="/create-project" sr-only="Add a new project"><i className="fas fa-plus"></i></Link>
+                <button className="menu" onClick={(e) => { this.toggleLinks(); }} sr-only="Expand Nav Bar"><i className="fas fa-bars"></i></button>
             </div>
             <div className={linksClass}>
                 <a className="" href="#" >Account</a>
                 <a className="" href="#" >Account</a>
                 <a className="" href="#" >Account</a>
-                <button className="" onClick={() => this.props.signOut()} >Sgn Out</button>
+                <button className="navLink" onClick={() => this.props.signOut()} >Sign Out</button>
             </div>
         </nav>);
     }

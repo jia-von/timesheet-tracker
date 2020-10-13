@@ -20,6 +20,26 @@
     box-shadow: 0px 5px 5px -5px #ececec;
 }
 
+/* add a radial effect to clicked projects
+    CITATION -- https://newsakmi.com/news/tech-news/software/how-to-recreate-the-ripple-effect-of-material-design-buttons/
+*/
+.home .project  {
+    background-position: center;
+    transition: background 0.4s;
+}
+
+.home .project:hover {
+        background: #47a7f500 radial-gradient(circle, transparent 1%, #f4f4f4 1%) center/15000%;
+    cursor: pointer;
+        }
+
+.home .project:active {
+        background-color: #ffffff;
+        background-size: 100%;
+        transition: background 0s;
+    }
+/* end citation */
+
 .home .projectBody {
     display: flex;
     align-items: center

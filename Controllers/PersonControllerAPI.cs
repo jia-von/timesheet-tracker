@@ -145,14 +145,12 @@ namespace Timesheet_Tracker.Controllers
                     if (person != null)
                     {
                         EmployeeController employeeController = new EmployeeController();
-                        // TODO Get the employee record
-                        // this need to either use context to find employee whose person ID matches person.ID
-                        // OR needs a GetEmployeeByPersonID method in the EmployeeController
-                        // TODO
-                        //Employee employeeInfo = employeeController.GetEmployeeByPersonID(person.ID);
-                        // use the DTO to avoid sending back the pass hash and salt
 
+                        Employee employeeInfo = employeeController.GetEmployeeIDByPersonID(person.ID);
 
+                        person.Cohort = employeeInfo.Cohort;
+                        person.Instructor = employeeInfo.Instructor;
+                        person.EmployeeID = employeeInfo.ID;
                         return person;
                     }
                     else

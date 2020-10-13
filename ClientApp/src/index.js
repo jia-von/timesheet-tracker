@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import timesheetTrackerReducer from "./reducers/timesheetTracker";
 import userAccountsReducer from "./reducers/userAccounts";
 import projectsReducer from "./reducers/projects";
+import employeesReducer from "./reducers/employees";
 
 
 
@@ -17,7 +18,12 @@ const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");
 
 // combine all reducers we want to use
-const combinedReducer = combineReducers({ userAccountsReducer, timesheetTrackerReducer, projectsReducer })
+const combinedReducer = combineReducers({
+    userAccountsReducer,
+    timesheetTrackerReducer,
+    projectsReducer,
+    employeesReducer
+})
 
 // create the redux store with the combination of all reducers
 const timesheetTrackerStore = createStore(combinedReducer);

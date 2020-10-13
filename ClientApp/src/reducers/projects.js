@@ -7,13 +7,19 @@ const defaultState = {
         isCompleted: false,
         error: null,
         data: []
+    },
+    createProject: {
+        isLoading: false,
+        isCompleted: false,
+        error: null,
+        data: null
     }
 }
 
 const projectsReducer = (state = defaultState, action) => {
     let tempState = { ...state };
     switch (action.type) {
-        
+        // get projects cases
         case actionType.GET_PROJECTS_REQUEST:
             tempState.projects = {
                 isLoading: true,
@@ -29,7 +35,8 @@ const projectsReducer = (state = defaultState, action) => {
                 isCompleted: true,
                 error: null,
                 data: action.value
-            }
+            };
+            return tempState;
 
         case actionType.GET_PROJECTS_FAIL:
             tempState.projects = {
@@ -37,10 +44,40 @@ const projectsReducer = (state = defaultState, action) => {
                 isCompleted: true,
                 error: action.value,
                 data: []
-            }
-
-        default:
+            };
             return tempState;
+
+        // create project cases
+        case actionType.CREATE_PROJECT_REQUEST:
+            tempState.createProject = {
+                isLoading: true,
+                isCompleted: false,
+                error: null,
+                data: null
+            };
+            return tempState;
+
+        case actionType.CREATE_PROJECT_SUCCESS:
+            tempState.createProject = {
+                isLoading: false,
+                isCompleted: true,
+                error: null,
+                data: action.value
+            };
+            return tempState;
+
+        case actionType.CREATE_PROJECT_FAIL:
+            tempState.createProject = {
+                isLoading: false,
+                isCompleted: true,
+                error: action.value,
+                data: null
+            };
+            return tempState;
+
+        // default case
+        default:
+            return state;
     }
 }
 
