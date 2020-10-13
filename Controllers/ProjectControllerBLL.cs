@@ -182,7 +182,6 @@ namespace Timesheet_Tracker.Controllers
 
             using(TimesheetContext context = new TimesheetContext())
             {   
-
                     // Filter the project for matching employee ID only
                     projectList = context.Projects.Where(x => x.EmployeeID == employeeID).ToList();
 
