@@ -182,12 +182,7 @@ namespace Timesheet_Tracker.Controllers
 
             using(TimesheetContext context = new TimesheetContext())
             {   
-                if(!context.Projects.Any(x => x.EmployeeID == employeeID))
-                {
-                    throw new ArgumentException($"There is no employee of {employeeID} recorded in database.");
-                }
-                else
-                {
+
                     // Filter the project for matching employee ID only
                     projectList = context.Projects.Where(x => x.EmployeeID == employeeID).ToList();
 
@@ -204,7 +199,7 @@ namespace Timesheet_Tracker.Controllers
                         TestingHours = x.TestingHours != null ? x.TestingHours : 0,
                         DeliverablesHours = x.DeliverablesHours != null ? x.DeliverablesHours : 0
                     }).ToList();
-                }
+
                 return studentProjects;
             }
 
