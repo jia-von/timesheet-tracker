@@ -15,7 +15,7 @@ namespace Timesheet_Tracker.Controllers
 {
     public class ProjectController : Controller
     {
-        // Create
+        // Create project for individual person
         // Create project with parameters, project name, due date, date creation, employee_id
         public int CreateProject(string projectName, DateTime dueDate, int employeeID)
         {
@@ -68,6 +68,33 @@ namespace Timesheet_Tracker.Controllers
             // This will return a projectID number.
             return target;
         }
+
+        // Create project cohort
+        public void CreateProjectForCohort(string projectName, DateTime dueDate, float cohort)
+        {
+            List<Employee> cohortList;
+
+            using(TimesheetContext context = new TimesheetContext())
+            {
+                // Filter Cohort First
+                cohortList = context.Employees.Where(x => x.Cohort == cohort).ToList();
+
+                // Assigned filtered cohort with assignments using foreach loop.
+                foreach(Employee student in cohortList)
+                {
+                    Project newProject = new Project()
+                    {
+                        ProjectName = projectName,
+                        DueDate = dueDate,
+                        EmployeeID = student.ID
+                    };
+
+                    context.Add(newProject);
+                    context.SaveChanges();
+                }
+            }
+        }
+
 
         // Read
         // Get all list of the projects and students for instructors, it can further filtered by: project name, studentID, duedate, ordered by total hours
