@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -373,6 +374,64 @@ namespace Timesheet_Tracker.Controllers
 
                     return UnprocessableEntity(new { errors = exceptions.SubExceptions.Select(x => x.Message) });
                 }
+            }
+
+        }
+
+        [Authorize(Roles = Roles.Instructor)]
+        [HttpGet("Instructor/CreateByCohort")]
+        public ActionResult CreateProjectByCohort(string projectName, string dueDate, string cohort, string isCohortProject)
+        {
+            isCohortProject = isCohortProject != null ? isCohortProject.Trim().ToLower() : null;
+            projectName = projectName != null ? projectName.Trim() : null;
+            dueDate = dueDate != null ? dueDate.Trim() : null;
+            cohort = cohort != null ? cohort.Trim() : null;
+
+            ValidationExceptions exceptions = new ValidationExceptions();
+
+            if (string.IsNullOrEmpty(projectName))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Must include project name."));
+            }
+
+            if (string.IsNullOrEmpty(dueDate))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Must include due date."));
+            }
+            else
+            if (!DateTime.TryParse(dueDate, out DateTime _dueDate))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("The date format is not correct."));
+            }
+            else
+            if (DateTime.Compare(_dueDate, DateTime.Today) < 0)
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("The due date has to be in the future."));
+            }
+
+            if(string.IsNullOrEmpty(cohort))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Must enter a cohort number."));
+            }
+            else
+            if(!float.TryParse(cohort, out float _cohort))
+            {
+                exceptions.SubExceptions.Add(new ArgumentException("Must enter a proper format."));
+            }
+
+            if(exceptions.SubExceptions.Count>0)
+            {
+                return UnprocessableEntity(new { errors = exceptions.SubExceptions.Select(x => x.Message) });
+            }
+            else
+            if(bool.TryParse(isCohortProject, out bool _isCohortProject))
+            {
+                new ProjectController().CreateProjectForCohort(projectName, DateTime.Parse(dueDate), float.Parse(cohort));
+                return StatusCode(200, $"Project {projectName} succesfully created. It has deadline of {dueDate} and it is assigned to cohort {cohort}");
+            }
+            else
+            {
+                return StatusCode(400, "Must enter either true or false.");
             }
 
         }
