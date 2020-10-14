@@ -62,17 +62,18 @@ This project was completed using [Kanban](https://en.wikipedia.org/wiki/Kanban) 
 
 - Osa Aimola
   - [GitHub](https://github.com/osaimola)
-  - LinkedIn
 
 ## Acknowledgement
 Timesheet Tracker is part of a Capstone Project issued by TECHCareers for students to create a primary portfolio from this TECHCareers Full-Stack Software Developer Program. This project will help students to develop a professional level quality portfolio piece with the guidance from TECHCareers instructors. We would like to say thank you to [TECHCareers](http://www.techcareers.ca), [University of Alberta](https://www.ualberta.ca/information-services-and-technology/index.html), and Cohort 4.1 Students for teaching and sharing their experiences with us. 
 
 ## License
 
-[GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/#)
+[GNU General Public License v3.0](LICENSE.txt)
 
 ## References
+- [4.1-ReactAPI by TECHCareers](https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI)
 - [ASP.NET Core 3.1 - Simple API for Authentication, Registration and User Management by Jason Watmore](https://jasonwatmore.com/post/2019/10/14/aspnet-core-3-simple-api-for-authentication-registration-and-user-management)
+- [ASP.NET Core 3 and React by Carl Rippon](https://github.com/PacktPublishing/ASP.NET-Core-3-and-React)
 - [Basic writing and formatting syntax by GitHub](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/basic-writing-and-formatting-syntax#lists)
 - [Code Repository Badges by dwyl](https://github.com/dwyl/repo-badges)
 - [Database design basics by Microsoft](https://support.microsoft.com/en-us/office/database-design-basics-eb2159cf-1e30-401a-8084-bd4f9c9ca1f5)
