@@ -83,11 +83,11 @@ namespace Timesheet_Tracker.Controllers
                     FullName = $"{x.Employee.Person.FirstName} {x.Employee.Person.LastName}",
                     DueDate = x.DueDate,
                     DateCreated = x.DateCreated,
-                    DesignHours = x.DesignHours != null ? x.DesignHours : 0,
-                    DoingHours = x.DoingHours != null ? x.DoingHours : 0,
-                    CodeReviewHours = x.CodeReviewHours != null ? x.CodeReviewHours : 0,
-                    TestingHours = x.TestingHours != null ? x.TestingHours : 0,
-                    DeliverablesHours = x.DeliverablesHours != null ? x.DeliverablesHours : 0
+                    DesignHours = x.DesignHours,
+                    DoingHours = x.DoingHours,
+                    CodeReviewHours = x.CodeReviewHours,
+                    TestingHours = x.TestingHours,
+                    DeliverablesHours = x.DeliverablesHours
                 }
                 ).ToList();
             }
@@ -198,11 +198,11 @@ namespace Timesheet_Tracker.Controllers
                         ProjectName = x.ProjectName,
                         DueDate = x.DueDate,
                         DateCreated = x.DateCreated,
-                        DesignHours = x.DesignHours != null ? x.DesignHours : 0,
-                        DoingHours = x.DoingHours != null ? x.DoingHours : 0,
-                        CodeReviewHours = x.CodeReviewHours != null ? x.CodeReviewHours : 0,
-                        TestingHours = x.TestingHours != null ? x.TestingHours : 0,
-                        DeliverablesHours = x.DeliverablesHours != null ? x.DeliverablesHours : 0
+                        DesignHours = x.DesignHours,
+                        DoingHours = x.DoingHours,
+                        CodeReviewHours = x.CodeReviewHours,
+                        TestingHours = x.TestingHours,
+                        DeliverablesHours = x.DeliverablesHours
                     }).ToList();
                 }
                 return studentProjects;
@@ -259,7 +259,7 @@ namespace Timesheet_Tracker.Controllers
         // Student must have asignments to add hours to project
         // Only student can add hours to their project, such as JavaScript
 
-        public Project UpdateHours(int projectID, float? design, float? doing, float? codeReview, float? testing, float? deliverables)
+        public Project UpdateHours(int projectID, float design, float doing, float codeReview, float testing, float deliverables)
         {
             Project project;
             using(TimesheetContext context = new TimesheetContext())
@@ -307,7 +307,7 @@ namespace Timesheet_Tracker.Controllers
             using (TimesheetContext context = new TimesheetContext())
             {
                 target = context.Projects.Where(x => x.ID == projectID).Single();
-                sumHours = target.DesignHours.Value + target.DoingHours.Value + target.CodeReviewHours.Value + target.TestingHours.Value + target.DeliverablesHours.Value;
+                sumHours = target.DesignHours + target.DoingHours + target.CodeReviewHours + target.TestingHours + target.DeliverablesHours;
             }
             return sumHours;
         }
@@ -321,11 +321,11 @@ namespace Timesheet_Tracker.Controllers
             {
                 // Find the project
                 target = context.Projects.Where(x => x.ProjectName == projectName).ToList();
-                averageDesign = target.Average(x => x.DesignHours).Value;
-                averageDoing = target.Average(x => x.DesignHours).Value;
-                averageCodeReview = target.Average(x => x.CodeReviewHours).Value;
-                averageTesting = target.Average(x => x.TestingHours).Value;
-                averageDeliverables = target.Average(x => x.DeliverablesHours).Value;
+                averageDesign = target.Average(x => x.DesignHours);
+                averageDoing = target.Average(x => x.DesignHours);
+                averageCodeReview = target.Average(x => x.CodeReviewHours);
+                averageTesting = target.Average(x => x.TestingHours);
+                averageDeliverables = target.Average(x => x.DeliverablesHours);
                 averageTotal = averageDesign + averageDoing + averageCodeReview + averageTesting + averageDeliverables;
             }
         }
