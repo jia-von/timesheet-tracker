@@ -81,7 +81,7 @@ const createStudentProjectFunc = (dispatch) => {
     return (projectName, dueDate, employeeID, key) => createStudentProject(dispatch, projectName, dueDate, employeeID, key);
 }
 
-// create a project for a cohort
+// create a project for all students in a cohort
 const createCohortProject = async (dispatch, projectName, dueDate, cohort, isCohortProject, key) => {
     dispatch({ type: actionType.CREATE_PROJECT_REQUEST });
 
@@ -110,4 +110,61 @@ const createCohortProjectFunc = (dispatch) => {
     return (projectName, dueDate, cohort, isCohortProject, key) => createCohortProject(dispatch, projectName, dueDate, cohort, isCohortProject, key);
 }
 
-export { getAllProjectsFunc, getUserProjectsByIDFunc, createStudentProjectFunc, createCohortProjectFunc }
+// add hours to a project
+const updateProject = async (dispatch, projectID, design, doing, codeReview, testing, deliverables, key) => {
+    dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS });
+
+    try {
+        let response = await axios({
+            url: "project/student/update",
+            method: "patch",
+            headers: {
+                Authorization: `Bearer ${key}`
+            },
+            params: {
+                projectID,
+                design,
+                doing,
+                codeReview,
+                testing,
+                deliverables
+            }
+        });
+        let data = await response.data;
+        dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS, value: data });
+    } catch (error) {
+        dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data });
+    }
+}
+
+const updateProjectFunc = (dispatch) => {
+    return (projectID, design, doing, codeReview, testing, deliverables, key) => updateProject(dispatch, projectID, design, doing, codeReview, testing, deliverables, key);
+}
+
+// delete a project
+const deleteProject = async (dispatch, projectID, key) => {
+    dispatch({ type: actionType.MODIFY_PROJECT_REQUEST });
+
+    try {
+        let response = await axios({
+            url: "project/student/archive",
+            method: "patch",
+            headers: {
+                Authorization: `Bearer ${key}`
+            },
+            params: {
+                projectID
+            }
+        });
+        let data = await response.data;
+        dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS, value: data });
+    } catch (error) {
+        dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data });
+    }
+}
+
+const deleteProjectFunc = (dispatch) => {
+    return (projectID, key) => deleteProject(dispatch, projectID, key);
+}
+
+export { getAllProjectsFunc, getUserProjectsByIDFunc, createStudentProjectFunc, createCohortProjectFunc, updateProjectFunc, deleteProjectFunc }

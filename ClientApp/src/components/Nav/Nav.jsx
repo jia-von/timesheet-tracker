@@ -25,6 +25,7 @@ class Nav extends React.Component {
         return (<nav className="navBar">
             <div className="primary">
                 <Link className="home" to="/home" sr-only="Home"><i className="fas fa-home"></i></Link>
+                { /* TODO display the add new project button to only instructors */}
                 <Link className="navButton" to="/create-project" sr-only="Add a new project"><i className="fas fa-plus"></i></Link>
                 <button className="menu" onClick={(e) => { this.toggleLinks(); }} sr-only="Expand Nav Bar"><i className="fas fa-bars"></i></button>
             </div>

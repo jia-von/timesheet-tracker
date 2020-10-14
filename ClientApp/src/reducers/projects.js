@@ -13,6 +13,12 @@ const defaultState = {
         isCompleted: false,
         error: null,
         data: null
+    },
+    modifyProject: {
+        isLoading: false,
+        isCompleted: false,
+        error: null,
+        data: null
     }
 }
 
@@ -74,6 +80,34 @@ const projectsReducer = (state = defaultState, action) => {
                 data: null
             };
             return tempState;
+
+        // edit and delete case
+        case actionType.MODIFY_PROJECT_REQUEST:
+            tempState.modifyProject = {
+                isLoading: true,
+                isCompleted: false,
+                error: null,
+                data: null
+            };
+            return tempState;
+
+        case actionType.MODIFY_PROJECT_SUCCESS:
+            tempState.modifyProject = {
+                isLoading: false,
+                isCompleted: true,
+                error: null,
+                data: action.value
+            };
+            return tempState;
+
+        case actionType.MODIFY_PROJECT_FAIL:
+            tempState.modifyProject = {
+                isLoading: false,
+                isCompleted: true,
+                error: action.value,
+                data: null
+            };
+            return tempState
 
         // default case
         default:
