@@ -2,6 +2,39 @@
 import axios from "axios";
 
 // create a function to handle all the processes of a request
+
+// finds a single project with matching ID
+const getProjectByID = async (dispatch, id, key) => {
+    dispatch({ type: actionType.GET_PROJECT_BY_ID_REQUEST });
+
+    try {
+        let response = await axios({
+            url: "project/id",
+            method: "get",
+            headers: {
+                Authorization: `Bearer ${key}`
+            },
+            params: {
+                id
+            }
+        });
+        let data = await response.data;
+        dispatch({ type: actionType.GET_PROJECT_BY_ID_SUCCESS, value: data });
+    } catch (error) {
+        let errorMessage = "";
+
+        if (error.response.status === 403) { errorMessage = "Unauthorized Request."; }
+        else if (typeof (error.response.data) === "object") { errorMessage = error.response.data.errors; }
+        else { errorMessage = error.response.data; }
+
+        dispatch({ type: actionType.GET_PROJECT_BY_ID_FAIL, value: errorMessage });
+    }
+}
+
+const getProjectByIDFunc = (dispatch) => {
+    return (id, key) => getProjectByID(dispatch, id, key);
+}
+
 // returns all projects belonging to a user ID
 const getUserProjectsByID = async (dispatch, id, key) => {
     dispatch({ type: actionType.GET_PROJECTS_REQUEST });
@@ -20,11 +53,13 @@ const getUserProjectsByID = async (dispatch, id, key) => {
         let data = await response.data;
         dispatch({ type: actionType.GET_PROJECTS_SUCCESS, value: data });
     } catch (error) {
-        if (typeof (error.response.data) === "object") {
-            dispatch({ type: actionType.GET_PROJECTS_FAIL, value: error.response.data.errors });
-        } else {
-            dispatch({ type: actionType.GET_PROJECTS_FAIL, value: error.response.data });
-        }
+        let errorMessage = "";
+
+        if (error.response.status === 403) { errorMessage = "Unauthorized Request."; }
+        else if (typeof (error.response.data) === "object") { errorMessage = error.response.data.errors; }
+        else { errorMessage = error.response.data; }
+
+        dispatch({ type: actionType.GET_PROJECTS_FAIL, value: errorMessage });
     }
 }
 
@@ -135,7 +170,7 @@ const createCohortProjectFunc = (dispatch) => {
 
 // add hours to a project
 const updateProject = async (dispatch, projectID, design, doing, codeReview, testing, deliverables, key) => {
-    dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS });
+    dispatch({ type: actionType.MODIFY_PROJECT_REQUEST });
 
     try {
         let response = await axios({
@@ -154,7 +189,7 @@ const updateProject = async (dispatch, projectID, design, doing, codeReview, tes
             }
         });
         let data = await response.data;
-        dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS, value: data });
+        dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS, value: data, deleted: false });
     } catch (error) {
         if (typeof (error.response.data) === "object") {
             dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data.errors });
@@ -184,7 +219,7 @@ const deleteProject = async (dispatch, projectID, key) => {
             }
         });
         let data = await response.data;
-        dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS, value: data });
+        dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS, value: data, deleted: true });
     } catch (error) {
         if (typeof (error.response.data) === "object") {
             dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data.errors });
@@ -198,4 +233,4 @@ const deleteProjectFunc = (dispatch) => {
     return (projectID, key) => deleteProject(dispatch, projectID, key);
 }
 
-export { getAllProjectsFunc, getUserProjectsByIDFunc, createStudentProjectFunc, createCohortProjectFunc, updateProjectFunc, deleteProjectFunc }
+export { getProjectByIDFunc, getAllProjectsFunc, getUserProjectsByIDFunc, createStudentProjectFunc, createCohortProjectFunc, updateProjectFunc, deleteProjectFunc }

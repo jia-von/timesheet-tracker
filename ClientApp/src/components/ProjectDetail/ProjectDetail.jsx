@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Nav from "../Nav/Nav"
 import "./ProjectDetail.css";
-import { updateProjectFunc, deleteProjectFunc } from "../../actions/projects";
+import { updateProjectFunc, deleteProjectFunc, getProjectByIDFunc } from "../../actions/projects";
 
 class ProjectDetail extends React.Component {
 
@@ -28,12 +28,19 @@ class ProjectDetail extends React.Component {
     componentDidMount() {
         // do something on initial page load
         // use passed ID to pull the project info
+        console.log("mounted");
+        this.props.getProjectByID(this.props.location.state.projectDetails.id, this.props.authentication.signIn.data.token);
     }
 
     componentDidUpdate(previousProps) {
         // if project hours have been added, use ID to pull project info
-
+        if (previousProps.projects.modifyProject.isLoading === true && this.props.projects.modifyProject.isCompleted === true && this.props.projects.modifyProject.error === null && this.props.projects.modifyProject.deleted === false) {
+           this.props.getProjectByID(this.props.location.state.projectDetails.id, this.props.authentication.signIn.data.token);
+        }
         // if deleted, set redirect to home
+        if (previousProps.projects.modifyProject.isLoading === true && this.props.projects.modifyProject.isCompleted === true && this.props.projects.modifyProject.error === null && this.props.projects.modifyProject.deleted === true) {
+            //this.setState({ redirect: "home" });
+        }
     }
 
     // update state when input fields are changes
@@ -114,7 +121,7 @@ class ProjectDetail extends React.Component {
     }
 
     renderProjectDetails() {
-        let project = this.props.location.state ? this.props.location.state.projectDetails : "";
+        let project = this.props.projects.projectByID.data !== null ? this.props.projects.projectByID.data  : "";
 
         // specify the default status message
         let statusMessage = "";
@@ -126,14 +133,8 @@ class ProjectDetail extends React.Component {
         }
         // if completed successfully
         else if (this.props.projects.modifyProject.isCompleted && this.props.projects.modifyProject.error == null && this.props.projects.modifyProject.data != null) {
-            // if we receive a string of errors back
-            if (typeof(this.props.projects.modifyProject.data) === "string") {
+            
                 statusMessage = this.props.projects.modifyProject.data;
-            }
-            // if we receive an array of errors
-            if (typeof(this.props.projects.modifyProject.data) === "object") {
-                statusMessage = this.props.projects.modifyProject.data;
-            }
         }
 
         return (
@@ -211,7 +212,8 @@ class ProjectDetail extends React.Component {
 function mapDispatchToProps(dispatch) {
     return {
         updateProject: updateProjectFunc(dispatch),
-        deleteProject: deleteProjectFunc(dispatch)
+        deleteProject: deleteProjectFunc(dispatch),
+        getProjectByID: getProjectByIDFunc(dispatch)
     }
 }
 

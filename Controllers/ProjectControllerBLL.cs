@@ -103,7 +103,7 @@ namespace Timesheet_Tracker.Controllers
             List<ProjectDTO> target;
             using(TimesheetContext context = new TimesheetContext())
             {
-               target = context.Projects.Select(x => new ProjectDTO()
+               target = context.Projects.Where(x => x.Archive == false).Select(x => new ProjectDTO()
                 {
                     ID = x.ID,
                     ProjectName = x.ProjectName,
