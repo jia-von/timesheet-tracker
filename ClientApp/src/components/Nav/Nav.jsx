@@ -21,12 +21,13 @@ class Nav extends React.Component {
 
     render() {
         let linksClass = this.state.linksAreVisible ? "secondary active" : "secondary";
+        let createProject = this.props.isInstructor ? <Link className="navButton" to="/create-project" sr-only="Add a new project"><i className="fas fa-plus"></i></Link> : "";
 
         return (<nav className="navBar">
             <div className="primary">
                 <Link className="home" to="/home" sr-only="Home"><i className="fas fa-home"></i></Link>
                 { /* TODO display the add new project button to only instructors */}
-                <Link className="navButton" to="/create-project" sr-only="Add a new project"><i className="fas fa-plus"></i></Link>
+                {createProject}
                 <button className="menu" onClick={(e) => { this.toggleLinks(); }} sr-only="Expand Nav Bar"><i className="fas fa-bars"></i></button>
             </div>
             <div className={linksClass}>
@@ -50,7 +51,7 @@ function mapDispatchToProps(dispatch) {
 // add the redux store to props
 function mapStateToProps(state) {
     return {
-
+        isInstructor: state.userAccountsReducer.signIn.data.instructor
     }
 }
 
