@@ -69,6 +69,8 @@ Timesheet Tracker is part of a Capstone Project issued by TECHCareers for studen
 
 ## License
 
+[GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/#)
+
 ## References
 - [ASP.NET Core 3.1 - Simple API for Authentication, Registration and User Management by Jason Watmore](https://jasonwatmore.com/post/2019/10/14/aspnet-core-3-simple-api-for-authentication-registration-and-user-management)
 - [Basic writing and formatting syntax by GitHub](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/basic-writing-and-formatting-syntax#lists)
@@ -77,6 +79,7 @@ Timesheet Tracker is part of a Capstone Project issued by TECHCareers for studen
 - [Diagram Software by draw.io](https://drawio-app.com)
 - [How to write a kickass README by James Scott](https://dev.to/scottydocs/how-to-write-a-kickass-readme-5af9)
 - [How I Write SQL, Part 1: Naming Conventions by Launch by Lunch](https://launchbylunch.com/posts/2014/Feb/16/sql-naming-conventions/)
+- [How to Make Asynchronous Calls in Redux Without Middlewares by Velotio Technologies](https://medium.com/velotio-perspectives/how-to-make-asynchronous-calls-in-redux-without-middlewares-cbf7181020b2)
 - [HTTP request methods by Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
 - [README.md IDE by Dillinger](https://dillinger.io/)
 - [Tutorial: Create a complex data model - ASP.NET MVC with EF Core](https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/complex-data-model?view=aspnetcore-3.1)
