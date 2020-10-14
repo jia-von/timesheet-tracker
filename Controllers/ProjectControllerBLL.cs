@@ -38,9 +38,9 @@ namespace Timesheet_Tracker.Controllers
                     exception.SubExceptions.Add(new ArgumentException($"The student with ID of {employeeID} cannot be found in the database."));
                 }
                 else
-                if (context.Projects.Where(x => x.EmployeeID == employeeID).Single().ProjectName == projectName)
+                if (context.Projects.Where(x => x.EmployeeID == employeeID).Any(x => x.ProjectName == projectName))
                 {
-                    // Find the employee's project name assigned
+                    // If the employee alreaddy has a project that matches the project being assigned, throw error
                     exception.SubExceptions.Add(new ArgumentException($"This project, {projectName} has been assigned to this student with ID: {employeeID}."));
                 }
                 
@@ -209,8 +209,8 @@ namespace Timesheet_Tracker.Controllers
 
             using(TimesheetContext context = new TimesheetContext())
             {   
-                    // Filter the project for matching employee ID only
-                    projectList = context.Projects.Where(x => x.EmployeeID == employeeID).ToList();
+                    // Filter the project for matching employee ID & unarchived projects only
+                    projectList = context.Projects.Where(x => x.EmployeeID == employeeID && x.Archive == false).ToList();
 
                     // calculate total hours for each project
                     studentProjects = projectList.Select(x => new ProjectDTO()

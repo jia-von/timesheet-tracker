@@ -20,7 +20,11 @@ const getUserProjectsByID = async (dispatch, id, key) => {
         let data = await response.data;
         dispatch({ type: actionType.GET_PROJECTS_SUCCESS, value: data });
     } catch (error) {
-        dispatch({ type: actionType.GET_PROJECTS_FAIL, value: error.response.data });
+        if (typeof (error.response.data) === "object") {
+            dispatch({ type: actionType.GET_PROJECTS_FAIL, value: error.response.data.errors });
+        } else {
+            dispatch({ type: actionType.GET_PROJECTS_FAIL, value: error.response.data });
+        }
     }
 }
 
@@ -45,7 +49,13 @@ const getAllProjects = async (dispatch, key) => {
         let data = await response.data;
         dispatch({ type: actionType.GET_PROJECTS_SUCCESS, value: data });
     } catch (error) {
-        dispatch({ type: actionType.GET_PROJECTS_FAIL, value: error.response.data });
+        let errorMessage = "";
+
+        if (error.response.status === 403) { errorMessage = "Unauthorized Request."; }
+        else if (typeof (error.response.data) === "object") { errorMessage = error.response.data.errors; }
+        else { errorMessage = error.response.data; }
+
+        dispatch({ type: actionType.GET_PROJECTS_FAIL, value: errorMessage });
     }
 }
 
@@ -73,7 +83,14 @@ const createStudentProject = async (dispatch, projectName, dueDate, employeeID, 
         let data = await response.data;
         dispatch({ type: actionType.CREATE_PROJECT_SUCCESS, value: data });
     } catch (error) {
-        dispatch({ type: actionType.CREATE_PROJECT_FAIL, value: error.response.data });
+        let errorMessage = "";
+
+        if (error.response.status === 403) { errorMessage = "Unauthorized Request."; }
+        else if (typeof (error.response.data) === "object") { errorMessage = error.response.data.errors; }
+        else { errorMessage = error.response.data; }
+
+        dispatch({ type: actionType.CREATE_PROJECT_FAIL, value: errorMessage });
+
     }
 }
 
@@ -102,7 +119,13 @@ const createCohortProject = async (dispatch, projectName, dueDate, cohort, isCoh
         let data = await response.data;
         dispatch({ type: actionType.CREATE_PROJECT_SUCCESS, value: data });
     } catch (error) {
-        dispatch({ type: actionType.CREATE_PROJECT_FAIL, value: error.response.data });
+        let errorMessage = "";
+
+        if (error.response.status === 403) { errorMessage = "Unauthorized Request."; }
+        else if (typeof (error.response.data) === "object") { errorMessage = error.response.data.errors; }
+        else { errorMessage = error.response.data; }
+
+        dispatch({ type: actionType.CREATE_PROJECT_FAIL, value: errorMessage });
     }
 }
 
@@ -133,7 +156,11 @@ const updateProject = async (dispatch, projectID, design, doing, codeReview, tes
         let data = await response.data;
         dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS, value: data });
     } catch (error) {
-        dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data });
+        if (typeof (error.response.data) === "object") {
+            dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data.errors });
+        } else {
+            dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data });
+        }
     }
 }
 
@@ -159,7 +186,11 @@ const deleteProject = async (dispatch, projectID, key) => {
         let data = await response.data;
         dispatch({ type: actionType.MODIFY_PROJECT_SUCCESS, value: data });
     } catch (error) {
-        dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data });
+        if (typeof (error.response.data) === "object") {
+            dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data.errors });
+        } else {
+            dispatch({ type: actionType.MODIFY_PROJECT_FAIL, value: error.response.data });
+        }
     }
 }
 

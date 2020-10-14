@@ -126,7 +126,14 @@ class ProjectDetail extends React.Component {
         }
         // if completed successfully
         else if (this.props.projects.modifyProject.isCompleted && this.props.projects.modifyProject.error == null && this.props.projects.modifyProject.data != null) {
-            statusMessage = this.props.projects.modifyProject.data;
+            // if we receive a string of errors back
+            if (typeof(this.props.projects.modifyProject.data) === "string") {
+                statusMessage = this.props.projects.modifyProject.data;
+            }
+            // if we receive an array of errors
+            if (typeof(this.props.projects.modifyProject.data) === "object") {
+                statusMessage = this.props.projects.modifyProject.data;
+            }
         }
 
         return (

@@ -88,9 +88,9 @@ namespace Timesheet_Tracker.Controllers
                 {
                     response = new ProjectController().GetProjectForStudent(int.Parse(projectID), int.Parse(employeeID));
                 }
-                catch (ValidationExceptions)
+                catch (ValidationExceptions e)
                 {
-                    response = UnprocessableEntity(new { errors = exceptions.SubExceptions.Select(x => x.Message) });
+                    response = UnprocessableEntity(new { errors = e.SubExceptions.Select(x => x.Message) });
                 }
             }
 
@@ -310,13 +310,12 @@ namespace Timesheet_Tracker.Controllers
         // Instructor to reacte project
         [Authorize(Roles = Roles.Instructor)]
         [HttpPost("Instructor/Create")]
-        public ActionResult CreateProject(string projectName, string dueDate, string time, string employeeID)
+        public ActionResult CreateProject(string projectName, string dueDate, string employeeID)
         {
             ValidationExceptions exceptions = new ValidationExceptions();
             projectName = projectName != null ? projectName.Trim() : null;
             dueDate = dueDate != null ? dueDate.Trim() : null;
             employeeID = employeeID != null ? employeeID.Trim() : null;
-            time = time != null ? time.Trim() : null;
             
             if(string.IsNullOrEmpty(projectName))
             {
@@ -338,15 +337,6 @@ namespace Timesheet_Tracker.Controllers
                 exceptions.SubExceptions.Add(new ArgumentException("The due date has to be in the future."));
             }
 
-            if(string.IsNullOrEmpty(time))
-            {
-                exceptions.SubExceptions.Add(new ArgumentException("Must have a time for the project deadline."));
-            }
-            else
-            if(!DateTime.TryParse(time, out DateTime _time))
-            {
-                exceptions.SubExceptions.Add(new ArgumentException("Time must be a proper time format."));
-            }
 
             if(string.IsNullOrEmpty(employeeID))
             {
@@ -369,10 +359,10 @@ namespace Timesheet_Tracker.Controllers
                     new ProjectController().CreateProject(projectName, DateTime.Parse(dueDate), int.Parse(employeeID));
                     return StatusCode(200, $"Project {projectName} succesfully created. It has deadline of {dueDate} and it is assigned to student with ID of {employeeID}");
                 }
-                catch (ValidationExceptions)
+                catch (ValidationExceptions e)
                 {
 
-                    return UnprocessableEntity(new { errors = exceptions.SubExceptions.Select(x => x.Message) });
+                    return UnprocessableEntity(new { errors = e.SubExceptions.Select(x => x.Message) });
                 }
             }
 
