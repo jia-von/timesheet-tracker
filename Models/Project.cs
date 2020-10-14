@@ -38,26 +38,27 @@ namespace Timesheet_Tracker.Models
         [Column("date_archive", TypeName = "date")]
         public DateTime? DateArchive { get; set; }
 
-        // Design, doing, code review, testing, deliverable hours are all nullable because it can be edited by the person
-        // https://dev.mysql.com/doc/refman/5.7/en/precision-math-decimal-characteristics.html decimal datatype for MySQL
-        // https://dev.mysql.com/doc/refman/5.7/en/floating-point-types.html floating point value with MySQL
-        // MySQL Float(6,2) will be like 9999.99, cause hours can be in the thousands like 2000 man hours
-        // Float properties are nullable as we do not know how many hours to start with.
+        [Required]
         [Column("design_hours", TypeName = "float(6,2)")]
-        public float? DesignHours { get; set; }
+        public float DesignHours { get; set; }
 
+        [Required]
         [Column("doing_hours", TypeName = "float(6,2)")]
-        public float? DoingHours { get; set; }
+        public float DoingHours { get; set; }
 
+        [Required]
         [Column("code_review_hours", TypeName = "float(6,2)")]
-        public float? CodeReviewHours { get; set; }
+        public float CodeReviewHours { get; set; }
 
+        [Required]
         [Column("testing_hours", TypeName = "float(6,2)")]
-        public float? TestingHours { get; set; }
+        public float TestingHours { get; set; }
 
+        [Required]
         [Column("deliverables_hours", TypeName = "float(6,2)")]
-        public float? DeliverablesHours { get; set; }
+        public float DeliverablesHours { get; set; }
 
+        [Required]
         [Column("archive", TypeName = "tinyint(1)")]
         public bool Archive { get; set; }
 
