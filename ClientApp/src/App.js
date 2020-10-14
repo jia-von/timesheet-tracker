@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
-import { FetchData } from "./components/FetchData";
-import Counter from "./components/Counter";
 import Index from "./components/Index/Index";
-
+import Home  from "./components/Home/Home";
 import "./custom.css";
+import ProjectDetail from "./components/ProjectDetail/ProjectDetail";
+import CreateProject from "./components/CreateProject/CreateProject";
+
 
 export default class App extends Component {
   static displayName = App.name;
@@ -12,9 +13,10 @@ export default class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Route exact path="/" component={Index} />
-        <Route path="/counter" component={Counter} />
-        <Route path="/fetch-data" component={FetchData} />
+            <Route exact path="/" component={Index} />
+            <Route path="/home" component={Home} />
+            <Route path="/project-detail" component={ProjectDetail} />
+            <Route path="/create-project" component={CreateProject} />
       </React.Fragment>
     );
   }
