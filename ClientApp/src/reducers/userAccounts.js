@@ -13,6 +13,18 @@ const defaultState = {
         isCompleted: false,
         error: null,
         data: null
+    },
+    updateAccount: {
+        isLoading: false,
+        isCompleted: false,
+        error: null,
+        data: null
+    },
+    deleteAccount: {
+        isLoading: false,
+        isCompleted: false,
+        error: null,
+        data: null
     }
 };
 
@@ -85,6 +97,63 @@ const userAccountsReducer = (state = defaultState, action) => {
 
         case actionType.SIGN_UP_FAIL:
             tempState.signUp = {
+                isLoading: false,
+                isCompleted: true,
+                error: action.value,
+                data: null
+            };
+            return tempState;
+
+        // UPDATE ACCOUNT CASES 
+        case actionType.UPDATE_ACCOUNT_REQUEST:
+            tempState.updateAccount = {
+                isLoading: true,
+                isCompleted: false,
+                error: null,
+                data: null
+            };
+            return tempState;
+
+        case actionType.UPDATE_ACCOUNT_SUCCESS:
+            tempState.updateAccount = {
+                isLoading: false,
+                isCompleted: true,
+                error: null,
+                data: action.value
+            };
+            return tempState;
+
+        case actionType.UPDATE_ACCOUNT_FAIL:
+            tempState.updateAccount = {
+                isLoading: false,
+                isCompleted: true,
+                error: action.value,
+                data: null
+            };
+            return tempState;
+
+
+        // DELETE ACCOUNT CASES 
+        case actionType.DELETE_ACCOUNT_REQUEST:
+            tempState.deleteAccount = {
+                isLoading: true,
+                isCompleted: false,
+                error: null,
+                data: null
+            };
+            return tempState;
+
+        case actionType.DELETE_ACCOUNT_SUCCESS:
+            tempState.deleteAccount = {
+                isLoading: false,
+                isCompleted: true,
+                error: null,
+                data: action.value
+            };
+            return tempState;
+
+        case actionType.DELETE_ACCOUNT_FAIL:
+            tempState.deleteAccount = {
                 isLoading: false,
                 isCompleted: true,
                 error: action.value,

@@ -296,7 +296,7 @@ namespace Timesheet_Tracker.Controllers
                     targetProject.Archive = true;
                 }
                 context.SaveChanges();
-                result = "User account successfully archived.";
+                result = "Your account has been archived. We may store data for records (this will not be publicly available)";
             }
             return result;
         }

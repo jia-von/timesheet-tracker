@@ -2,7 +2,7 @@
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./Account.css";
-import { signOutFunc } from "../../actions/userAccounts";
+import { updateAccountFunc, deleteAccountFunc } from "../../actions/userAccounts";
 import Nav from "../Nav/Nav";
 
 class Account extends React.Component {
@@ -42,17 +42,28 @@ class Account extends React.Component {
         }
     }
 
+    // handle deleting a user account 
+    handleDelete(event) {
+        this.props.deleteAccount(this.props.authentication.signIn.data.id, this.props.authentication.signIn.data.token);
+    }
+
+    // handle updating a user account
     handleSubmit(event) {
         event.preventDefault();
         let isInvalid = this.validateForm();
+        let isUpdatingPassword = "false";
+        // if the change password field is not disable, we want to update password
+        if (!this.state.currentPasswordDisabled) { isUpdatingPassword = "true"; }
         // if form is valid, make the api call
         if (!isInvalid) {
             // if we want to update only names
-            if (!this.state.currentPasswordDisabled) {
+            if (this.state.currentPasswordDisabled) {
                 // call api with new names and dummy password
+                this.props.updateAccount(this.props.authentication.signIn.data.id, this.state.firstName, this.state.lastName, "*", "********", isUpdatingPassword, this.props.authentication.signIn.data.token);
             }
             else {
                 // call api with all information included
+                this.props.updateAccount(this.props.authentication.signIn.data.id, this.state.firstName, this.state.lastName, this.state.currentPassword, this.state.password, isUpdatingPassword, this.props.authentication.signIn.data.token);
             }
         }
     }
@@ -60,7 +71,7 @@ class Account extends React.Component {
     // update state when input fields are changed
     handleInputchange(event) {
         this.setState({
-            [event.target.name]:  event.target.value,
+            [event.target.name]: event.target.value,
             [event.target.name + "Error"]: ""
         });
     }
@@ -167,6 +178,32 @@ class Account extends React.Component {
     }
 
     renderAccount() {
+        // specify the default status message
+        let statusMessage = "";
+        // if request is loading
+        if (this.props.authentication.updateAccount.isLoading) { statusMessage = "Loading"; }
+        // if completed and errors exist
+        else if (this.props.authentication.updateAccount.isCompleted && this.props.authentication.updateAccount.error != null) {
+            statusMessage = this.props.authentication.updateAccount.error;
+        }
+        // if completed successfully
+        else if (this.props.authentication.updateAccount.isCompleted && this.props.authentication.updateAccount.error == null && this.props.authentication.updateAccount.data != null) {
+            statusMessage = this.props.authentication.updateAccount.data;
+        }
+
+        // specify the default status message
+        let deleteStatusMessage = "";
+        // if request is loading
+        if (this.props.authentication.deleteAccount.isLoading) { deleteStatusMessage = "Loading"; }
+        // if completed and errors exist
+        else if (this.props.authentication.deleteAccount.isCompleted && this.props.authentication.deleteAccount.error != null) {
+            deleteStatusMessage = this.props.authentication.deleteAccount.error;
+        }
+        // if completed successfully
+        else if (this.props.authentication.deleteAccount.isCompleted && this.props.authentication.deleteAccount.error == null && this.props.authentication.deleteAccount.data != null) {
+            deleteStatusMessage = this.props.authentication.deleteAccount.data;
+        }
+
         return (
             <div className="account">
                 <Nav />
@@ -217,9 +254,11 @@ class Account extends React.Component {
                             </div>
                         </div>
                         <button type="submit">Save Changes</button>
+                        <div className="statusMessage">{statusMessage}</div>
                     </form>
 
-                    <button>Delete Account</button>
+                    <button onClick={(e) => this.handleDelete()}>Delete Account</button>
+                    <div className="statusMessage">{deleteStatusMessage}</div>
                 </div>
             </div>);
     }
@@ -250,7 +289,8 @@ class Account extends React.Component {
 // add the redux async actions to props
 function mapDispatchToProps(dispatch) {
     return {
-        signOut: signOutFunc(dispatch)
+        updateAccount: updateAccountFunc(dispatch),
+        deleteAccount: deleteAccountFunc(dispatch)
     }
 }
 

@@ -29,12 +29,6 @@ const signInFunc = dispatch => {
     return (email, password) => signIn(dispatch, email, password);
 }
 
-// create the action which handles sign out
-const signOut = async (dispatch) => {
-    // dispatch the request so we know we are beginning a new request
-    dispatch({ type: actionType.SIGN_OUT });
-}
-
 // create a function "factory" which will pass the handler action when called
 const signOutFunc = dispatch => {
     return () => dispatch({ type: actionType.SIGN_OUT });
@@ -49,6 +43,7 @@ const signUp = async (dispatch, firstName, lastName, email, password, isInstruct
     // try the request
     try {
         let response;
+        // make requests for instructors
         if (isInstructorString === "instructor") {
             response = await axios({
                 url: "person/create",
@@ -61,8 +56,10 @@ const signUp = async (dispatch, firstName, lastName, email, password, isInstruct
                     isInstructorString,
                     cohort: 0
                 }
-            }); // TODO use sign up data here for instructor
-        } else {
+            });
+        }
+        // make requests for students
+        else {
             response = await axios({
                 url: "/person/create",
                 method: "post",
@@ -74,7 +71,7 @@ const signUp = async (dispatch, firstName, lastName, email, password, isInstruct
                     isInstructorString,
                     cohort
                 }
-            }); // TODO use sign up data here for student
+            });
         }
         const data = await response.data;
         dispatch({ type: actionType.SIGN_UP_SUCCESS, value: data });
@@ -88,4 +85,63 @@ const signUpFunc = dispatch => {
     return (firstName, lastName, email, password, isInstructor, cohort) => signUp(dispatch, firstName, lastName, email, password, isInstructor, cohort )
 }
 
-export { signInFunc, signUpFunc, signOutFunc }
+// create the function to handle updating accounts
+const updateAccount = async (dispatch, personID, firstName, lastName, currentPassword, newPassword, isUpdatingPassword, key) => {
+    dispatch({ type: actionType.UPDATE_ACCOUNT_REQUEST });
+
+    try {
+        let response = await axios({
+            url: "person/update",
+            method: "patch",
+            headers: {
+                Authorization: `Bearer ${key}`
+            },
+            params: {
+                personID,
+                firstName,
+                lastName,
+                currentPassword,
+                newPassword,
+                isUpdatingPassword
+            }
+        });
+        let data = await response.data;
+        dispatch({ type: actionType.UPDATE_ACCOUNT_SUCCESS, value: data });
+    } catch (error) {
+        dispatch({ type: actionType.UPDATE_ACCOUNT_FAIL, value: error.response.data })
+    }
+}
+
+const updateAccountFunc = (dispatch) => {
+    return (personID, firstName, lastName, currentPassword, newPassword, isUpdatingPassword, key) => 
+        updateAccount(dispatch, personID, firstName, lastName, currentPassword, newPassword, isUpdatingPassword, key);
+}
+
+// create the function to handle deleting accounts
+const deleteAccount = async (dispatch, personID, key) => {
+    dispatch({ type: actionType.DELETE_ACCOUNT_REQUEST });
+
+    try {
+        let response = await axios({
+            url: "person/delete",
+            method: "delete",
+            headers: {
+                Authorization: `Bearer ${key}`
+            },
+            params: {
+                personID
+            }
+        });
+        let data = await response.data;
+        dispatch({ type: actionType.DELETE_ACCOUNT_SUCCESS, value: data });
+    } catch (error) {
+        dispatch({ type: actionType.DELETE_ACCOUNT_FAIL, value: error.response.data })
+    }
+}
+
+const deleteAccountFunc = (dispatch) => {
+    return (personID, key) =>
+        deleteAccount(dispatch, personID, key);
+}
+
+export { signInFunc, signUpFunc, signOutFunc, updateAccountFunc, deleteAccountFunc }
