@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import "./Nav.css";
 import { signOutFunc } from "../../actions/userAccounts";
 
@@ -31,9 +31,7 @@ class Nav extends React.Component {
                 <button className="menu" onClick={(e) => { this.toggleLinks(); }} sr-only="Expand Nav Bar"><i className="fas fa-bars"></i></button>
             </div>
             <div className={linksClass}>
-                <a className="" href="#" >Account</a>
-                <a className="" href="#" >Account</a>
-                <a className="" href="#" >Account</a>
+                <Link className="" to="/account" >Account</Link>
                 <button className="navLink" onClick={() => this.props.signOut()} >Sign Out</button>
             </div>
         </nav>);

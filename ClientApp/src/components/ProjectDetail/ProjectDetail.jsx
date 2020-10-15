@@ -43,7 +43,7 @@ class ProjectDetail extends React.Component {
         }
     }
 
-    // update state when input fields are changes
+    // update state when input fields are changed
     handleInputchange(event) {
         this.setState({
             [event.target.name]: event.target.value === "" ? 0 : event.target.value,
@@ -195,7 +195,7 @@ class ProjectDetail extends React.Component {
                 }}
                 />);
             }
-            // if redirect is false, display the home page
+            // if redirect is false, display the project details page
             else {
                 return this.renderProjectDetails();
             }
