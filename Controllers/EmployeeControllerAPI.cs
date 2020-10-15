@@ -227,24 +227,5 @@ namespace Timesheet_Tracker.Controllers
             return response;
         }
 
-        [HttpPatch("Archive")]
-        public ActionResult ArchiveEmployee(string id)
-        {
-            ActionResult response;
-            int employeeID = int.Parse(id);
-
-            try
-            {
-                new EmployeeController().Archive(employeeID);
-                response = Ok(new { message = $"Successfully archive an employee with ID, {id}." });
-            }
-            catch (Exception e)
-            {
-                response = StatusCode(422, e.Message);
-            }
-
-            return response;
-        }
-
     }
 }

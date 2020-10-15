@@ -15,7 +15,7 @@ namespace Timesheet_Tracker.Controllers
 {
     public class ProjectController : Controller
     {
-        // Create
+        // Create project for individual person
         // Create project with parameters, project name, due date, date creation, employee_id
         public int CreateProject(string projectName, DateTime dueDate, int employeeID)
         {
@@ -38,9 +38,9 @@ namespace Timesheet_Tracker.Controllers
                     exception.SubExceptions.Add(new ArgumentException($"The student with ID of {employeeID} cannot be found in the database."));
                 }
                 else
-                if (context.Projects.Where(x => x.EmployeeID == employeeID).Single().ProjectName == projectName)
+                if (context.Projects.Where(x => x.EmployeeID == employeeID).Any(x => x.ProjectName == projectName))
                 {
-                    // Find the employee's project name assigned
+                    // If the employee alreaddy has a project that matches the project being assigned, throw error
                     exception.SubExceptions.Add(new ArgumentException($"This project, {projectName} has been assigned to this student with ID: {employeeID}."));
                 }
                 
@@ -69,6 +69,33 @@ namespace Timesheet_Tracker.Controllers
             return target;
         }
 
+        // Create project cohort
+        public void CreateProjectForCohort(string projectName, DateTime dueDate, float cohort)
+        {
+            List<Employee> cohortList;
+
+            using(TimesheetContext context = new TimesheetContext())
+            {
+                // Filter Cohort First
+                cohortList = context.Employees.Where(x => x.Cohort == cohort).ToList();
+
+                // Assigned filtered cohort with assignments using foreach loop.
+                foreach(Employee student in cohortList)
+                {
+                    Project newProject = new Project()
+                    {
+                        ProjectName = projectName,
+                        DueDate = dueDate,
+                        EmployeeID = student.ID
+                    };
+
+                    context.Add(newProject);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+
         // Read
         // Get all list of the projects and students for instructors, it can further filtered by: project name, studentID, duedate, ordered by total hours
         public List<ProjectDTO> GetAllProjects()
@@ -76,7 +103,7 @@ namespace Timesheet_Tracker.Controllers
             List<ProjectDTO> target;
             using(TimesheetContext context = new TimesheetContext())
             {
-               target = context.Projects.Select(x => new ProjectDTO()
+               target = context.Projects.Where(x => x.Archive == false).Select(x => new ProjectDTO()
                 {
                     ID = x.ID,
                     ProjectName = x.ProjectName,
@@ -182,14 +209,8 @@ namespace Timesheet_Tracker.Controllers
 
             using(TimesheetContext context = new TimesheetContext())
             {   
-                if(!context.Projects.Any(x => x.EmployeeID == employeeID))
-                {
-                    throw new ArgumentException($"There is no employee of {employeeID} recorded in database.");
-                }
-                else
-                {
-                    // Filter the project for matching employee ID only
-                    projectList = context.Projects.Where(x => x.EmployeeID == employeeID).ToList();
+                    // Filter the project for matching employee ID & unarchived projects only
+                    projectList = context.Projects.Where(x => x.EmployeeID == employeeID && x.Archive == false).ToList();
 
                     // calculate total hours for each project
                     studentProjects = projectList.Select(x => new ProjectDTO()
@@ -204,7 +225,7 @@ namespace Timesheet_Tracker.Controllers
                         TestingHours = x.TestingHours,
                         DeliverablesHours = x.DeliverablesHours
                     }).ToList();
-                }
+
                 return studentProjects;
             }
 

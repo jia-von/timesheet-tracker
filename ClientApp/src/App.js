@@ -5,6 +5,7 @@ import Home  from "./components/Home/Home";
 import "./custom.css";
 import ProjectDetail from "./components/ProjectDetail/ProjectDetail";
 import CreateProject from "./components/CreateProject/CreateProject";
+import Account from "./components/Account/Account";
 
 
 export default class App extends Component {
@@ -17,6 +18,7 @@ export default class App extends Component {
             <Route path="/home" component={Home} />
             <Route path="/project-detail" component={ProjectDetail} />
             <Route path="/create-project" component={CreateProject} />
+            <Route path="/account" component={Account} />
       </React.Fragment>
     );
   }

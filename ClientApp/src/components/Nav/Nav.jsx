@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import "./Nav.css";
 import { signOutFunc } from "../../actions/userAccounts";
 
@@ -21,17 +21,17 @@ class Nav extends React.Component {
 
     render() {
         let linksClass = this.state.linksAreVisible ? "secondary active" : "secondary";
+        let createProject = this.props.isInstructor ? <Link className="navButton" to="/create-project" sr-only="Add a new project"><i className="fas fa-plus"></i></Link> : "";
 
         return (<nav className="navBar">
             <div className="primary">
                 <Link className="home" to="/home" sr-only="Home"><i className="fas fa-home"></i></Link>
-                <Link className="navButton" to="/create-project" sr-only="Add a new project"><i className="fas fa-plus"></i></Link>
+                { /* TODO display the add new project button to only instructors */}
+                {createProject}
                 <button className="menu" onClick={(e) => { this.toggleLinks(); }} sr-only="Expand Nav Bar"><i className="fas fa-bars"></i></button>
             </div>
             <div className={linksClass}>
-                <a className="" href="#" >Account</a>
-                <a className="" href="#" >Account</a>
-                <a className="" href="#" >Account</a>
+                <Link className="" to="/account" >Account</Link>
                 <button className="navLink" onClick={() => this.props.signOut()} >Sign Out</button>
             </div>
         </nav>);
@@ -49,7 +49,7 @@ function mapDispatchToProps(dispatch) {
 // add the redux store to props
 function mapStateToProps(state) {
     return {
-
+        isInstructor: state.userAccountsReducer.signIn.data.instructor
     }
 }
 

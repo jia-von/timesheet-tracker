@@ -17,7 +17,8 @@ namespace Timesheet_Tracker.Controllers
     [ApiController]
     public class PersonControllerAPI : ControllerBase
     {
-        // assing a private person controller which is set when an instance of this api controller is created 
+        // assign a private person controller which is set when an instance of this api controller is created
+        // this will be used to interact with the person controller
         private PersonController _personController;
         public PersonControllerAPI(PersonController personController)
         {
@@ -124,7 +125,7 @@ namespace Timesheet_Tracker.Controllers
                 if (email == null) badInputs.Add("email");
                 if (password == null) badInputs.Add("password");
                 if (firstName == null) badInputs.Add("first name");
-                if (lastName == null) badInputs.Add("lastname");
+                if (lastName == null) badInputs.Add("last name");
                 if (isInstructorString == null) badInputs.Add("isInstructorString");
                 if (isInstructorString != null && isInstructorString == "student"  && cohort == null) badInputs.Add("cohort");
                 return StatusCode(400, $"Values for {String.Join(", ", badInputs)} must be provided");
@@ -173,22 +174,64 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
+        // update a user account
+        [HttpPatch("Update")]
+        public ActionResult UpdateUserAccount(string personID, string firstName, string lastName, string currentPassword, string newPassword, string isUpdatingPassword)
+        {
+            // proceed if all values were provided, else return info on which values are required
+            if (personID != null && firstName != null && lastName != null && currentPassword != null && newPassword != null && isUpdatingPassword != null)
+            {
+                // convert is updating password to a boolean value
+                bool updatePassword = isUpdatingPassword == "true";
+                // attempt to update the new person or return errors
+                try
+                {
+                    // try converting the id to an integer
+                    int intPersonID = Convert.ToInt32(personID);
+                    //PersonController controller = new PersonController();
+                    string result = _personController.UpdateAccount(intPersonID, firstName.Trim(), lastName.Trim(), currentPassword.Trim(), newPassword.Trim(), updatePassword);
+
+                    return StatusCode(200, result);
+                }
+                catch (InvalidOperationException)
+                {
+                    return StatusCode(400, "Something went wrong. Please check your internet/database connection");
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(400, e.Message);
+                }
+            }
+            else
+            {
+                // return errors if any values are null
+                List<string> badInputs = new List<string>();
+                if (personID == null) badInputs.Add("person ID");
+                if (currentPassword == null) badInputs.Add("current password");
+                if (firstName == null) badInputs.Add("first name");
+                if (lastName == null) badInputs.Add("last name");
+                if (newPassword == null) badInputs.Add("new password");
+                if (isUpdatingPassword == null ) badInputs.Add("isUpdatingPassword");
+                return StatusCode(400, $"Values for {String.Join(", ", badInputs)} must be provided");
+            }
+        }
         
         // archive the person, their projects and their employee records
-        [Authorize(Roles = Roles.Instructor)] // TODO replace only instructors can delete to allow students delete as well
         [HttpDelete("Delete")]
-        public ActionResult DeletePerson(string id)
+        public ActionResult DeletePerson(string personID)
         {
-            // TODO ensure the user calling delete has the ID of the entity being deleted
+            // TODO ensure the user calling delete matches the entity being deleted
+            // read here https://stackoverflow.com/questions/38340078/how-to-decode-jwt-token
+            // responses from pato milan and jenson-button-event
             try
             {
-                int ID = Convert.ToInt32(id);
+                int ID = Convert.ToInt32(personID);
                 //PersonController controller = new PersonController();
                 // attempt to archive the account, return an error if this fails
                 try
                 {
                     String result = _personController.DeletePersonByID(ID);
-                    return Ok(new { result });
+                    return StatusCode(200, result);
                 } catch (Exception e)
                 {
                     return StatusCode(400, e.Message);
@@ -197,7 +240,7 @@ namespace Timesheet_Tracker.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(400, $"ID: {id} is not valid. Use integers only");
+                return StatusCode(400, $"ID: {personID} is not valid. Use integers only");
             }
         }
     }

@@ -52,11 +52,11 @@ class CreateProject extends React.Component {
         if (!isInvalid) {
             // if this is a cohort project
             if (this.state.isCohortProject) {
-                this.props.createCohortProject(this.state.projectName, this.state.dueDate, this.state.cohort, this.state.isCohortProject, this.props.authentication.signIn.data.token);
+                this.props.createCohortProject(this.state.projectName.trim(), this.state.dueDate.trim(), this.state.cohort.trim(), this.state.isCohortProject, this.props.authentication.signIn.data.token);
             }
             // else if this is a student project
             else {
-                this.props.createStudentProject(this.state.projectName, this.state.dueDate, this.state.employeeID, this.props.authentication.signIn.data.token);
+                this.props.createStudentProject(this.state.projectName.trim(), this.state.dueDate.trim(), this.state.employeeID.trim(), this.props.authentication.signIn.data.token);
             }
         }
     }
@@ -132,6 +132,9 @@ class CreateProject extends React.Component {
         if (this.props.projects.createProject.isLoading) { statusMessage = "Loading"; }
         else if (this.props.projects.createProject.isCompleted && this.props.projects.createProject.error != null) {
             statusMessage = this.props.projects.createProject.error;
+        }
+        else if (this.props.projects.createProject.isCompleted && this.props.projects.createProject.error == null && this.props.projects.createProject.data != null) {
+            statusMessage = this.props.projects.createProject.data;
         }
 
         return (
