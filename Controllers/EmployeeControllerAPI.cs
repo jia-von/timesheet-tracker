@@ -74,18 +74,17 @@ namespace Timesheet_Tracker.Controllers
             return response;
         }
 
-        [HttpGet("Instructor/{id}")]
-        public ActionResult <Employee> GetEmployeeByID(string id)
+        [HttpGet("Instructor")]
+        public ActionResult <EmployeeDTO> GetEmployeeByID(string id)
         {
-            ActionResult<Employee> response;
+            ActionResult<EmployeeDTO> response;
             id = id != null ? id.Trim().ToLower() : null;
-            int employeeID;
             if(string.IsNullOrWhiteSpace(id))
             {
                 response = StatusCode(400, "Employee ID cannot be empty.");
             }
             else
-            if(!int.TryParse(id, out employeeID))
+            if(!int.TryParse(id, out int employeeID))
             {
                 response = StatusCode(400, "Employee ID has to be a number.");
             }
@@ -103,6 +102,7 @@ namespace Timesheet_Tracker.Controllers
 
             return response;
         }
+
 
         [HttpPost("Create")]
         // instructor can be a yes or no button, or check box. 

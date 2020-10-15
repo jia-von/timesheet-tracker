@@ -1,0 +1,70 @@
+﻿.home .headerText {
+    padding: 10px 5%;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 0 4px 10px -5px #e0e0e0;
+}
+
+/* style the container for the projects */
+.home .projectsContainer {
+}
+
+
+/* style the projects being displayed */
+.home .project {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
+    box-shadow: 0px 5px 5px -5px #ececec;
+}
+
+/* add a radial effect to clicked projects
+    CITATION -- https://newsakmi.com/news/tech-news/software/how-to-recreate-the-ripple-effect-of-material-design-buttons/
+*/
+.home .project  {
+    background-position: center;
+    transition: background 0.4s;
+}
+
+.home .project:hover {
+        background: #47a7f500 radial-gradient(circle, transparent 1%, #f4f4f4 1%) center/15000%;
+    cursor: pointer;
+        }
+
+.home .project:active {
+        background-color: #ffffff;
+        background-size: 100%;
+        transition: background 0s;
+    }
+/* end citation */
+
+.home .projectBody {
+    display: flex;
+    align-items: center
+}
+
+.home .projectCheck {
+    margin: 0 15px;
+    border: 3px solid #cecece;
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+}
+
+.home .projectTitle {
+    padding-top: 10px;
+}
+
+.home .projectLabel {
+    width: 10px;
+}
+
+.home .complete {
+    background-color: #3f923f;
+}
+
+.home .overdue {
+    background-color: #aa3636;
+}

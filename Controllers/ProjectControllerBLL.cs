@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Timesheet_Tracker.Models;
 using Timesheet_Tracker.Models.Exceptions;
+using Timesheet_Tracker.Models.DTO;
 
 namespace Timesheet_Tracker.Controllers
 {
@@ -70,79 +71,182 @@ namespace Timesheet_Tracker.Controllers
 
         // Read
         // Get all list of the projects and students for instructors, it can further filtered by: project name, studentID, duedate, ordered by total hours
-        public List<Project> GetAllProjects(string input)
+        public List<ProjectDTO> GetAllProjects()
+        {
+            List<ProjectDTO> target;
+            using(TimesheetContext context = new TimesheetContext())
+            {
+               target = context.Projects.Select(x => new ProjectDTO()
+                {
+                    ID = x.ID,
+                    ProjectName = x.ProjectName,
+                    FullName = $"{x.Employee.Person.FirstName} {x.Employee.Person.LastName}",
+                    DueDate = x.DueDate,
+                    DateCreated = x.DateCreated,
+                    DesignHours = x.DesignHours,
+                    DoingHours = x.DoingHours,
+                    CodeReviewHours = x.CodeReviewHours,
+                    TestingHours = x.TestingHours,
+                    DeliverablesHours = x.DeliverablesHours
+                }
+                ).ToList();
+            }
+            return target;
+        }
+
+        // Filter by Cohort
+        public List<ProjectDTO> GetAllProjectByCohort(float cohort)
         {
             using(TimesheetContext context = new TimesheetContext())
             {
-                switch (input)
+                if(!context.Employees.Any(x => x.Cohort == cohort))
                 {
-                    case "projectName":
-                        if (!context.Projects.Any(x => x.ProjectName == input))
-                        {
-                            throw new ArgumentNullException($"This project {input} does not exist.");
-                        }
-                        else
-                        {
-                            return context.Projects.Where(x => x.ProjectName == input).ToList();
-                        }
-                    case "employeeID":
-                        if (!context.Projects.Any(x => x.EmployeeID == int.Parse(input)))
-                        {
-                            throw new ArgumentNullException($"This student with ID, {input} does not exist in the current database.");
-                        }
-                        else
-                        {
-                            return context.Projects.Where(x => x.EmployeeID == int.Parse(input)).ToList();
-                        }
-                    case "dueDate":
-                        if (!context.Projects.Any(x => x.DueDate == DateTime.Parse(input)))
-                        {
-                            throw new ArgumentNullException($"The date entered, {input} is unavailable.");
-                        }
-                        else
-                        {
-                            return context.Projects.Where(x => x.DueDate == DateTime.Parse(input)).ToList();
-                        }
-                    default:
-                        return context.Projects.Select(x => x).ToList();
-
+                    throw new ArgumentException($"There is no cohort of {cohort} recorded in the database.");
+                }
+                else
+                {
+                    return GetAllProjects().Where(x => x.Cohort == cohort).ToList();
                 }
             }
         }
 
-
-        // Get a list of projects based on employeeID of student, for student to view their projects
-        public List<Project> GetProjectListForStudent(int employeeID)
+        // Filter by Project Name
+        public List<ProjectDTO> GetAllByProjectName(string projectName)
         {
-            List<Project> studentProjects;
-
-            using(TimesheetContext context = new TimesheetContext())
+            using (TimesheetContext context = new TimesheetContext())
             {
-                // Filter the projects based on employeeID
-                studentProjects = context.Projects.Where(x => x.EmployeeID == employeeID).ToList();
+                if (!context.Projects.Any(x => x.ProjectName.ToLower() == projectName))
+                {
+                    throw new ArgumentException($"There is no project with name of {projectName} recorded in the database.");
+                }
+                else
+                {
+                    return GetAllProjects().Where(x => x.ProjectName.ToLower() == projectName).ToList();
+                }
             }
-
-            return studentProjects;
         }
 
-        // Get one project for student and return one project for student based on name, return projectID
-        public int GetProjectForStudent(string projectName, int employeeID)
+        // Filter by Student Name
+        public List<ProjectDTO> GetAllProjectByStudentName(string studentName)
         {
-            Project studentProject;
-            List<Project> projectList;
-            using(TimesheetContext context = new TimesheetContext())
+            using (TimesheetContext context = new TimesheetContext())
             {
-                projectList = GetProjectListForStudent(employeeID);
-                studentProject = projectList.Where(x => x.ProjectName == projectName).Single();
+                if (!GetAllProjects().Any(x => x.FullName.ToLower() == studentName))
+                {
+                    throw new ArgumentException($"There is no project with name of {studentName} recorded in the database.");
+                }
+                else
+                {
+                    return GetAllProjects().Where(x => x.FullName.ToLower() == studentName).ToList();
+                }
+            }
+        }
+
+        // Filter by Descending order for total hours
+
+        public List<ProjectDTO> GetAllProjectByTotalHours()
+        {
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                return GetAllProjects().OrderByDescending(x => x.TotalHours).ToList();
+            }
+        }
+
+        // For instructor Only
+        public ProjectDTO ProjectDetail(int projectID)
+        {
+            Project target;
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                target = context.Projects.Where(x => x.ID == projectID).Single();
+                return new ProjectDTO()
+                {
+                    ID = target.ID,
+                    ProjectName = target.ProjectName,
+                    FullName = $"{target.Employee.Person.FirstName} and {target.Employee.Person.LastName}",
+                    DueDate = target.DueDate,
+                    DesignHours = target.DesignHours,
+                    DoingHours = target.DoingHours,
+                    CodeReviewHours = target.CodeReviewHours,
+                    TestingHours = target.TestingHours,
+                    DeliverablesHours = target.DeliverablesHours
+                };
+            }
+        }
+
+        // Get a list of projects based on employeeID of student, for student to view their projects
+        public List<ProjectDTO> GetProjectListForStudent(int employeeID)
+        {
+            List<ProjectDTO> studentProjects;
+            List<Project> projectList;
+
+            using(TimesheetContext context = new TimesheetContext())
+            {   
+                if(!context.Projects.Any(x => x.EmployeeID == employeeID))
+                {
+                    throw new ArgumentException($"There is no employee of {employeeID} recorded in database.");
+                }
+                else
+                {
+                    // Filter the project for matching employee ID only
+                    projectList = context.Projects.Where(x => x.EmployeeID == employeeID).ToList();
+
+                    // calculate total hours for each project
+                    studentProjects = projectList.Select(x => new ProjectDTO()
+                    {
+                        ID = x.ID,
+                        ProjectName = x.ProjectName,
+                        DueDate = x.DueDate,
+                        DateCreated = x.DateCreated,
+                        DesignHours = x.DesignHours,
+                        DoingHours = x.DoingHours,
+                        CodeReviewHours = x.CodeReviewHours,
+                        TestingHours = x.TestingHours,
+                        DeliverablesHours = x.DeliverablesHours
+                    }).ToList();
+                }
+                return studentProjects;
             }
 
-            return studentProject.ID;
+        }
+
+        // Get one project for student and return one project for student 
+        public ProjectDTO GetProjectForStudent(int projectID, int employeeID)
+        {
+            ProjectDTO studentProject;
+            List<ProjectDTO> projectList;
+            ValidationExceptions exceptions = new ValidationExceptions();
+
+            using(TimesheetContext context = new TimesheetContext())
+            {
+                if(!context.Projects.Any(x => x.ID == projectID))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("There so such project ID exist."));
+                }
+
+                if(!context.Projects.Any(x => x.EmployeeID == employeeID))
+                {
+                    exceptions.SubExceptions.Add(new ArgumentException("There is no such employee ID recorded in the database."));
+                }
+
+                if (exceptions.SubExceptions.Count > 0)
+                {
+                    throw exceptions;
+                }
+                else
+                {
+                    projectList = GetProjectListForStudent(employeeID);
+                    studentProject = projectList.Where(x => x.ID == projectID).Single();
+                }
+            }
+
+            return studentProject;
         }
 
         // Order the project Due Date appearing at the top with filtered ID
-        public List<Project> StudentProjectsOrdered(int employeeID)
+        public List<ProjectDTO> StudentProjectsOrdered(int employeeID)
         {
-            List<Project> target;
+            List<ProjectDTO> target;
             using(TimesheetContext context = new TimesheetContext())
             {
                 target = GetProjectListForStudent(employeeID).OrderByDescending(x => x.DueDate).ToList();
@@ -155,7 +259,7 @@ namespace Timesheet_Tracker.Controllers
         // Student must have asignments to add hours to project
         // Only student can add hours to their project, such as JavaScript
 
-        public int UpdateHours(int projectID, float? design, float? doing, float? codeReview, float? testing, float? deliverables)
+        public Project UpdateHours(int projectID, float design, float doing, float codeReview, float testing, float deliverables)
         {
             Project project;
             using(TimesheetContext context = new TimesheetContext())
@@ -168,7 +272,8 @@ namespace Timesheet_Tracker.Controllers
                 project.DeliverablesHours += deliverables;
                 context.SaveChanges();
             }
-            return project.ID;
+
+            return project;
         }
 
         // Archive
@@ -202,7 +307,7 @@ namespace Timesheet_Tracker.Controllers
             using (TimesheetContext context = new TimesheetContext())
             {
                 target = context.Projects.Where(x => x.ID == projectID).Single();
-                sumHours = target.DesignHours.Value + target.DoingHours.Value + target.CodeReviewHours.Value + target.TestingHours.Value + target.DeliverablesHours.Value;
+                sumHours = target.DesignHours + target.DoingHours + target.CodeReviewHours + target.TestingHours + target.DeliverablesHours;
             }
             return sumHours;
         }
@@ -216,11 +321,11 @@ namespace Timesheet_Tracker.Controllers
             {
                 // Find the project
                 target = context.Projects.Where(x => x.ProjectName == projectName).ToList();
-                averageDesign = target.Average(x => x.DesignHours).Value;
-                averageDoing = target.Average(x => x.DesignHours).Value;
-                averageCodeReview = target.Average(x => x.CodeReviewHours).Value;
-                averageTesting = target.Average(x => x.TestingHours).Value;
-                averageDeliverables = target.Average(x => x.DeliverablesHours).Value;
+                averageDesign = target.Average(x => x.DesignHours);
+                averageDoing = target.Average(x => x.DesignHours);
+                averageCodeReview = target.Average(x => x.CodeReviewHours);
+                averageTesting = target.Average(x => x.TestingHours);
+                averageDeliverables = target.Average(x => x.DeliverablesHours);
                 averageTotal = averageDesign + averageDoing + averageCodeReview + averageTesting + averageDeliverables;
             }
         }

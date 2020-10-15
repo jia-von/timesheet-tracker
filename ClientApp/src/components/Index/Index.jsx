@@ -1,10 +1,9 @@
 ﻿import React from "react";
 import { connect } from "react-redux";
-//import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 //import {} from "../../actions/timesheetTracker";
 import workers from "./workers.svg";
 import metrics from "./metrics.svg";
-
 import "./Index.css";
 // import the function factories so we can use them when mapping dispatch to props
 import { signInFunc, signUpFunc } from "../../actions/userAccounts";
@@ -14,7 +13,8 @@ class Index extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+      this.state = {
+        redirect: null,
       emailSignIn: "",
       passwordSignIn: "",
       emailSignInError: "",
@@ -218,7 +218,7 @@ class Index extends React.Component {
     // this will be responsible for dismissing the form values and closing the sign up form if successful
     // note a conditional is required when setting state in component did update to prevent infiniteloop
     componentDidUpdate(perviousProps) {
-      // if we were loading previously, have now completed and have no errors, lets close the form and delete the entries in fields
+      // if we were loading SIGN UP previously, have now completed and have no errors, lets close the form and delete the entries in fields
       if (perviousProps.store.signUp.isLoading === true && this.props.store.signUp.isCompleted === true && this.props.store.signUp.error == null) {
         this.setState({
           signUpForm: "",
@@ -232,11 +232,13 @@ class Index extends React.Component {
         });
       }
 
-      // if we were loading, have completed and have no sign in errors, clear the form fields OPTIONAL: move user to the home page
+      // if we were SIGN IN loading, have completed and have no sign in errors, clear the form fields
+        // we also set the Redirect state value to the page we wish signed in users to be taken to
       if (perviousProps.store.signIn.isLoading === true && this.props.store.signIn.isCompleted === true && this.props.store.signIn.error == null) {
         this.setState({
           emailSignIn: "",
-          passwordSignIn: ""
+            passwordSignIn: "",
+            redirect: "/home"
         });
       }
     }
@@ -263,222 +265,229 @@ class Index extends React.Component {
           }
         
 
-    return (
-      <div className="index">
-        <div className="login">
-          <img src={workers} alt="display for the timesheet login section" />
+      // If this.state.redirect is null, the user is not signed in
+      // if this.state.redirect has a value, the user is signed in and should be taken to home page
+      if (this.state.redirect) {
+          return <Redirect to={this.state.redirect} />
+      }
+      else {
+          return (
+              <div className="index">
+                  <div className="login">
+                      <img src={workers} alt="display for the timesheet login section" />
 
-          <h1>Sign In</h1>
+                      <h1>Sign In</h1>
 
-          <form
-            onSubmit={(e) => {
-              this.handleSignIn(e);
-            }}
-          >
-            <div>
-              <label htmlFor="emailSignIn" className="sr-only">
-                Email Address
+                      <form
+                          onSubmit={(e) => {
+                              this.handleSignIn(e);
+                          }}
+                      >
+                          <div>
+                              <label htmlFor="emailSignIn" className="sr-only">
+                                  Email Address
               </label>
-              <input
-                className={
-                  this.state.emailSignInError.length > 0 ? "error" : ""
-                }
-                type="email"
-                placeholder="Email"
-                name="emailSignIn"
-                id="emailSignIn"
-                value={this.state.emailSignIn}
-                onChange={(e) => this.handleFormInputChange(e)}
-              />
-              <div className="error-message">{this.state.emailSignInError}</div>
-            </div>
+                              <input
+                                  className={
+                                      this.state.emailSignInError.length > 0 ? "error" : ""
+                                  }
+                                  type="email"
+                                  placeholder="Email"
+                                  name="emailSignIn"
+                                  id="emailSignIn"
+                                  value={this.state.emailSignIn}
+                                  onChange={(e) => this.handleFormInputChange(e)}
+                              />
+                              <div className="error-message">{this.state.emailSignInError}</div>
+                          </div>
 
-            <div>
-              <label htmlFor="passwordSignIn" className="sr-only">
-                Password
+                          <div>
+                              <label htmlFor="passwordSignIn" className="sr-only">
+                                  Password
               </label>
-              <input
-                className={
-                  this.state.passwordSignInError.length > 0 ? "error" : ""
-                }
-                type="password"
-                placeholder="Password"
-                name="passwordSignIn"
-                id="passwordSignIn"
-                value={this.state.passwordSignIn}
-                onChange={(e) => this.handleFormInputChange(e)}
-              />
-              <div className="error-message">
-                {this.state.passwordSignInError}
-              </div>
-            </div>
+                              <input
+                                  className={
+                                      this.state.passwordSignInError.length > 0 ? "error" : ""
+                                  }
+                                  type="password"
+                                  placeholder="Password"
+                                  name="passwordSignIn"
+                                  id="passwordSignIn"
+                                  value={this.state.passwordSignIn}
+                                  onChange={(e) => this.handleFormInputChange(e)}
+                              />
+                              <div className="error-message">
+                                  {this.state.passwordSignInError}
+                              </div>
+                          </div>
 
-            <button type="submit" disabled={this.props.store.signIn.isLoading}>Go</button>
-            <div className="statusMessage">{signInStatusMessage}</div>
-          </form>
+                          <button type="submit" disabled={this.props.store.signIn.isLoading}>Go</button>
+                          <div className="statusMessage">{signInStatusMessage}</div>
+                      </form>
 
-          <p className="text-center">
-            No account?{" "}
-            <button
-              onClick={() => {
-                this.setState({ signUpForm: "active" });
-              }}
-            >
-              Create an account
+                      <p className="text-center">
+                          No account?{" "}
+                          <button
+                              onClick={() => {
+                                  this.setState({ signUpForm: "active" });
+                              }}
+                          >
+                              Create an account
             </button>
-          </p>
+                      </p>
 
-          {/* SIGN UP FORM START */}
-          <div className={"signUp " + this.state.signUpForm}>
-            <div>
-              <button
-                onClick={() => {
-                  this.setState({ signUpForm: "" });
-                }}
-              >
-                <i className="fas fa-arrow-down"></i>
-                <p className="sr-only">Close</p>
-              </button>
-            </div>
-            <div>
-              <h2>Sign Up</h2>
-              <form onSubmit={(e) => this.handleSignUp(e)}>
-                <div>
-                  <label htmlFor="firstNameSignUp" className="sr-only">
-                    First Name
+                      {/* SIGN UP FORM START */}
+                      <div className={"signUp " + this.state.signUpForm}>
+                          <div>
+                              <button
+                                  onClick={() => {
+                                      this.setState({ signUpForm: "" });
+                                  }}
+                              >
+                                  <i className="fas fa-arrow-down"></i>
+                                  <p className="sr-only">Close</p>
+                              </button>
+                          </div>
+                          <div>
+                              <h2>Sign Up</h2>
+                              <form onSubmit={(e) => this.handleSignUp(e)}>
+                                  <div>
+                                      <label htmlFor="firstNameSignUp" className="sr-only">
+                                          First Name
                   </label>
-                  <input
-                  className={
-                    this.state.firstNameSignUpError.length > 0 ? "error" : ""
-                  }
-                    type="text"
-                    placeholder="First Name"
-                    name="firstNameSignUp"
-                    id="firstNameSignUp"
-                    value={this.state.firstNameSignUp}
-                    onChange={(e) => this.handleFormInputChange(e)}
-                  />
-                  <div className="error-message">{this.state.firstNameSignUpError}</div>
-                </div>
+                                      <input
+                                          className={
+                                              this.state.firstNameSignUpError.length > 0 ? "error" : ""
+                                          }
+                                          type="text"
+                                          placeholder="First Name"
+                                          name="firstNameSignUp"
+                                          id="firstNameSignUp"
+                                          value={this.state.firstNameSignUp}
+                                          onChange={(e) => this.handleFormInputChange(e)}
+                                      />
+                                      <div className="error-message">{this.state.firstNameSignUpError}</div>
+                                  </div>
 
-                <div>
-                  <label htmlFor="lastNameSignUp" className="sr-only">
-                    Last Name
+                                  <div>
+                                      <label htmlFor="lastNameSignUp" className="sr-only">
+                                          Last Name
                   </label>
-                  <input
-                  className={
-                    this.state.lastNameSignUpError.length > 0 ? "error" : ""
-                  }
-                    type="text"
-                    placeholder="Last Name"
-                    name="lastNameSignUp"
-                    id="lastNameSignUp"
-                    value={this.state.lastNameSignUp}
-                    onChange={(e) => this.handleFormInputChange(e)}
-                  />
-                  <div className="error-message">{this.state.lastNameSignUpError}</div>
-                </div>
+                                      <input
+                                          className={
+                                              this.state.lastNameSignUpError.length > 0 ? "error" : ""
+                                          }
+                                          type="text"
+                                          placeholder="Last Name"
+                                          name="lastNameSignUp"
+                                          id="lastNameSignUp"
+                                          value={this.state.lastNameSignUp}
+                                          onChange={(e) => this.handleFormInputChange(e)}
+                                      />
+                                      <div className="error-message">{this.state.lastNameSignUpError}</div>
+                                  </div>
 
-                <div>
-                  <label htmlFor="emailSignUp" className="sr-only">
-                    Email
+                                  <div>
+                                      <label htmlFor="emailSignUp" className="sr-only">
+                                          Email
                   </label>
-                  <input
-                  className={
-                    this.state.emailSignUpError.length > 0 ? "error" : ""
-                  }
-                    type="email"
-                    placeholder="Email"
-                    name="emailSignUp"
-                    id="emailSignUp"
-                    value={this.state.emailSignUp}
-                    onChange={(e) => this.handleFormInputChange(e)}
-                  />
-                  <div className="error-message">{this.state.emailSignUpError}</div>
-                </div>
+                                      <input
+                                          className={
+                                              this.state.emailSignUpError.length > 0 ? "error" : ""
+                                          }
+                                          type="email"
+                                          placeholder="Email"
+                                          name="emailSignUp"
+                                          id="emailSignUp"
+                                          value={this.state.emailSignUp}
+                                          onChange={(e) => this.handleFormInputChange(e)}
+                                      />
+                                      <div className="error-message">{this.state.emailSignUpError}</div>
+                                  </div>
 
-                <div>
-                  <label htmlFor="passwordSignUp" className="sr-only">
-                    Password
+                                  <div>
+                                      <label htmlFor="passwordSignUp" className="sr-only">
+                                          Password
                   </label>
-                  <input
-                  className={
-                    this.state.passwordSignUpError.length > 0 ? "error" : ""
-                  }
-                    type="password"
-                    placeholder="Password"
-                    name="passwordSignUp"
-                    id="passwordSignUp"
-                    value={this.state.passwordSignUp}
-                    onChange={(e) => this.handleFormInputChange(e)}
-                  />
-                  <div className="error-message">{this.state.passwordSignUpError}</div>
-                </div>
+                                      <input
+                                          className={
+                                              this.state.passwordSignUpError.length > 0 ? "error" : ""
+                                          }
+                                          type="password"
+                                          placeholder="Password"
+                                          name="passwordSignUp"
+                                          id="passwordSignUp"
+                                          value={this.state.passwordSignUp}
+                                          onChange={(e) => this.handleFormInputChange(e)}
+                                      />
+                                      <div className="error-message">{this.state.passwordSignUpError}</div>
+                                  </div>
 
-                <div>
-                  <label htmlFor="confirmPasswordSignUp" className="sr-only">
-                    Confirim Password
+                                  <div>
+                                      <label htmlFor="confirmPasswordSignUp" className="sr-only">
+                                          Confirim Password
                   </label>
-                  <input
-                  className={
-                    this.state.confirmPasswordSignUpError.length > 0 ? "error" : ""
-                  }
-                    type="password"
-                    placeholder="Confirm Password"
-                    name="confirmPasswordSignUp"
-                    id="confirmPasswordSignUp"
-                    value={this.state.confirmPasswordSignUp}
-                    onChange={(e) => this.handleFormInputChange(e)}
-                  />
-                  <div className="error-message">{this.state.confirmPasswordSignUpError}</div>
-                </div>
+                                      <input
+                                          className={
+                                              this.state.confirmPasswordSignUpError.length > 0 ? "error" : ""
+                                          }
+                                          type="password"
+                                          placeholder="Confirm Password"
+                                          name="confirmPasswordSignUp"
+                                          id="confirmPasswordSignUp"
+                                          value={this.state.confirmPasswordSignUp}
+                                          onChange={(e) => this.handleFormInputChange(e)}
+                                      />
+                                      <div className="error-message">{this.state.confirmPasswordSignUpError}</div>
+                                  </div>
 
-                <div className="instructor-row">
-                  <input
-                    checked={this.state.isInstructor}
-                    type="checkbox"
-                    name="isInstructor"
-                    id="isInstructor"
-                    onChange={(e) =>
-                      this.setState({ isInstructor: !this.state.isInstructor })
-                    }
-                  />
-                  <label htmlFor="isInstructor">I'm an Instructor</label>
-                </div>
+                                  <div className="instructor-row">
+                                      <input
+                                          checked={this.state.isInstructor}
+                                          type="checkbox"
+                                          name="isInstructor"
+                                          id="isInstructor"
+                                          onChange={(e) =>
+                                              this.setState({ isInstructor: !this.state.isInstructor })
+                                          }
+                                      />
+                                      <label htmlFor="isInstructor">I'm an Instructor</label>
+                                  </div>
 
-                <div>
-                  <label htmlFor="cohortSignUp" className="sr-only">
-                    Cohort
+                                  <div>
+                                      <label htmlFor="cohortSignUp" className="sr-only">
+                                          Cohort
                   </label>
-                  <input
-                  className={
-                    this.state.cohortSignUpError.length > 0 ? "error" : ""
-                  }
-                    disabled={this.state.isInstructor}
-                    type="text"
-                    placeholder="Cohort"
-                    name="cohortSignUp"
-                    id="cohortSignUp"
-                    value={this.state.cohortSignUp}
-                    onChange={(e) => this.handleFormInputChange(e)}
-                  />
-                  <div className="error-message">{this.state.cohortSignUpError}</div>
-                </div>
+                                      <input
+                                          className={
+                                              this.state.cohortSignUpError.length > 0 ? "error" : ""
+                                          }
+                                          disabled={this.state.isInstructor}
+                                          type="text"
+                                          placeholder="Cohort"
+                                          name="cohortSignUp"
+                                          id="cohortSignUp"
+                                          value={this.state.cohortSignUp}
+                                          onChange={(e) => this.handleFormInputChange(e)}
+                                      />
+                                      <div className="error-message">{this.state.cohortSignUpError}</div>
+                                  </div>
 
-                <button type="submit" disabled={this.props.store.signUp.isLoading}>Create Account</button>
+                                  <button type="submit" disabled={this.props.store.signUp.isLoading}>Create Account</button>
 
-                <div className="statusMessage">{signUpStatusMessage}</div>
-              </form>
-            </div>
-          </div>
-          {/* SIGN UP FORM END */}
-        </div>
+                                  <div className="statusMessage">{signUpStatusMessage}</div>
+                              </form>
+                          </div>
+                      </div>
+                      {/* SIGN UP FORM END */}
+                  </div>
 
-        <div className="desktopImage">
-          <img src={metrics} alt="charts and metrics" />
-        </div>
-      </div>
-    );
+                  <div className="desktopImage">
+                      <img src={metrics} alt="charts and metrics" />
+                  </div>
+              </div>
+          );
+      }
   }
 }
 
@@ -486,7 +495,7 @@ class Index extends React.Component {
 function mapStateToProps(state) {
   return {
     store: state.userAccountsReducer,
-  };
+  }
 }
 
 // map the function "factories" from dispatch to this component's props
@@ -496,4 +505,4 @@ function mapDispatchToProps(dispatch) {
         signUp: signUpFunc(dispatch)
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Index));

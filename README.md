@@ -62,6 +62,7 @@ This project was completed using [Kanban](https://en.wikipedia.org/wiki/Kanban) 
 
 - Osa Aimola
   - [GitHub](https://github.com/osaimola)
+  - [Website](https://osaimola.com)
 
 ## Acknowledgement
 Timesheet Tracker is part of a Capstone Project issued by TECHCareers for students to create a primary portfolio from this TECHCareers Full-Stack Software Developer Program. This project will help students to develop a professional level quality portfolio piece with the guidance from TECHCareers instructors. We would like to say thank you to [TECHCareers](http://www.techcareers.ca), [University of Alberta](https://www.ualberta.ca/information-services-and-technology/index.html), and Cohort 4.1 Students for teaching and sharing their experiences with us. 
@@ -82,6 +83,8 @@ Timesheet Tracker is part of a Capstone Project issued by TECHCareers for studen
 - [How I Write SQL, Part 1: Naming Conventions by Launch by Lunch](https://launchbylunch.com/posts/2014/Feb/16/sql-naming-conventions/)
 - [How to Make Asynchronous Calls in Redux Without Middlewares by Velotio Technologies](https://medium.com/velotio-perspectives/how-to-make-asynchronous-calls-in-redux-without-middlewares-cbf7181020b2)
 - [HTTP request methods by Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+- [Role Based Authorization Tutorial with Example API by Jason Watmore](https://jasonwatmore.com/post/2019/10/16/aspnet-core-3-role-based-authorization-tutorial-with-example-api#authenticate-model-cs)
 - [README.md IDE by Dillinger](https://dillinger.io/)
+- [Simple API for Authentication, Registration and User Management by Jason Watmore](https://jasonwatmore.com/post/2019/10/14/aspnet-core-3-simple-api-for-authentication-registration-and-user-management)
 - [Tutorial: Create a complex data model - ASP.NET MVC with EF Core](https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/complex-data-model?view=aspnetcore-3.1)
 - [Wireframing in Figma by Figma](https://www.figma.com)

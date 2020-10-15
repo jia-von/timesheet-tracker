@@ -129,7 +129,7 @@ namespace Timesheet_Tracker.Controllers
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                     new Claim(ClaimTypes.Name, returnUser.ID.ToString()),
-                    new Claim(ClaimTypes.Role, "Instructor")// returnUser.Role) // TODO add string role field for users
+                    new Claim(ClaimTypes.Role,  returnUser.Role) 
                     }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
