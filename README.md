@@ -1,7 +1,7 @@
 ﻿# Timesheet Tracker
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-Jia and Osa from Input/Output submitted a proposal on September 30, 2020, to develop a Timesheet Tracker application that will replace the current format of [4.1] Master TECHCareers Timesheet Tracker (Master Timesheet). Master Timesheet was created using the Google Sheet platform and was released on July 15, 2020.  Since the release of the Master Timesheet, it has been inconvenient for students to use as it requires initial training, students to search their tabs and dates to enter their hours in specified columns. Additionally, instructors have difficulties tracking hours submitted by students and to analyze which student requires the most help based on hours submitted for a project. Timesheet Tracker will simplify timesheet submission for students and analyses for instructors by using a full-stack web application. 
+Jia and Osa from Input/Output submitted a [proposal](Planning/Design/ProposalforCapstoneProject.pdf) on September 30, 2020, to develop a Timesheet Tracker application that will replace the current format of [4.1] Master TECHCareers Timesheet Tracker (Master Timesheet). Master Timesheet was created using the Google Sheet platform and was released on July 15, 2020.  Since the release of the Master Timesheet, it has been inconvenient for students to use as it requires initial training, students to search their tabs and dates to enter their hours in specified columns. Additionally, instructors have difficulties tracking hours submitted by students and to analyze which student requires the most help based on hours submitted for a project. Timesheet Tracker will simplify timesheet submission for students and analyses for instructors by using a full-stack web application. 
 
 ## Prerequisites
 - Timesheet Tracker requires [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/) (VS 2019) and [ASP.NET Core 3.1](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-3.1)
@@ -62,21 +62,26 @@ This project was completed using [Kanban](https://en.wikipedia.org/wiki/Kanban) 
 
 - Osa Aimola
   - [GitHub](https://github.com/osaimola)
-  - LinkedIn
+  - [Website](https://osaimola.com)
 
 ## Acknowledgement
 Timesheet Tracker is part of a Capstone Project issued by TECHCareers for students to create a primary portfolio from this TECHCareers Full-Stack Software Developer Program. This project will help students to develop a professional level quality portfolio piece with the guidance from TECHCareers instructors. We would like to say thank you to [TECHCareers](http://www.techcareers.ca), [University of Alberta](https://www.ualberta.ca/information-services-and-technology/index.html), and Cohort 4.1 Students for teaching and sharing their experiences with us. 
 
 ## License
 
-## References
+[GNU General Public License v3.0](LICENSE.txt)
 
+## References
+- [4.1-ReactAPI by TECHCareers](https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI)
+- [ASP.NET Core 3.1 - Simple API for Authentication, Registration and User Management by Jason Watmore](https://jasonwatmore.com/post/2019/10/14/aspnet-core-3-simple-api-for-authentication-registration-and-user-management)
+- [ASP.NET Core 3 and React by Carl Rippon](https://github.com/PacktPublishing/ASP.NET-Core-3-and-React)
 - [Basic writing and formatting syntax by GitHub](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/basic-writing-and-formatting-syntax#lists)
 - [Code Repository Badges by dwyl](https://github.com/dwyl/repo-badges)
 - [Database design basics by Microsoft](https://support.microsoft.com/en-us/office/database-design-basics-eb2159cf-1e30-401a-8084-bd4f9c9ca1f5)
 - [Diagram Software by draw.io](https://drawio-app.com)
 - [How to write a kickass README by James Scott](https://dev.to/scottydocs/how-to-write-a-kickass-readme-5af9)
 - [How I Write SQL, Part 1: Naming Conventions by Launch by Lunch](https://launchbylunch.com/posts/2014/Feb/16/sql-naming-conventions/)
+- [How to Make Asynchronous Calls in Redux Without Middlewares by Velotio Technologies](https://medium.com/velotio-perspectives/how-to-make-asynchronous-calls-in-redux-without-middlewares-cbf7181020b2)
 - [HTTP request methods by Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
 - [Role Based Authorization Tutorial with Example API by Jason Watmore](https://jasonwatmore.com/post/2019/10/16/aspnet-core-3-role-based-authorization-tutorial-with-example-api#authenticate-model-cs)
 - [README.md IDE by Dillinger](https://dillinger.io/)
