@@ -10,10 +10,12 @@ class Account extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentPasswordDisabled: true,
             firstName: "",
             lastName: "",
             email: "",
             password: "",
+            currentPassword: "########",
             confirmPassword: "",
             passwordActive: "",
             hasErrors: false,
@@ -42,6 +44,17 @@ class Account extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        let isInvalid = this.validateForm();
+        // if form is valid, make the api call
+        if (!isInvalid) {
+            // if we want to update only names
+            if (!this.state.currentPasswordDisabled) {
+                // call api with new names and dummy password
+            }
+            else {
+                // call api with all information included
+            }
+        }
     }
 
     // update state when input fields are changed
@@ -53,9 +66,104 @@ class Account extends React.Component {
     }
 
     toggleChangePassword() {
+        // clear the password placeholder if equal to ########
+        if (this.state.currentPassword === "########") {
+            this.setState({
+                passwordActive: this.state.passwordActive === "" ? "active" : "",
+                currentPasswordDisabled: !this.state.currentPasswordDisabled,
+                currentPassword: ""
+            });
+        } else {
+            this.setState({
+                passwordActive: this.state.passwordActive === "" ? "active" : "",
+                currentPasswordDisabled: !this.state.currentPasswordDisabled
+            });
+        }
+    }
+
+    validateForm() {
+        let hasErrors = false;
+        let firstNameError = "";
+        let lastNameError = "";
+        let passwordError = "";
+        let confirmPasswordError = "";
+        let currentPasswordError = "";
+
+        // validate first name field
+        switch (this.state.firstName.trim()) {
+            case "":
+                hasErrors = true;
+                firstNameError = "First Name cannot be empty/whitespace";
+                break;
+            default:
+                if (this.state.firstName.match(/[0-9]/)) {
+                    hasErrors = true;
+                    firstNameError = "First Name cannot contain numbers";
+                } else if (this.state.firstName.trim().length > 50) {
+                    hasErrors = true;
+                    firstNameError = "First Name must be less than 50 characters";
+                }
+                break;
+        }
+
+        // validate last name field
+        switch (this.state.lastName.trim()) {
+            case "":
+                hasErrors = true;
+                lastNameError = "Last Name cannot be empty/whitespace";
+                break;
+            default:
+                if (this.state.lastName.match(/[0-9]/)) {
+                    hasErrors = true;
+                    lastNameError = "Last Name cannot contain numbers";
+                } else if (this.state.lastName.trim().length > 50) {
+                    hasErrors = true;
+                    lastNameError = "Last Name must be less than 50 characters";
+                }
+                break;
+        }
+
+        // if we want to update passwords
+        if (!this.state.currentPasswordDisabled) {
+            //validate a value was entered for the current password
+            if (this.state.currentPassword.trim() === "") {
+                hasErrors = true;
+                currentPasswordError = "Your current password is required.";
+            }
+
+            // validate the new password field
+            switch (this.state.password.trim()) {
+                case "":
+                    hasErrors = true;
+                    passwordError = "Password cannot be empty/whitespace";
+                    break;
+                default:
+                    if (this.state.password.trim().length < 6) {
+                        hasErrors = true;
+                        passwordError = "Password cannot be less than 6 characters";
+                    } else if (this.state.password.trim().length > 50) {
+                        hasErrors = true;
+                        passwordError = "Password must be less than 50 characters";
+                    }
+                    break;
+            }
+
+            // confirm passwords match in both password fields
+            if (this.state.password.trim() !== this.state.confirmPassword.trim()) {
+                hasErrors = true;
+                confirmPasswordError = "New passwords do not match";
+            }
+        }
+
         this.setState({
-            passwordActive: this.state.passwordActive === "" ? "active" : ""
+            hasErrors,
+            firstNameError,
+            lastNameError,
+            currentPasswordError,
+            passwordError,
+            confirmPasswordError
         });
+        return hasErrors;
     }
 
     renderAccount() {
@@ -88,11 +196,11 @@ class Account extends React.Component {
                             <div className="accountColumn">
                                 <div className="oldPassword">
                                     <div className="inputGroup">
-                                        <label htmlFor="oldPassword">Password</label>
-                                        <input type="password" name="oldPassword" id="oldPassword" value="########" disabled />
-                                        <div className="error-message"></div>
+                                        <label htmlFor="currentPassword">Current Password</label>
+                                        <input type="password" name="currentPassword" id="currentPassword" value={this.state.currentPassword} onChange={(e) => this.handleInputchange(e)} disabled={this.state.currentPasswordDisabled} />
+                                        <div className="error-message">{this.state.currentPasswordError}</div>
                                     </div>
-                                    <button onClick={(e) => this.toggleChangePassword()}>Change Password</button>
+                                    <button onClick={(e) => { e.preventDefault(); this.toggleChangePassword() }}>Change Password</button>
                                 </div>
                                 <div className={`editPassword ${this.state.passwordActive}`}>
                                     <div className="inputGroup">
