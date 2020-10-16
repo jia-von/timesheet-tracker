@@ -48,7 +48,7 @@ class Home extends React.Component {
                             }
                         } >
                             <div className="projectBody">
-                                <div className="projectCheck"></div>
+                                <div className="projectCheck"><div className="checked"></div></div>
                                 <div className="projectTitle">
                                     <h3>{project.projectName}</h3>
                                     <p>Time spent: {project.totalHours} hours </p>
@@ -56,7 +56,6 @@ class Home extends React.Component {
                                     <p>{project.dueCreated}</p>
                                 </div>
                             </div>
-                            <div class="projectLabel overdue"></div>
 
                         </div>
                     }

@@ -37,10 +37,14 @@ class ProjectDetail extends React.Component {
         if (previousProps.projects.modifyProject.isLoading === true && this.props.projects.modifyProject.isCompleted === true && this.props.projects.modifyProject.error === null && this.props.projects.modifyProject.deleted === false) {
            this.props.getProjectByID(this.props.location.state.projectDetails.id, this.props.authentication.signIn.data.token);
         }
-        // if deleted, set redirect to home
+        // if deleted, set redirect to home after time interval
         if (previousProps.projects.modifyProject.isLoading === true && this.props.projects.modifyProject.isCompleted === true && this.props.projects.modifyProject.error === null && this.props.projects.modifyProject.deleted === true) {
-            //this.setState({ redirect: "home" });
+            setTimeout(this.redirectToHome, 4000);
         }
+    }
+
+    redirectToHome = () => {
+        this.setState({ redirect: "home" });
     }
 
     // update state when input fields are changed
@@ -90,23 +94,23 @@ class ProjectDetail extends React.Component {
         // check if any fields contain alphabets
         if (this.state.doing.toString().toLowerCase().match(/[a-z]/)) {
             hasErrors = true;
-            doingError = "Only numeric hour values are allowed eg 1.25";
+            doingError = "Hour values should be numeric eg 1.25";
         }
         if (this.state.design.toString().toLowerCase().match(/[a-z]/)) {
             hasErrors = true;
-            designError = "Only numeric hour values are allowed eg 1.25";
+            designError = "Hour values should be numeric eg 1.25";
         }
         if (this.state.codeReview.toString().toLowerCase().match(/[a-z]/)) {
             hasErrors = true;
-            codeReviewError = "Only numeric hour values are allowed eg 1.25";
+            codeReviewError = "Hour values should be numeric eg 1.25";
         }
         if (this.state.testing.toString().toLowerCase().match(/[a-z]/)) {
             hasErrors = true;
-            testingError = "Only numeric hour values are allowed eg 1.25";
+            testingError = "Hour values should be numeric eg 1.25";
         }
         if (this.state.deliverables.toString().toLowerCase().match(/[a-z]/)) {
             hasErrors = true;
-            deliverablesError = "Only numeric hour values are allowed eg 1.25";
+            deliverablesError = "Hour values should be numeric eg 1.25";
         }
 
         this.setState({
@@ -148,36 +152,36 @@ class ProjectDetail extends React.Component {
                         <p>{project.dueCreated}</p>
 
                         <form onSubmit={(e) => this.handleUpdate(e, project.id)}>
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="design">Design:</label>
-                                <input type="text" name="design" id="design" value={this.state.design} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()} />
+                                <input type="text" name="design" id="design" autocomplete="off" value={this.state.design} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()} />
                                 <div className="error-message">{this.state.designError}</div>
                             </div>
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="doing">Doing:</label>
-                                <input type="text" name="doing" id="doing" value={this.state.doing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input type="text" name="doing" id="doing" autocomplete="off" value={this.state.doing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
                                 <div className="error-message">{this.state.doingError}</div>
                             </div>
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="codeReview">Code Review:</label>
-                                <input type="text" name="codeReview" id="codeReview" value={this.state.codeReview} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input type="text" name="codeReview" id="codeReview" autocomplete="off" value={this.state.codeReview} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
                                 <div className="error-message">{this.state.codeReviewError}</div>
                             </div>
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="testing">Testing:</label>
-                                <input type="text" name="testing" id="testing" value={this.state.testing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input type="text" name="testing" id="testing" autocomplete="off" value={this.state.testing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
                                 <div className="error-message">{this.state.testingError}</div>
                             </div>
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="deliverables">Deliverables:</label>
-                                <input type="text" name="deliverables" id="deliverables" value={this.state.deliverables} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input type="text" name="deliverables" id="deliverables" autocomplete="off" value={this.state.deliverables} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
                                 <div className="error-message">{this.state.deliverablesError}</div>
                             </div>
                             <button type="submit">Update Hours</button>
                             <div className="statusMessage">{statusMessage}</div>
                         </form>
 
-                        <button className="delete" onClick={() => this.handleDelete(project.id)}>Delete Project</button>
+                        <button className="deleteProject" onClick={() => this.handleDelete(project.id)}>Delete Project</button>
 
                     </div>
 

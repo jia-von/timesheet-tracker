@@ -121,7 +121,7 @@ class Account extends React.Component {
         switch (this.state.firstName.trim()) {
             case "":
                 hasErrors = true;
-                firstNameError = "First Name cannot be empty/whitespace";
+                firstNameError = "First Name is required";
                 break;
             default:
                 if (this.state.firstName.match(/[0-9]/)) {
@@ -138,7 +138,7 @@ class Account extends React.Component {
         switch (this.state.lastName.trim()) {
             case "":
                 hasErrors = true;
-                lastNameError = "Last Name cannot be empty/whitespace";
+                lastNameError = "Last Name is required";
                 break;
             default:
                 if (this.state.lastName.match(/[0-9]/)) {
@@ -156,14 +156,14 @@ class Account extends React.Component {
             //validate a value was entered for the current password
             if (this.state.currentPassword.trim() === "") {
                 hasErrors = true;
-                currentPasswordError = "Your current password is required.";
+                currentPasswordError = "Current password is required.";
             }
 
             // validate the new password field
             switch (this.state.password.trim()) {
                 case "":
                     hasErrors = true;
-                    passwordError = "Password cannot be empty/whitespace";
+                    passwordError = "Password is required";
                     break;
                 default:
                     if (this.state.password.trim().length < 6) {
@@ -179,7 +179,7 @@ class Account extends React.Component {
             // confirm passwords match in both password fields
             if (this.state.password.trim() !== this.state.confirmPassword.trim()) {
                 hasErrors = true;
-                confirmPasswordError = "New passwords do not match";
+                confirmPasswordError = "New passwords don't match";
             }
         }
 
