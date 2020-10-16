@@ -9,6 +9,28 @@
 .home .projectsContainer {
 }
 
+/* style the display when no projects exist */
+.home .noProjects {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20% 8%;
+}
+
+    .home .noProjects img {
+        width: 60%;
+        height: 60%;
+        margin-bottom: 15%;
+    }
+
+    .home .noProjects p {
+        font-weight: 700;
+        font-size: 18px;
+        color: #8f8f8f;
+        text-align: center;
+    }
+
 
 /* style the projects being displayed */
 .home .project {

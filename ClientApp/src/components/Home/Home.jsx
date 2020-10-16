@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import "./Home.css";
 import Nav from "../Nav/Nav";
 import { getUserProjectsByIDFunc, getAllProjectsFunc } from "../../actions/projects";
+import complete from "./complete.svg";
 
 class Home extends React.Component {
 
@@ -34,7 +35,8 @@ class Home extends React.Component {
 
         if (errors === null) {
             // if loading is complete and results were received, display them
-            if (projects.data != [] && projects.isCompleted) {
+            if (projects.data.length > 0 && projects.isCompleted) {
+                console.log("firstcase");
                 return projects.data.map(
                     (project) => {
                         return <div className="project" key={project.id} onClick={
@@ -61,8 +63,11 @@ class Home extends React.Component {
                 );
             }
             // if loading is complete and no results were received
-            else if (projects.isCompleted && projects.data === []) {
-               return  <p> No projects... Create a project </p>
+            else if (projects.isCompleted && projects.data.length === 0) {
+                return <div className="noProjects">
+                    <img src={complete} alt="no tasks left"/>
+                    <p> No projects. Create some or wait for them to be assigned to you. </p>
+                    </div>
             }
             // if request is loading 
             else if (projects.isLoading) {
@@ -92,8 +97,7 @@ class Home extends React.Component {
 
     render() {
         // if user is logged in
-        //if (this.props.authentication.signIn.data !== null) {
-        if (true) {
+        if (this.props.authentication.signIn.data !== null) {
         // if redirect is true, redirect to the desired page
             if (this.state.redirect) {
             // inject data into the next component's props, read more  here: https://reactrouter.com/web/api/Redirect
