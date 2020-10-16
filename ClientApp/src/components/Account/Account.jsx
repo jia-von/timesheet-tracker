@@ -2,7 +2,7 @@
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./Account.css";
-import { updateAccountFunc, deleteAccountFunc } from "../../actions/userAccounts";
+import { updateAccountFunc, deleteAccountFunc, signOutFunc } from "../../actions/userAccounts";
 import Nav from "../Nav/Nav";
 
 class Account extends React.Component {
@@ -29,7 +29,7 @@ class Account extends React.Component {
     }
 
     componentDidMount() {
-        // do something on initial page load
+        // set state with users info on first page load
         if (this.props.authentication.signIn.data != null) {
             let user = this.props.authentication.signIn.data;
             this.setState({
@@ -38,6 +38,23 @@ class Account extends React.Component {
                 email: user.email,
                 password: "",
                 confirmPassword: "",
+            });
+        }
+    }
+
+    componentDidUpdate(previousProps) {
+        // if we successfully deleted account
+        if (previousProps.authentication.deleteAccount.isLoading === true && this.props.authentication.deleteAccount.isCompleted === true && this.props.authentication.deleteAccount.error === null) {
+            // sign out after specified interval
+            setTimeout(this.props.signOut, 5000);
+        }
+        // if we successfully updated account
+        if (previousProps.authentication.updateAccount.isLoading === true && this.props.authentication.updateAccount.isCompleted === true && this.props.authentication.updateAccount.error === null) {
+            // reset the password fields
+            this.setState({
+                currentPassword: "########",
+                password: "",
+                confirmPassword: ""
             });
         }
     }
@@ -229,7 +246,6 @@ class Account extends React.Component {
                                 <div className="error-message"></div>
                             </div>
                         </div>
-                        <div className="accountRow">
                             <div className="accountColumn">
                                 <div className="oldPassword">
                                     <div className="inputGroup">
@@ -237,7 +253,7 @@ class Account extends React.Component {
                                         <input type="password" name="currentPassword" id="currentPassword" value={this.state.currentPassword} onChange={(e) => this.handleInputchange(e)} disabled={this.state.currentPasswordDisabled} />
                                         <div className="error-message">{this.state.currentPasswordError}</div>
                                     </div>
-                                    <button onClick={(e) => { e.preventDefault(); this.toggleChangePassword() }}>Change Password</button>
+                                <button className="togglePassword" onClick={(e) => { e.preventDefault(); this.toggleChangePassword() }}>Change Password</button>
                                 </div>
                                 <div className={`editPassword ${this.state.passwordActive}`}>
                                     <div className="inputGroup">
@@ -251,13 +267,12 @@ class Account extends React.Component {
                                         <div className="error-message">{this.state.confirmPasswordError}</div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <button type="submit">Save Changes</button>
                         <div className="statusMessage">{statusMessage}</div>
                     </form>
 
-                    <button onClick={(e) => this.handleDelete()}>Delete Account</button>
+                    <button className="deleteAccount" onClick={(e) => this.handleDelete()}>Delete Account</button>
                     <div className="statusMessage">{deleteStatusMessage}</div>
                 </div>
             </div>);
@@ -290,7 +305,8 @@ class Account extends React.Component {
 function mapDispatchToProps(dispatch) {
     return {
         updateAccount: updateAccountFunc(dispatch),
-        deleteAccount: deleteAccountFunc(dispatch)
+        deleteAccount: deleteAccountFunc(dispatch),
+        signOut: signOutFunc(dispatch)
     }
 }
 

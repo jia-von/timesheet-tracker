@@ -1,2 +1,146 @@
-﻿body {
+﻿.account .headerText {
+    padding: 10px 5%;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 0 4px 10px -5px #e0e0e0;
+}
+
+.account .accountContainer {
+    padding: 0 5%;
+}
+
+/* add padding and border below the form */
+.account form {
+    padding-bottom: 14px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+    /* style the form labels */
+    .account form label {
+        font-weight: 600;
+        color: #787676;
+        margin-bottom: 5px;
+    }
+
+.account .accountRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.account .accountColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+/* style the input groups in the form */
+.account .inputGroup {
+    display: flex;
+    flex-direction: column;
+    width: 45%
+}
+
+.account .editPassword {
+    height: 0;
+    display: flex;
+    justify-content: space-between;
+    overflow-y: hidden;
+}
+
+.account .active {
+    height: initial;
+}
+
+.account .oldPassword {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* style the input boxes */
+.account form input[type="text"],
+.account form input[type="email"],
+.account form input[type="password"] {
+    border: 1px solid #e1e4e8;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 100%;
+    transition: all 0.4s ease-in-out;
+}
+
+.account form input:hover {
+    border: 1px solid #0284fe;
+}
+
+.account form input.error {
+    border: 1px solid #c80909;
+    color: #c80909;
+}
+
+/* style the toggle password button */
+.account form .togglePassword {
+    background-color: #fafafa;
+    border: 1px solid #c4c4c4;
+    color: #727272;
+}
+
+/* style the form button */
+.account form button {
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    color: #0067c8;
+    background: #dceeff;
+    border: 1px solid transparent;
+}
+
+    .account form button:hover {
+        box-shadow: 0 0 1px 0 rgba(8, 11, 14, 0.06), 0 3px 3px -1px rgba(8, 11, 14, 0.1);
+    }
+
+    .account form button:focus {
+        outline: none;
+        border: 1px solid #0284fe;
+    }
+
+/* style the delete account button */
+.account .deleteAccount {
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    background: #ffffff;
+    color: #F4541D;
+    border: 1px solid #f8f8f8;
+    margin-top: 10px;
+    box-shadow: 0 0 1px 0 rgba(8, 11, 14, 0.06), 0 3px 3px -1px rgba(8, 11, 14, 0.1);
+}
+
+    .account .deleteAccount:hover {
+        color: #ffffff;
+        background: #F4541D;
+        border: 1px solid transparent;
+    }
+
+    .account .deleteAccount:focus {
+        outline: none;
+        border: 1px solid #f8f8f8;
+    }
+
+/* Style the status message */
+.account div.statusMessage {
+    font-size: small;
+    font-weight: bold;
+    color: #a0a0a0;
+    margin-top: 4px;
+    margin-bottom: 0;
 }
