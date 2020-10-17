@@ -56,7 +56,8 @@ namespace Timesheet_Tracker.Controllers
                     {
                         ProjectName = projectName,
                         DueDate = dueDate,
-                        EmployeeID = employeeID
+                        EmployeeID = employeeID,
+                        DateCreated = DateTime.Now
                     };
 
                     context.Add(newProject);
@@ -86,7 +87,8 @@ namespace Timesheet_Tracker.Controllers
                     {
                         ProjectName = projectName,
                         DueDate = dueDate,
-                        EmployeeID = student.ID
+                        EmployeeID = student.ID,
+                        DateCreated = DateTime.Now
                     };
 
                     context.Add(newProject);
@@ -110,6 +112,7 @@ namespace Timesheet_Tracker.Controllers
                     FullName = $"{x.Employee.Person.FirstName} {x.Employee.Person.LastName}",
                     DueDate = x.DueDate,
                     DateCreated = x.DateCreated,
+                    DateCompleted = x.DateCompleted,
                     DesignHours = x.DesignHours,
                     DoingHours = x.DoingHours,
                     CodeReviewHours = x.CodeReviewHours,
@@ -219,6 +222,7 @@ namespace Timesheet_Tracker.Controllers
                         ProjectName = x.ProjectName,
                         DueDate = x.DueDate,
                         DateCreated = x.DateCreated,
+                        DateCompleted = x.DateCompleted,
                         DesignHours = x.DesignHours,
                         DoingHours = x.DoingHours,
                         CodeReviewHours = x.CodeReviewHours,
@@ -297,6 +301,27 @@ namespace Timesheet_Tracker.Controllers
             return project;
         }
 
+        // Complete a project
+        public int Complete(int projectID)
+        {
+            Project target;
+            using (TimesheetContext context = new TimesheetContext())
+            {
+                if (!context.Projects.Any(x => x.ID == projectID))
+                {
+                    throw new ArgumentNullException($"No project with ID {projectID} found.");
+                }
+                else
+                {
+                    target = context.Projects.Where(x => x.ID == projectID).Single();
+                    target.DateCompleted = DateTime.Now;
+                    context.SaveChanges();
+                }
+                return target.ID;
+            }
+        }
+
+
         // Archive
         public int Archive(int projectID)
         {
@@ -311,6 +336,7 @@ namespace Timesheet_Tracker.Controllers
                 {
                     target = context.Projects.Where(x => x.ID == projectID).Single();
                     target.Archive = true;
+                    target.DateArchive = DateTime.Now;
                     context.SaveChanges();
                 }
                 return target.ID;

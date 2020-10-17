@@ -1,32 +1,27 @@
 ﻿/* style the container for the create project page */
 .createProject {
-    display: flex;
-    height: 100vh;
+}
+
+.createProject .headerText {
+    padding: 10px 5%;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 0 4px 10px -5px #e0e0e0;
 }
 
 /* style the containter with the create project components */
-.createProject .createProjectContainer {
-    margin: auto;
-    position: relative; /* this is added to make create page form with absolute position inherit height and width from login div */
-    padding: 5px;
-    background-color: #ffffff;
-}
-
-/* style the mobile create project display image --- there is no image to size -- Jia*/
-/*.createProject .createProjectContainer img {
-    width: 300px;
-    height: 300px;
-}
-*/
+    .createProject .createProjectContainer {
+        padding: 0 5%;
+        margin-bottom: 60px;
+    }
 
 /* style the create project forms */
 .createProject .createProjectContainer form {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
 }
 
-.createProject .createProjectContainer > div {
+.createProject .createProjectContainer .inputGroup {
     margin-bottom: 10px;
 }
 
@@ -61,11 +56,13 @@
     transition: all 0.4s ease-in-out;
 }
 
-.createProject .createProjectContainer form input:hover {
+.createProject .createProjectContainer form input:hover,
+.createProject .createProjectContainer form select:hover {
     border: 1px solid #0284fe;
 }
 
-.createProject .createProjectContainer form input.error {
+.createProject .createProjectContainer form input.error,
+.createProject .createProjectContainer form select.error {
     border: 1px solid #c80909;
     color: #c80909;
 }
@@ -102,22 +99,22 @@
 }
 
 /* style the image for desktop views  --- Currently no image for desktop */
-.createProject .desktopImage {
+/*.createProject .desktopImage {
     display: none;
-}
+}*/
 
 /* TABLET SCREEN SIZE styles */
-@media screen and (min-width: 650px) {
+/*@media screen and (min-width: 650px) {
     .createProject .createProjectContainer img {
         width: 500px;
         height: 500px;
     }
-}
+}*/
 
 /* DESKTOP SCREEN SIZE styles */
-@media screen and (min-width: 1025px) {
+/*@media screen and (min-width: 1025px) {*/
     /* style the containter with the create project components */
-    .createProject .createProjectContainer {
+    /*.createProject .createProjectContainer {
         margin-left: 10%;
         padding: 25px;
     }
@@ -125,11 +122,11 @@
         .createProject .createProjectContainer img {
             width: 400px;
             height: 400px;
-        }
+        }*/
 
 
     /* style the image for desktop views */
-    .createProject .desktopImage {
+    /*.createProject .desktopImage {
         display: flex;
         align-items: center;
         overflow: hidden;
@@ -140,4 +137,4 @@
         height: auto;
         margin-right: 40px;
     }
-}
+}*/

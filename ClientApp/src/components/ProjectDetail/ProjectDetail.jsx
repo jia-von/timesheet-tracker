@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import Nav from "../Nav/Nav"
 import "./ProjectDetail.css";
 import { updateProjectFunc, deleteProjectFunc, getProjectByIDFunc } from "../../actions/projects";
+import { Bar } from "react-chartjs-2";
 
 class ProjectDetail extends React.Component {
 
@@ -33,9 +34,16 @@ class ProjectDetail extends React.Component {
     }
 
     componentDidUpdate(previousProps) {
-        // if project hours have been added, use ID to pull project info
+        // if project hours have been added, use ID to pull project info and clear the form fields 
         if (previousProps.projects.modifyProject.isLoading === true && this.props.projects.modifyProject.isCompleted === true && this.props.projects.modifyProject.error === null && this.props.projects.modifyProject.deleted === false) {
-           this.props.getProjectByID(this.props.location.state.projectDetails.id, this.props.authentication.signIn.data.token);
+            this.props.getProjectByID(this.props.location.state.projectDetails.id, this.props.authentication.signIn.data.token);
+            this.setState({
+                design: 0,
+                doing: 0,
+                codeReview: 0,
+                testing: 0,
+                deliverables: 0,
+            });
         }
         // if deleted, set redirect to home after time interval
         if (previousProps.projects.modifyProject.isLoading === true && this.props.projects.modifyProject.isCompleted === true && this.props.projects.modifyProject.error === null && this.props.projects.modifyProject.deleted === true) {
@@ -124,8 +132,33 @@ class ProjectDetail extends React.Component {
         return hasErrors;
     }
 
+    generateBarChart(project) {
+        let data = {
+            labels: ["Total", "Design", "Doing", "Code Review", "Testing", "Deliverables"],
+            datasets: [{
+                label: "Hours",
+                backgroundColor: 'rgba(153, 206, 255, .75)',
+                borderColor: 'rgba(0, 103, 200, .90)',
+                borderWidth: 1,
+                data: [project.totalHours, project.designHours, project.doingHours, project.codeReviewHours, project.testingHours, project.deliverablesHours],
+            }]
+        };
+
+        let options = {
+            legend: {
+                labels: {
+                    boxWidth: 20
+                }
+            }
+        }
+
+        return <div className="projectChart"><div>< Bar data={data} options={options}  /></div></div>
+    }
+
     renderProjectDetails() {
-        let project = this.props.projects.projectByID.data !== null ? this.props.projects.projectByID.data  : "";
+        let project = this.props.projects.projectByID.data !== null ? this.props.projects.projectByID.data : "";
+        let createdOn = new Date(project.dateCreated);
+        let dueOn = new Date(project.dueDate);
 
         // specify the default status message
         let statusMessage = "";
@@ -147,34 +180,38 @@ class ProjectDetail extends React.Component {
                 <div>
                     <div className="headerText"> <h1>{project.projectName}</h1> </div>
                     <div className="projectDetailContainer">
-                        <p>Time spent: {project.totalHours} hours </p>
-                        <p>{project.dateCreated}</p>
-                        <p>{project.dueCreated}</p>
+                        {this.generateBarChart(project)}
 
+                        <h2>Project Summary</h2>
+                        <p className="projectInfo">Time spent: {project.totalHours} hours </p>
+                        <p className="projectInfo">Created on: {createdOn.toUTCString()}</p>
+                        <p className="projectInfo">Due on: {dueOn.toUTCString()}</p>
+
+                        <h2>Track Progress</h2>
                         <form onSubmit={(e) => this.handleUpdate(e, project.id)}>
                             <div className="inputGroup">
                                 <label htmlFor="design">Design:</label>
-                                <input type="text" name="design" id="design" autocomplete="off" value={this.state.design} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()} />
+                                <input className={this.state.designError.length > 0 ? "error" : ""} type="text" name="design" id="design" autoComplete="off" value={this.state.design} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()} />
                                 <div className="error-message">{this.state.designError}</div>
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="doing">Doing:</label>
-                                <input type="text" name="doing" id="doing" autocomplete="off" value={this.state.doing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input className={this.state.doingError.length > 0 ? "error" : ""} type="text" name="doing" id="doing" autoComplete="off" value={this.state.doing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
                                 <div className="error-message">{this.state.doingError}</div>
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="codeReview">Code Review:</label>
-                                <input type="text" name="codeReview" id="codeReview" autocomplete="off" value={this.state.codeReview} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input className={this.state.codeReviewError.length > 0 ? "error" : ""} type="text" name="codeReview" id="codeReview" autoComplete="off" value={this.state.codeReview} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
                                 <div className="error-message">{this.state.codeReviewError}</div>
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="testing">Testing:</label>
-                                <input type="text" name="testing" id="testing" autocomplete="off" value={this.state.testing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input className={this.state.testingError.length > 0 ? "error" : ""} type="text" name="testing" id="testing" autoComplete="off" value={this.state.testing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
                                 <div className="error-message">{this.state.testingError}</div>
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="deliverables">Deliverables:</label>
-                                <input type="text" name="deliverables" id="deliverables" autocomplete="off" value={this.state.deliverables} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input className={this.state.deliverablesError.length > 0 ? "error" : ""} type="text" name="deliverables" id="deliverables" autoComplete="off" value={this.state.deliverables} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
                                 <div className="error-message">{this.state.deliverablesError}</div>
                             </div>
                             <button type="submit">Update Hours</button>

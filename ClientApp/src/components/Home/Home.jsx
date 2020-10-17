@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./Home.css";
 import Nav from "../Nav/Nav";
-import { getUserProjectsByIDFunc, getAllProjectsFunc } from "../../actions/projects";
+import { getUserProjectsByIDFunc, getAllProjectsFunc, completeProjectFunc } from "../../actions/projects";
 import complete from "./complete.svg";
 
 class Home extends React.Component {
@@ -29,6 +29,19 @@ class Home extends React.Component {
     }
 
 
+    componentDidUpdate(previousProps) {
+        // refresh projects if we just completed a project
+        if (previousProps.projects.completeProject.isLoading && this.props.projects.completeProject.isCompleted && this.props.projects.completeProject.error === null) {
+            if (this.props.authentication.signIn.data != null)
+                if (this.props.authentication.signIn.data.instructor) {
+                    this.props.getInstructorProjects(this.props.authentication.signIn.data.token);
+                } else {
+                    this.props.getStudentProjects(this.props.authentication.signIn.data.id, this.props.authentication.signIn.data.token);
+                }
+        }
+    }
+
+
     renderProjects() {
         let projects = this.props.projects.projects;
         let errors = this.props.projects.projects.error;
@@ -36,10 +49,18 @@ class Home extends React.Component {
         if (errors === null) {
             // if loading is complete and results were received, display them
             if (projects.data.length > 0 && projects.isCompleted) {
-                console.log("firstcase");
                 return projects.data.map(
                     (project) => {
-                        return <div className="project" key={project.id} onClick={
+                        // parse the dates and complete/overdue stati
+                        let createdOn = new Date(project.dateCreated);
+                        let dueOn = new Date(project.dueDate);
+                        let isCompleted = project.dateCompleted === null ? false : true; // if dateCompleted is null, set isCompleted to false
+                        let overdue = isCompleted ? "" : Date.parse(project.dueDate) < Date.now() ? "overdue" : ""; // if complete, set overdue to "", else check if overdue and set accordingly
+                        let completed = isCompleted ? "complete" : "";
+                        let checked = isCompleted ? "checked" : "";
+
+
+                        return <div className={`project ${overdue} ${completed}`} key={project.id} onClick={
                             () => {
                                 this.setState({
                                     redirect: "/project-detail",
@@ -48,12 +69,12 @@ class Home extends React.Component {
                             }
                         } >
                             <div className="projectBody">
-                                <div className="projectCheck"><div className="checked"></div></div>
+                                <div className="projectCheck" onClick={(e) => { e.stopPropagation(); this.props.completeProject(project.id, this.props.authentication.signIn.data.token ) }} ><div className={checked} ></div></div>
                                 <div className="projectTitle">
                                     <h3>{project.projectName}</h3>
                                     <p>Time spent: {project.totalHours} hours </p>
-                                    <p>{project.dateCreated}</p>
-                                    <p>{project.dueCreated}</p>
+                                    <p>{createdOn.toUTCString()}</p>
+                                    <p>{dueOn.toUTCString()}</p>
                                 </div>
                             </div>
 
@@ -131,7 +152,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         getStudentProjects: getUserProjectsByIDFunc(dispatch),
-        getInstructorProjects: getAllProjectsFunc(dispatch)
+        getInstructorProjects: getAllProjectsFunc(dispatch),
+        completeProject: completeProjectFunc(dispatch)
     }
 }
 

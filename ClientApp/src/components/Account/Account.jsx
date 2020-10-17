@@ -23,6 +23,7 @@ class Account extends React.Component {
             lastNameError: "",
             passwordError: "",
             confirmPasswordError: "",
+            currentPasswordError: "",
             redirect: false
 
         };
@@ -230,12 +231,12 @@ class Account extends React.Component {
                         <div className="accountRow">
                             <div className="inputGroup">
                                 <label htmlFor="firstName">First Name</label>
-                                <input type="text" name="firstName" id="firstName" value={this.state.firstName} onChange={(e) => this.handleInputchange(e)} />
+                                <input className={this.state.firstNameError.length > 0 ? "error" : ""} type="text" name="firstName" id="firstName" value={this.state.firstName} onChange={(e) => this.handleInputchange(e)} />
                                 <div className="error-message">{this.state.firstNameError}</div>
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="lastName">Last Name</label>
-                                <input type="text" name="lastName" id="lastName" value={this.state.lastName} onChange={(e) => this.handleInputchange(e)} />
+                                <input className={this.state.lastNameError.length > 0 ? "error" : ""} type="text" name="lastName" id="lastName" value={this.state.lastName} onChange={(e) => this.handleInputchange(e)} />
                                 <div className="error-message">{this.state.lastNameError}</div>
                             </div>
                         </div>
@@ -250,7 +251,7 @@ class Account extends React.Component {
                                 <div className="oldPassword">
                                     <div className="inputGroup">
                                         <label htmlFor="currentPassword">Current Password</label>
-                                        <input type="password" name="currentPassword" id="currentPassword" value={this.state.currentPassword} onChange={(e) => this.handleInputchange(e)} disabled={this.state.currentPasswordDisabled} />
+                                    <input className={this.state.currentPasswordError.length > 0 ? "error" : ""} type="password" name="currentPassword" id="currentPassword" value={this.state.currentPassword} onChange={(e) => this.handleInputchange(e)} disabled={this.state.currentPasswordDisabled} />
                                         <div className="error-message">{this.state.currentPasswordError}</div>
                                     </div>
                                 <button className="togglePassword" onClick={(e) => { e.preventDefault(); this.toggleChangePassword() }}>Change Password</button>
@@ -258,12 +259,12 @@ class Account extends React.Component {
                                 <div className={`editPassword ${this.state.passwordActive}`}>
                                     <div className="inputGroup">
                                         <label htmlFor="password">New Password</label>
-                                        <input type="password" name="password" id="password" value={this.state.password} onChange={(e) => this.handleInputchange(e)} />
+                                        <input className={this.state.passwordError.length > 0 ? "error" : ""} lastName type="password" name="password" id="password" value={this.state.password} onChange={(e) => this.handleInputchange(e)} />
                                         <div className="error-message">{this.state.passwordError}</div>
                                     </div>
                                     <div className="inputGroup">
                                         <label htmlFor="confirmPassword">Confirm Password</label>
-                                        <input type="password" name="confirmPassword" id="confirmPassword" value={this.state.confirmPassword} onChange={(e) => this.handleInputchange(e)} />
+                                        <input className={this.state.confirmPasswordError.length > 0 ? "error" : ""} type="password" name="confirmPassword" id="confirmPassword" value={this.state.confirmPassword} onChange={(e) => this.handleInputchange(e)} />
                                         <div className="error-message">{this.state.confirmPasswordError}</div>
                                     </div>
                                 </div>

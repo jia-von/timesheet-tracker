@@ -39,7 +39,7 @@ namespace Timesheet_Tracker.Controllers
             {
                 try
                 {
-                    response = new ProjectController().GetAllProjects().Where( x => x.ID == projectID).SingleOrDefault();
+                    response = new ProjectController().GetAllProjects().Where(x => x.ID == projectID).SingleOrDefault();
                 }
                 catch (Exception e)
                 {
@@ -217,6 +217,36 @@ namespace Timesheet_Tracker.Controllers
                     new ProjectController().UpdateHours(int.Parse(projectID), float.Parse(design), float.Parse(doing), float.Parse(codeReview), float.Parse(testing), float.Parse(deliverables));
                     response = StatusCode(200, "Hours updated.");
                     // TODO need to re-direct somewhere...... 
+                }
+            }
+            return response;
+        }
+
+        [HttpPatch("Student/Complete")]
+        public ActionResult Completed(string projectID)
+        {
+            ActionResult response;
+            projectID = projectID != null ? projectID.Trim().ToLower() : null;
+
+            if (string.IsNullOrEmpty(projectID))
+            {
+                response = StatusCode(400, "Please enter a project ID.");
+            }
+            else
+            if (!int.TryParse(projectID, out int _projectID))
+            {
+                response = StatusCode(400, "ID's must be positive integers.");
+            }
+            else
+            {
+                try
+                {
+                    new ProjectController().Complete(_projectID);
+                    response = StatusCode(200, "Well done! Project complete.");
+                }
+                catch (Exception e)
+                {
+                    response = StatusCode(422, e.Message);
                 }
             }
             return response;
