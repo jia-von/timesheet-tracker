@@ -21,6 +21,13 @@
     flex-direction: column;
 }
 
+/* style the form labels */
+.createProject form label {
+    font-weight: 600;
+    color: #787676;
+    margin-bottom: 5px;
+}
+
 .createProject .createProjectContainer .inputGroup {
     margin-bottom: 10px;
 }

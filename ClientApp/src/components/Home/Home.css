@@ -38,12 +38,73 @@
         text-align: center;
     }
 
+/* style the chart div */
+.home .projectChart {
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    box-shadow: 0px 2px 15px -6px #cecece;
+    padding: 10px;
+    margin: 8px 2%;
+}
+
+.home .buttonRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 5px 5px 5px;
+}
+
+    .home .buttonRow button {
+        font-weight: 500;
+        color: #6c6c6c;
+        border-radius: 4px;
+        padding: 5px 8px;
+        border: 1px solid transparent;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+        .home .buttonRow button:focus {
+            border: 1px solid #0284FE;
+            outline: none;
+        }
+
+        .home .buttonRow button:hover {
+            color: #0284FE;
+        }
+
+        .home .buttonRow button.active {
+            color: #0284FE;
+            background: #DCEEFF;
+            box-shadow: 0 0 1px 0 rgba(8,11,14,0.06), -1px 11px 16px -1px rgba(8,11,14,0.1);
+        }
+
+.home .filterRow {
+    justify-content: space-between;
+    padding: 10px 0 5px 0;
+    display: none;
+}
+
+    .home .filterRow.active {
+        display: flex;
+    }
+
+    .home .filterRow input {
+        width: 49%;
+        padding: 5px 8px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #e1e4e8;
+    }
+
+        .home .filterRow input:hover {
+            border: 1px solid #0284fe;
+        }
 
 /* style the projects being displayed */
 .home .project {
     margin: 11px;
     padding-bottom: 10px;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #dfdfdf87;
     border-radius: 4px;
     box-shadow: 0px 5px 5px -5px #d6d4d4;
 }
@@ -52,25 +113,6 @@
         background: #d7d7d717;
     }
 
-/* add a radial effect to clicked projects
-    CITATION -- https://newsakmi.com/news/tech-news/software/how-to-recreate-the-ripple-effect-of-material-design-buttons/
-
-.home .project  {
-    background-position: center;
-    transition: background 0.4s;
-}
-
-.home .project:hover {
-        background: #47a7f500 radial-gradient(circle, transparent 1%, #f4f4f4 1%) center/15000%;
-    cursor: pointer;
-        }
-
-.home .project:active {
-        background-color: #ffffff;
-        background-size: 100%;
-        transition: background 0s;
-    }
- end citation */
 
 .home .projectBody {
     display: flex;
@@ -88,8 +130,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
 }
+
 .home .checked {
     background: #5dcc5d;
     height: 15px;

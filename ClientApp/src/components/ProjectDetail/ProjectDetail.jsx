@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Nav from "../Nav/Nav"
 import "./ProjectDetail.css";
-import { updateProjectFunc, deleteProjectFunc, getProjectByIDFunc } from "../../actions/projects";
+import { updateProjectFunc, deleteProjectFunc, getProjectByIDFunc, completeProjectFunc } from "../../actions/projects";
 import { Bar } from "react-chartjs-2";
 
 class ProjectDetail extends React.Component {
@@ -66,6 +66,11 @@ class ProjectDetail extends React.Component {
     // delete this project
     handleDelete(projectID) {
         this.props.deleteProject(projectID, this.props.authentication.signIn.data.token);
+    }
+
+    // complete this project
+    handleComplete(projectID) {
+            this.props.completeProject(projectID, this.props.authentication.signIn.data.token);
     }
 
     // update this project
@@ -152,7 +157,7 @@ class ProjectDetail extends React.Component {
             }
         }
 
-        return <div className="projectChart"><div>< Bar data={data} options={options}  /></div></div>
+        return <div className="projectChart"><div>< Bar data={data} options={options} /></div></div>
     }
 
     renderProjectDetails() {
@@ -170,8 +175,8 @@ class ProjectDetail extends React.Component {
         }
         // if completed successfully
         else if (this.props.projects.modifyProject.isCompleted && this.props.projects.modifyProject.error == null && this.props.projects.modifyProject.data != null) {
-            
-                statusMessage = this.props.projects.modifyProject.data;
+
+            statusMessage = this.props.projects.modifyProject.data;
         }
 
         return (
@@ -196,29 +201,31 @@ class ProjectDetail extends React.Component {
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="doing">Doing:</label>
-                                <input className={this.state.doingError.length > 0 ? "error" : ""} type="text" name="doing" id="doing" autoComplete="off" value={this.state.doing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input className={this.state.doingError.length > 0 ? "error" : ""} type="text" name="doing" id="doing" autoComplete="off" value={this.state.doing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()} />
                                 <div className="error-message">{this.state.doingError}</div>
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="codeReview">Code Review:</label>
-                                <input className={this.state.codeReviewError.length > 0 ? "error" : ""} type="text" name="codeReview" id="codeReview" autoComplete="off" value={this.state.codeReview} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input className={this.state.codeReviewError.length > 0 ? "error" : ""} type="text" name="codeReview" id="codeReview" autoComplete="off" value={this.state.codeReview} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()} />
                                 <div className="error-message">{this.state.codeReviewError}</div>
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="testing">Testing:</label>
-                                <input className={this.state.testingError.length > 0 ? "error" : ""} type="text" name="testing" id="testing" autoComplete="off" value={this.state.testing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input className={this.state.testingError.length > 0 ? "error" : ""} type="text" name="testing" id="testing" autoComplete="off" value={this.state.testing} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()} />
                                 <div className="error-message">{this.state.testingError}</div>
                             </div>
                             <div className="inputGroup">
                                 <label htmlFor="deliverables">Deliverables:</label>
-                                <input className={this.state.deliverablesError.length > 0 ? "error" : ""} type="text" name="deliverables" id="deliverables" autoComplete="off" value={this.state.deliverables} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()}  />
+                                <input className={this.state.deliverablesError.length > 0 ? "error" : ""} type="text" name="deliverables" id="deliverables" autoComplete="off" value={this.state.deliverables} onChange={(e) => this.handleInputchange(e)} onFocus={(e) => e.target.select()} />
                                 <div className="error-message">{this.state.deliverablesError}</div>
                             </div>
                             <button type="submit">Update Hours</button>
                             <div className="statusMessage">{statusMessage}</div>
                         </form>
-
-                        <button className="deleteProject" onClick={() => this.handleDelete(project.id)}>Delete Project</button>
+                        <div className="buttonRow">
+                            <button className="completeProject" onClick={() => this.handleComplete(project.id)}>Complete Project</button>
+                            <button className="deleteProject" onClick={() => this.handleDelete(project.id)}>Delete Project</button>
+                        </div>
 
                     </div>
 
@@ -254,7 +261,8 @@ function mapDispatchToProps(dispatch) {
     return {
         updateProject: updateProjectFunc(dispatch),
         deleteProject: deleteProjectFunc(dispatch),
-        getProjectByID: getProjectByIDFunc(dispatch)
+        getProjectByID: getProjectByIDFunc(dispatch),
+        completeProject: completeProjectFunc(dispatch)
     }
 }
 
