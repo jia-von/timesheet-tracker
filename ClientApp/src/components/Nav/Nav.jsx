@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Nav.css";
 import { signOutFunc } from "../../actions/userAccounts";
+import logo from "./logo.png";
 
 class Nav extends React.Component {
 
@@ -25,7 +26,7 @@ class Nav extends React.Component {
 
         return (<nav className="navBar">
             <div className="primary">
-                <Link className="home" to="/home" sr-only="Home"><i className="fas fa-home"></i></Link>
+                <Link className="home" to="/home" sr-only="Home"><img src={logo} alt="home" /></Link>
                 { /* TODO display the add new project button to only instructors */}
                 {createProject}
                 <button className="menu" onClick={(e) => { this.toggleLinks(); }} sr-only="Expand Nav Bar"><i className="fas fa-bars"></i></button>

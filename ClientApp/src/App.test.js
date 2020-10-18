@@ -25,7 +25,7 @@ const timesheetTrackerStore = createStore(combinedReducer);
 
 const Root = (store) => (
     <Provider store={store.store}>
-        <BrowserRouter >
+       <BrowserRouter>
             <App />
         </BrowserRouter>
     </Provider>

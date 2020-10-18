@@ -295,6 +295,14 @@ namespace Timesheet_Tracker.Controllers
                 project.CodeReviewHours += codeReview;
                 project.TestingHours += testing;
                 project.DeliverablesHours += deliverables;
+
+                // if any of the values are less than zero, set them to 0 ( no negative values)
+                if (project.DesignHours < 0) project.DesignHours = 0;
+                if (project.DoingHours < 0) project.DoingHours = 0;
+                if (project.CodeReviewHours < 0) project.CodeReviewHours = 0;
+                if (project.TestingHours < 0) project.TestingHours = 0;
+                if (project.DeliverablesHours < 0) project.DeliverablesHours = 0;
+
                 context.SaveChanges();
             }
 
