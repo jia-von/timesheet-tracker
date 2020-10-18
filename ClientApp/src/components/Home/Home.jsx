@@ -50,11 +50,11 @@ class Home extends React.Component {
         // return different chart types based on type stored in state
         switch (this.state.chartType) {
             case "Doughnut":
-                return utils.renderDoughnut(this.props.projects.projects.data, this.state.filterByName);
+                return utils.renderDoughnut(this.props.projects.projects.data, this.state.filterByName, this.state.filterByCohort);
             case "Bar":
-                return utils.renderBar(this.props.projects.projects.data, this.state.filterByName);
+                return utils.renderBar(this.props.projects.projects.data, this.state.filterByName, this.state.filterByCohort);
             case "Histogram":
-                return utils.renderHistogram(this.props.projects.projects.data, this.state.filterByName);
+                return utils.renderHistogram(this.props.projects.projects.data, this.state.filterByName, this.state.filterByCohort);
             default:
                 return "";
         }

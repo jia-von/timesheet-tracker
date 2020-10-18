@@ -91,11 +91,17 @@ const filterProjectsByName = (projectName, projects) => {
     return projects.filter(project => project.projectName.trim().toLowerCase() === projectName.trim().toLowerCase() );
 }
 
+// return an array of projects which match the cohort
+const  filterProjectsByCohort = (cohort, projects) => {
+    return projects.filter(project => project.cohort == cohort);
+}
+
 
 // return a doughnut chart
-const renderDoughnut = (projectData, filterName) => {
+const renderDoughnut = (projectData, filterName, cohort) => {
     // if a name filter is provided, filter the project list, else use unfiltered projects
     let filteredData = filterName.trim() === "" ? projectData : filterProjectsByName(filterName, projectData);
+    filteredData = cohort === "" ? filteredData : filterProjectsByCohort(cohort, filteredData);
 
     let colors = [
         'rgba(98, 169, 255, .75)', //blue
@@ -128,9 +134,10 @@ const renderDoughnut = (projectData, filterName) => {
 }
 
 // return a bar chart
-const renderBar = (projectData, filterName) => {
+const renderBar = (projectData, filterName, cohort) => {
     // if a name filter is provided, filter the project list, else use unfiltered projects
     let filteredData = filterName.trim() === "" ? projectData : filterProjectsByName(filterName, projectData);
+    filteredData = cohort === "" ? filteredData : filterProjectsByCohort(cohort, filteredData);
 
     let data = {
         labels: ["Maximum", "Average", "Minimum"],
@@ -154,9 +161,10 @@ const renderBar = (projectData, filterName) => {
     return < Bar data={data} options={options} />;
 }
 
-const renderHistogram = (projectData, filterName) => {
+const renderHistogram = (projectData, filterName, cohort) => {
     // if a name filter is provided, filter the project list, else use unfiltered projects
     let filteredData = filterName.trim() === "" ? projectData : filterProjectsByName(filterName, projectData);
+    filteredData = cohort === "" ? filteredData : filterProjectsByCohort(cohort, filteredData);
     let dataArray = getLabelsAndFrequency(filteredData);
 
     let data = {
