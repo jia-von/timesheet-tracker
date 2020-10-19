@@ -18,12 +18,17 @@ $ git clone https://github.com/TECHCareers-by-Manpower/capstone-project-input-ou
 $ cd capstone-project-input-output
 $ devenv start
 ```
+It is not necessary to install packages and libraries after cloning the project, however depending on computer and software, at times packages need to installed manually. If you have encountered issues running this application you may proceed with the instructions below:
+
 
 Installations of Entity Framework Core can be done either through [NuGet Package Manager for Solution...](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio) or through Visual Studio 2019 [NuGet Package Manager Console](https://docs.microsoft.com/en-us/ef/core/get-started/install/) (Package Manager), check for `Program.cs` in the file directory, within the same directory, run these commands
 ```bash
 PM> dotnet add package Microsoft.EntityFrameworkCore.Design
 PM> dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 PM> dotnet add package Pomelo.EntityFrameworkCore.MySql
+PM> dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+PM> dotnet add package Microsoft.AspNetCore.SpaServices
+PM> dotnet add package System.IdentityModel.Tokens.Jwt
 ````
 
 Installations of packages relating to ReactJS.NET libraries can be done through the Package Manager by running these [commands](https://docs.microsoft.com/en-us/aspnet/core/client-side/spa/react?view=aspnetcore-3.1&tabs=visual-studio)
@@ -31,6 +36,8 @@ Installations of packages relating to ReactJS.NET libraries can be done through 
 PM> cd ClientApp
 PM> npm install
 PM> npm install axios
+PM> npm install react-chartjs-2
+PM> npm install redux
 ````
 
 To establish a database (within MariaDB) with pre-populated dummy data requires the execution of Code First Migrations. Run these commands to initiate migration within the `Program.cs` file directory
@@ -39,13 +46,15 @@ PM> dotnet ef add migrations StartUp
 PM> dotnet ef database update
 ```
 
-If there are any errors that occur during the migrations, kindly refer to the [EF Core tools reference](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet) to troubleshoot. The server should be populated with the database named **timesheet_tracker**.
+If there are any errors that occur during the migrations, kindly refer to the [EF Core tools reference](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet) to troubleshoot. The server should be populated with the database named **timesheet_tracker** as shown below:
+
+![timesheet_tracker_database](Planning/Images/timesheet_tracker_database.PNG)
 
 ## Usage
 
 Once the installations of Timesheet Tracker has been completed without any issues, you may start the application following these steps: 
 1. Start the server, in our case it is through XAMPP developer tools
-2. Within Visual Studio 2019, Start Debugging (F5)
+2. Within Visual Studio 2019, select *Timesheet_Tracker* project and Start Debugging (F5)
 3. A browser should pop-up after it has completed building and compiling
 4. You may choose to interact with the pages and test it using Postman
 
@@ -72,6 +81,7 @@ Timesheet Tracker is part of a Capstone Project issued by TECHCareers for studen
 [GNU General Public License v3.0](LICENSE.txt)
 
 ## References
+- [4.1-react-redux-to-do-app](https://github.com/TECHCareers-by-Manpower/4.1-react-redux-to-do-app)
 - [4.1-ReactAPI by TECHCareers](https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI)
 - [ASP.NET Core 3.1 - Simple API for Authentication, Registration and User Management by Jason Watmore](https://jasonwatmore.com/post/2019/10/14/aspnet-core-3-simple-api-for-authentication-registration-and-user-management)
 - [ASP.NET Core 3 and React by Carl Rippon](https://github.com/PacktPublishing/ASP.NET-Core-3-and-React)
@@ -79,6 +89,7 @@ Timesheet Tracker is part of a Capstone Project issued by TECHCareers for studen
 - [Code Repository Badges by dwyl](https://github.com/dwyl/repo-badges)
 - [Database design basics by Microsoft](https://support.microsoft.com/en-us/office/database-design-basics-eb2159cf-1e30-401a-8084-bd4f9c9ca1f5)
 - [Diagram Software by draw.io](https://drawio-app.com)
+- [How to use chart.js to create charts in React by Edpresso Team](https://www.educative.io/edpresso/how-to-use-chartjs-to-create-charts-in-react)
 - [How to write a kickass README by James Scott](https://dev.to/scottydocs/how-to-write-a-kickass-readme-5af9)
 - [How I Write SQL, Part 1: Naming Conventions by Launch by Lunch](https://launchbylunch.com/posts/2014/Feb/16/sql-naming-conventions/)
 - [How to Make Asynchronous Calls in Redux Without Middlewares by Velotio Technologies](https://medium.com/velotio-perspectives/how-to-make-asynchronous-calls-in-redux-without-middlewares-cbf7181020b2)
