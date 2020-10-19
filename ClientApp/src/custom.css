@@ -3,6 +3,10 @@ a {
   color: #0366d6;
 }
 
+h1, h2, h3 {
+    color: #8d8d8d;
+}
+
 code {
   color: #E01A76;
 }

@@ -105,43 +105,21 @@
     margin-bottom: 0;
 }
 
-/* style the image for desktop views  --- Currently no image for desktop */
-/*.createProject .desktopImage {
-    display: none;
-}*/
+
 
 /* TABLET SCREEN SIZE styles */
-/*@media screen and (min-width: 650px) {
-    .createProject .createProjectContainer img {
-        width: 500px;
-        height: 500px;
+@media screen and (min-width: 650px) {
+    .createProject .createProjectContainer {
+        margin: 10px 10% 40px 10%;
     }
-}*/
+}
 
 /* DESKTOP SCREEN SIZE styles */
-/*@media screen and (min-width: 1025px) {*/
+@media screen and (min-width: 1025px) {
     /* style the containter with the create project components */
-    /*.createProject .createProjectContainer {
-        margin-left: 10%;
-        padding: 25px;
+    .createProject .createProjectContainer {
+        margin: 20px 20% 40px 20%;
     }
 
-        .createProject .createProjectContainer img {
-            width: 400px;
-            height: 400px;
-        }*/
 
-
-    /* style the image for desktop views */
-    /*.createProject .desktopImage {
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-    }
-
-    .createProject .desktopImage > img {
-        width: calc(130vw - 10vw - 450px);
-        height: auto;
-        margin-right: 40px;
-    }
-}*/
+}

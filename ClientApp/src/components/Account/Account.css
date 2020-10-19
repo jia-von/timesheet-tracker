@@ -7,7 +7,7 @@
 
 .account .accountContainer {
     padding: 0 5%;
-    margin-bottom: 60px;
+    margin-bottom: 70px;
 }
 
 /* add padding and border below the form */
@@ -152,4 +152,11 @@
     font-size: 70%;
     height: 25px;
     color: #c80909;
+}
+
+/* TABLET SCREEN SIZE styles */
+@media screen and (min-width: 1025px) {
+    .account .accountContainer {
+        margin-bottom: 40px;
+    }
 }

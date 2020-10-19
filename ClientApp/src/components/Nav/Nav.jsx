@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./Nav.css";
 import { signOutFunc } from "../../actions/userAccounts";
 import logo from "./logo.png";
+import IO from "./io";
 
 class Nav extends React.Component {
 
@@ -22,17 +23,17 @@ class Nav extends React.Component {
 
     render() {
         let linksClass = this.state.linksAreVisible ? "secondary active" : "secondary";
-        let createProject = this.props.isInstructor ? <Link className="navButton" to="/create-project" sr-only="Add a new project"><i className="fas fa-plus"></i></Link> : "";
+        let createProject = this.props.isInstructor ? <Link className="navLink" to="/create-project">Create Project</Link> : "";
 
         return (<nav className="navBar">
             <div className="primary">
-                <Link className="home" to="/home" sr-only="Home"><img src={logo} alt="home" /></Link>
-                { /* TODO display the add new project button to only instructors */}
-                {createProject}
+                <Link className="home" to="/home" sr-only="Home"><IO className="logo" /> Home</Link>
+                
                 <button className="menu" onClick={(e) => { this.toggleLinks(); }} sr-only="Expand Nav Bar"><i className="fas fa-bars"></i></button>
             </div>
             <div className={linksClass}>
-                <Link className="" to="/account" >Account</Link>
+                <Link className="navLink" to="/account" >Account</Link>
+                {createProject}
                 <button className="navLink" onClick={() => this.props.signOut()} >Sign Out</button>
             </div>
         </nav>);

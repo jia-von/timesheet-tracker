@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import "./Home.css";
 import Nav from "../Nav/Nav";
 import { getUserProjectsByIDFunc, getAllProjectsFunc, completeProjectFunc } from "../../actions/projects";
-import complete from "./complete.svg";
+import Complete from "./Complete";
 import * as utils from "../../utils/dataUtils";
 
 class Home extends React.Component {
@@ -103,7 +103,7 @@ class Home extends React.Component {
             // if loading is complete and no results were received
             else if (projects.isCompleted && projects.data.length === 0) {
                 return <div className="noProjects">
-                    <img src={complete} alt="no tasks left" />
+                    <Complete className="complete" />
                     <p> No projects. Create some or wait for them to be assigned to you. </p>
                 </div>
             }
