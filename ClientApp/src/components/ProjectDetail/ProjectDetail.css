@@ -7,7 +7,31 @@
 
 .projectDetail .projectDetailContainer {
     padding: 0 5%;
-    margin-bottom: 60px;
+    margin-bottom: 70px;
+}
+
+/* style the chart div */
+.projectDetail .projectChart {
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    box-shadow: 0px 2px 15px -6px #cecece;
+    padding: 10px;
+    margin: 8px -3%;
+}
+
+/* style the sub header text */
+.projectDetail .projectDetailContainer h2 {
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 2px;
+}
+
+/* style the project info text */
+.projectDetail .projectInfo {
+    font-size: 14px;
+    font-weight: 500;
+    color: grey;
+    margin-bottom: 3px;
 }
 
 /* add padding and border below the form */
@@ -70,9 +94,15 @@
         border: 1px solid #0284fe;
     }
 
+/* style the delete and complete button div */
 
-/* style the delete account button */
-.projectDetail .deleteProject {
+.projectDetail .buttonRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* style the buttons in button row (complete and delete button */
+.projectDetail .buttonRow button {
     border: none;
     border-radius: 5px;
     font-weight: 500;
@@ -80,13 +110,17 @@
     cursor: pointer;
     transition: all 0.4s ease-in-out;
     background: #ffffff;
-    color: #F4541D;
     border: 1px solid #f8f8f8;
     margin-top: 10px;
     box-shadow: 0 0 1px 0 rgba(8, 11, 14, 0.06), 0 3px 3px -1px rgba(8, 11, 14, 0.1);
 }
 
-    .projectDetail .deleteProject:hover {
+/* style the delete button */
+.projectDetail .deleteProject {
+    color: #F4541D;
+}
+
+.projectDetail .deleteProject:hover {
         color: #ffffff;
         background: #F4541D;
         border: 1px solid transparent;
@@ -94,7 +128,23 @@
 
     .projectDetail .deleteProject:focus {
         outline: none;
-        border: 1px solid #f8f8f8;
+        border: 1px solid #F4541D;
+    }
+
+/* style the complete button */
+.projectDetail .completeProject {
+    color: #36AB80;
+}
+
+    .projectDetail .completeProject:hover {
+        color: #ffffff;
+        background: #36AB80;
+        border: 1px solid transparent;
+    }
+
+    .projectDetail .completeProject:focus {
+        outline: none;
+        border: 1px solid #36AB80;
     }
 
 /* Style the status message */
@@ -114,3 +164,25 @@
     color: #c80909;
 }
 
+/* TABLET SCREEN SIZE styles */
+@media screen and (min-width: 650px) {
+    .projectDetail .projectDetailContainer {
+        margin: 10px 10% 40px 10%;
+    }
+
+    .projectDetail .projectChart {
+        margin: 20px -10%;
+    }
+}
+
+/* DESKTOP SCREEN SIZE styles */
+@media screen and (min-width: 1025px) {
+    /* style the containter with the create project components */
+    .projectDetail .projectDetailContainer {
+        margin: 20px 20% 40px 20%;
+    }
+
+    .projectDetail .projectChart {
+        margin: 20px -10%;
+    }
+}

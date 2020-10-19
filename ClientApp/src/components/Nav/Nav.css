@@ -4,27 +4,42 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: #ffffff96;
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    background: #ffffffb8;
+    border-top: 1px solid #e0e0e0;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
 }
 
 /* style the main content of the nav bar */
-.navBar .primary {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 5%;
-}
+    .navBar .primary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 5%;
+    }
 
     .navBar .home {
-        color: #6610f2;
-        font-size: 24px;
+        color: #8d8d8d;
+        font-size: 20px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        transition: all 0.4s ease-in-out;
     }
+    .navBar .home:hover {
+        color: #0284fe;
+        text-decoration: none;
+    }
+
+      .navBar  .logo {
+            width: 30px;
+            margin-right: 4px;
+        }
 
     .navBar .menu {
         border: none;
         background: none;
-        color: #6610f2;
+        color: #8d8d8d;
         font-size: 24px;
     }
 
@@ -37,12 +52,18 @@
 }
 
 /* style the nav links */
-.navBar .secondary .navLink {
+    .navBar .secondary .navLink {
         border: none;
         background: none;
         padding: 0;
         font-weight: 700;
+        color: #8d8d8d;
+        transition: all 0.4s ease-in-out;
+    }
+
+    .navBar .secondary .navLink:hover {
         color: #0284fe;
+        text-decoration: none;
     }
 
 /* make the secondary content of the nav bar visible */
@@ -50,4 +71,47 @@
     display: flex;
 }
 
+/* TABLET SCREEN SIZE styles */
+@media screen and (min-width: 650px) {
+    .navBar {
+        position: initial;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        /* style the secondary content of the nav bar*/
+        .navBar .secondary {
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 20%;
+            align-items: center;
+            padding-bottom: 5px;
+        }
+
+        .navBar .menu {
+            display: none;
+        }
+
+        .navBar .secondary {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 5%;
+            align-items: center;
+            padding-right: 5%;
+            width: 50%;
+        }
+}
+
+/* DESKTOP SCREEN SIZE styles */
+@media screen and (min-width: 1025px) {
+    /* style the containter with the create project components */
+    .projectDetail .projectDetailContainer {
+        margin: 20px 20% 0 20%;
+    }
+
+    .projectDetail .projectChart {
+        margin: 20px -10%;
+    }
+}
 

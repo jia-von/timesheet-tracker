@@ -2,8 +2,8 @@
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
 //import {} from "../../actions/timesheetTracker";
-import workers from "./workers.svg";
-import metrics from "./metrics.svg";
+import Workers from "./Workers";
+import Metrics from "./Metrics";
 import "./Index.css";
 // import the function factories so we can use them when mapping dispatch to props
 import { signInFunc, signUpFunc } from "../../actions/userAccounts";
@@ -274,7 +274,7 @@ class Index extends React.Component {
           return (
               <div className="index">
                   <div className="login">
-                      <img src={workers} alt="display for the timesheet login section" />
+                      <Workers className="workers" />
 
                       <h1>Sign In</h1>
 
@@ -483,7 +483,7 @@ class Index extends React.Component {
                   </div>
 
                   <div className="desktopImage">
-                      <img src={metrics} alt="charts and metrics" />
+                      <Metrics className="metrics" />
                   </div>
               </div>
           );

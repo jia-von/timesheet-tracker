@@ -233,4 +233,36 @@ const deleteProjectFunc = (dispatch) => {
     return (projectID, key) => deleteProject(dispatch, projectID, key);
 }
 
-export { getProjectByIDFunc, getAllProjectsFunc, getUserProjectsByIDFunc, createStudentProjectFunc, createCohortProjectFunc, updateProjectFunc, deleteProjectFunc }
+
+// complete a project
+const completeProject = async (dispatch, projectID, key) => {
+    dispatch({ type: actionType.COMPLETE_PROJECT_REQUEST });
+
+    try {
+        let response = await axios({
+            url: "project/student/complete",
+            method: "patch",
+            headers: {
+                Authorization: `Bearer ${key}`
+            },
+            params: {
+                projectID
+            }
+        });
+        let data = await response.data;
+        dispatch({ type: actionType.COMPLETE_PROJECT_SUCCESS, value: data});
+    } catch (error) {
+        if (typeof (error.response.data) === "object") {
+            dispatch({ type: actionType.COMPLETE_PROJECT_FAIL, value: error.response.data.errors });
+        } else {
+            dispatch({ type: actionType.COMPLETE_PROJECT_FAIL, value: error.response.data });
+        }
+    }
+}
+
+const completeProjectFunc = (dispatch) => {
+    return (projectID, key) => completeProject(dispatch, projectID, key);
+}
+
+
+export { getProjectByIDFunc, getAllProjectsFunc, getUserProjectsByIDFunc, createStudentProjectFunc, createCohortProjectFunc, updateProjectFunc, deleteProjectFunc, completeProjectFunc }

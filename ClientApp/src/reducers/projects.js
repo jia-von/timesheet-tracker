@@ -26,6 +26,12 @@ const defaultState = {
         error: null,
         data: null,
         deleted: false
+    },
+    completeProject: {
+        isLoading: false,
+        isCompleted: false,
+        error: null,
+        data: null
     }
 }
 
@@ -144,6 +150,34 @@ const projectsReducer = (state = defaultState, action) => {
                 error: action.value,
                 data: null,
                 deleted: false
+            };
+            return tempState
+
+        // complete case
+        case actionType.COMPLETE_PROJECT_REQUEST:
+            tempState.completeProject = {
+                isLoading: true,
+                isCompleted: false,
+                error: null,
+                data: null
+            };
+            return tempState;
+
+        case actionType.COMPLETE_PROJECT_SUCCESS:
+            tempState.completeProject = {
+                isLoading: false,
+                isCompleted: true,
+                error: null,
+                data: action.value
+            };
+            return tempState;
+
+        case actionType.COMPLETE_PROJECT_FAIL:
+            tempState.completeProject = {
+                isLoading: false,
+                isCompleted: true,
+                error: action.value,
+                data: null
             };
             return tempState
 

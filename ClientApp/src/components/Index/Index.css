@@ -13,7 +13,7 @@
 }
 
 /* style the mobile login display image */
-.index .login img {
+.index .login .workers {
   width: 300px;
   height: 300px;
 }
@@ -174,7 +174,7 @@
 
 /* TABLET SCREEN SIZE styles */
 @media screen and (min-width: 650px) {
-  .index .login img {
+  .index .login .workers {
     width: 500px;
     height: 500px;
   }
@@ -188,7 +188,7 @@
     padding: 25px;
   }
 
-  .index .login img {
+  .index .login .workers {
     width: 400px;
     height: 400px;
   }
@@ -204,7 +204,7 @@
     align-items: center;
     overflow: hidden;
   }
-  .index .desktopImage > img {
+  .index .desktopImage > .metrics {
     width: calc(130vw - 10vw - 450px);
     height: auto;
     margin-right: 40px;

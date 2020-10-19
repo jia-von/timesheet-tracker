@@ -144,7 +144,7 @@ class CreateProject extends React.Component {
                     <div className="headerText"> <h1>Create A Project</h1> </div>
                     <div className="createProjectContainer">
                         <form onSubmit={(e) => { this.handleSubmit(e); }}>
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="projectName">Project Name:</label>
                                 <input
                                     className={this.state.projectNameError.length > 0 ? "error" : ""}
@@ -158,7 +158,7 @@ class CreateProject extends React.Component {
                                 <div className="error-message">{this.state.projectNameError}</div>
                             </div>
 
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="dueDate">Due Date:</label>
                                 <input
                                     className={this.state.dueDateError.length > 0 ? "error" : ""}
@@ -185,9 +185,10 @@ class CreateProject extends React.Component {
                             </div>
 
                             
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="employeeID">Employee ID:</label>
                                 <select
+                                    className={this.state.employeeIDError.length > 0 ? "error" : ""}
                                     name="employeeID"
                                     id="employeeID"
                                     value={this.state.employeeID}
@@ -205,7 +206,7 @@ class CreateProject extends React.Component {
                                 <div className="error-message">{this.state.employeeIDError}</div>
                                 </div>
 
-                            <div>
+                            <div className="inputGroup">
                                 <label htmlFor="cohort">Cohort:</label>
                                 <input
                                     className={this.state.cohortError.length > 0 ? "error" : ""}

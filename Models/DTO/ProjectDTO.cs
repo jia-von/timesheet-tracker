@@ -13,6 +13,7 @@ namespace Timesheet_Tracker.Models.DTO
         public float Cohort { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime DateCreated { get; set; }
+        public DateTime? DateCompleted { get; set; }
         public float? DesignHours { get; set; }
         public float? DoingHours { get; set; }
         public float? CodeReviewHours { get; set; }
