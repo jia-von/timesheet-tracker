@@ -9,7 +9,8 @@ namespace Timesheet_Tracker.Models
 {
     [Table("employee")]
     public partial class Employee
-    {
+    {   
+        // Citation here
         // This initializes an empty list so we don't get null reference exceptions for our list.
         public Employee()
         {

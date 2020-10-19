@@ -160,50 +160,50 @@ namespace Timesheet_Tracker.Controllers
 
         }
 
-        // Get a list of all person
-        public List<Person> GetAllPerson()
-        {
-            List<Person> target;
-            using (TimesheetContext context = new TimesheetContext())
-            {
-                target = context.Persons.Where(x => x.Archive == false).ToList();
-            }
-            return target;
-        }
+        //// Get a list of all person
+        //public List<Person> GetAllPerson()
+        //{
+        //    List<Person> target;
+        //    using (TimesheetContext context = new TimesheetContext())
+        //    {
+        //        target = context.Persons.Where(x => x.Archive == false).ToList();
+        //    }
+        //    return target;
+        //}
 
-        // Get a person by ID
-        public Person GetPersonByID(int id)
-        {
-            Person target;
-            using (TimesheetContext context = new TimesheetContext())
-            {
-                target = context.Persons.Where(x => x.ID == id && x.Archive == false).SingleOrDefault();
-            }
-            return target;
-        }
+        //// Get a person by ID
+        //public Person GetPersonByID(int id)
+        //{
+        //    Person target;
+        //    using (TimesheetContext context = new TimesheetContext())
+        //    {
+        //        target = context.Persons.Where(x => x.ID == id && x.Archive == false).SingleOrDefault();
+        //    }
+        //    return target;
+        //}
 
-        // Get a person by name, first name and last name
-        public Person GetPersonByName(string firstName, string lastName)
-        {
-            Person target;
+        //// Get a person by name, first name and last name
+        //public Person GetPersonByName(string firstName, string lastName)
+        //{
+        //    Person target;
 
-            using (TimesheetContext context = new TimesheetContext())
-            {
-                target = context.Persons.Where(x => x.FirstName == firstName && x.LastName == lastName && x.Archive == false).SingleOrDefault();
-            }
-            return target;
-        }
+        //    using (TimesheetContext context = new TimesheetContext())
+        //    {
+        //        target = context.Persons.Where(x => x.FirstName == firstName && x.LastName == lastName && x.Archive == false).SingleOrDefault();
+        //    }
+        //    return target;
+        //}
 
-        // Get a person by email
-        public Person GetPersonByEmail(string email)
-        {
-            Person target;
-            using (TimesheetContext context = new TimesheetContext())
-            {
-                target = context.Persons.Where(x => x.Email == email && x.Archive == false).SingleOrDefault();
-            }
-            return target;
-        }
+        //// Get a person by email
+        //public Person GetPersonByEmail(string email)
+        //{
+        //    Person target;
+        //    using (TimesheetContext context = new TimesheetContext())
+        //    {
+        //        target = context.Persons.Where(x => x.Email == email && x.Archive == false).SingleOrDefault();
+        //    }
+        //    return target;
+        //}
 
         // Update
         public string UpdateAccount(int personID, string firstName, string lastName, string currentPassword, string newPassword, bool updatePassword)

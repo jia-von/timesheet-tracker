@@ -11,6 +11,7 @@ namespace Timesheet_Tracker.Models
     [Table("person")]
     public partial class Person
     {
+        // Citation HERE
         [Key]
         // This is to describe unique id number related to person
         [Column("id", TypeName = "int(10)")]
@@ -43,12 +44,12 @@ namespace Timesheet_Tracker.Models
         public DateTime DateCreated { get; set; }
 
         // can be null as we do not know when the user will delete/archive their account in the future
-        [Column("date_archive", TypeName = "date")]
-        public DateTime? DateArchive { get; set; }
+       // [Column("date_archive", TypeName = "date")]
+        // public DateTime? DateArchive { get; set; }
 
         // can be null as we do not know when the user will change their account in the future
-        [Column("date_modified_profile", TypeName = "timestamp")]
-        public DateTime? DateModifiedProfile { get; set; }
+        // [Column("date_modified_profile", TypeName = "timestamp")]
+        // public DateTime? DateModifiedProfile { get; set; }
 
         [Column("archive", TypeName = "tinyint(1)")]
         public bool Archive { get; set; }

@@ -109,21 +109,21 @@ namespace Timesheet_Tracker.Controllers
             }
         }
 
-        // Get list of students by cohort
-        public List<EmployeeDTO> GetAllStudentsByCohort(float cohort)
-        {
-            using (TimesheetContext context = new TimesheetContext())
-            {
-                if(!context.Employees.Any(x =>x.Cohort == cohort))
-                {
-                    throw new ArgumentException($"No cohort, {cohort} recorded in the employee database.");
-                }
-                else
-                {
-                    return GetAll().Where(x => x.Cohort == cohort).ToList();
-                }
-            }
-        }
+        //// Get list of students by cohort
+        //public List<EmployeeDTO> GetAllStudentsByCohort(float cohort)
+        //{
+        //    using (TimesheetContext context = new TimesheetContext())
+        //    {
+        //        if(!context.Employees.Any(x =>x.Cohort == cohort))
+        //        {
+        //            throw new ArgumentException($"No cohort, {cohort} recorded in the employee database.");
+        //        }
+        //        else
+        //        {
+        //            return GetAll().Where(x => x.Cohort == cohort).ToList();
+        //        }
+        //    }
+        //}
 
         public Employee GetEmployeeIDByPersonID(int personID)
         {
@@ -142,52 +142,52 @@ namespace Timesheet_Tracker.Controllers
             return target;
         }
 
-        // Get employee by id
-        public EmployeeDTO GetEmployeeByID(int employeeID)
-        {
-            EmployeeDTO target;
-            using (TimesheetContext context = new TimesheetContext())
-            {
-                if(!context.Employees.Any(x => x.ID == employeeID))
-                {
-                    throw new ArgumentException($"No employee with ID,{employeeID} recorded in the employee database.");
-                }
-                else
-                {
-                    target = context.Employees.Where(x => x.ID == employeeID).Include(x => x.Person).Select(x => new EmployeeDTO
-                    {
-                        ID = x.ID,
-                        FirstName = x.Person.FirstName,
-                        LastName = x.Person.LastName,
-                        Email = x.Person.Email,
-                        Instructor = x.Instructor,
-                        Cohort = x.Cohort,
-                        Archive = x.Archive
-                    }).Single();
-                }
-            }
-            return target;
-        }
+        //// Get employee by id
+        //public EmployeeDTO GetEmployeeByID(int employeeID)
+        //{
+        //    EmployeeDTO target;
+        //    using (TimesheetContext context = new TimesheetContext())
+        //    {
+        //        if(!context.Employees.Any(x => x.ID == employeeID))
+        //        {
+        //            throw new ArgumentException($"No employee with ID,{employeeID} recorded in the employee database.");
+        //        }
+        //        else
+        //        {
+        //            target = context.Employees.Where(x => x.ID == employeeID).Include(x => x.Person).Select(x => new EmployeeDTO
+        //            {
+        //                ID = x.ID,
+        //                FirstName = x.Person.FirstName,
+        //                LastName = x.Person.LastName,
+        //                Email = x.Person.Email,
+        //                Instructor = x.Instructor,
+        //                Cohort = x.Cohort,
+        //                Archive = x.Archive
+        //            }).Single();
+        //        }
+        //    }
+        //    return target;
+        //}
 
-        // Update
-        public int UpdateEmployee(int employeeID, bool instructor, float cohort)
-        {
-            Employee target;
-            using(TimesheetContext context = new TimesheetContext())
-            {
-                if(!context.Employees.Any(x => x.ID == employeeID))
-                {
-                    throw new ArgumentNullException($"No employee with {employeeID} recorded in the employee database.");
-                }
-                else
-                {
-                    target = context.Employees.Where(x => x.ID == employeeID).Single();
-                    target.Instructor = instructor;
-                    target.Cohort = cohort;
-                    context.SaveChanges();
-                }
-                return target.ID;
-            }
-        }
+        //// Update
+        //public int UpdateEmployee(int employeeID, bool instructor, float cohort)
+        //{
+        //    Employee target;
+        //    using(TimesheetContext context = new TimesheetContext())
+        //    {
+        //        if(!context.Employees.Any(x => x.ID == employeeID))
+        //        {
+        //            throw new ArgumentNullException($"No employee with {employeeID} recorded in the employee database.");
+        //        }
+        //        else
+        //        {
+        //            target = context.Employees.Where(x => x.ID == employeeID).Single();
+        //            target.Instructor = instructor;
+        //            target.Cohort = cohort;
+        //            context.SaveChanges();
+        //        }
+        //        return target.ID;
+        //    }
+        //}
     }
 }

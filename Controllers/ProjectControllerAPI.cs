@@ -86,53 +86,53 @@ namespace Timesheet_Tracker.Controllers
             return response;
         }
 
-        // show individual project that is associated with the employee ID
-        [HttpGet("Student/Project")]
-        public ActionResult<ProjectDTO> GetProjectForStudent(string projectID, string employeeID)
-        {
-            ActionResult<ProjectDTO> response;
-            ValidationExceptions exceptions = new ValidationExceptions();
-            projectID = projectID != null ? projectID.Trim().ToLower() : null;
-            employeeID = employeeID != null ? employeeID.Trim().ToLower() : null;
+        //// show individual project that is associated with the employee ID
+        //[HttpGet("Student/Project")]
+        //public ActionResult<ProjectDTO> GetProjectForStudent(string projectID, string employeeID)
+        //{
+        //    ActionResult<ProjectDTO> response;
+        //    ValidationExceptions exceptions = new ValidationExceptions();
+        //    projectID = projectID != null ? projectID.Trim().ToLower() : null;
+        //    employeeID = employeeID != null ? employeeID.Trim().ToLower() : null;
 
-            if (string.IsNullOrEmpty(projectID))
-            {
-                exceptions.SubExceptions.Add(new ArgumentException("The project must have and ID"));
+        //    if (string.IsNullOrEmpty(projectID))
+        //    {
+        //        exceptions.SubExceptions.Add(new ArgumentException("The project must have and ID"));
 
-            }
-            else if (!int.TryParse(projectID, out int _projectID))
-            {
-                exceptions.SubExceptions.Add(new ArgumentException("The project ID must be in number format"));
-            }
+        //    }
+        //    else if (!int.TryParse(projectID, out int _projectID))
+        //    {
+        //        exceptions.SubExceptions.Add(new ArgumentException("The project ID must be in number format"));
+        //    }
 
-            if (string.IsNullOrEmpty(employeeID))
-            {
-                exceptions.SubExceptions.Add(new ArgumentException("The employee must have an ID. "));
-            }
-            else
-            if (!int.TryParse(employeeID, out int _employeeID))
-            {
-                exceptions.SubExceptions.Add(new ArgumentException("The employee ID must be in number format. "));
-            }
+        //    if (string.IsNullOrEmpty(employeeID))
+        //    {
+        //        exceptions.SubExceptions.Add(new ArgumentException("The employee must have an ID. "));
+        //    }
+        //    else
+        //    if (!int.TryParse(employeeID, out int _employeeID))
+        //    {
+        //        exceptions.SubExceptions.Add(new ArgumentException("The employee ID must be in number format. "));
+        //    }
 
-            if (exceptions.SubExceptions.Count > 0)
-            {
-                response = UnprocessableEntity(new { errors = exceptions.SubExceptions.Select(x => x.Message) });
-            }
-            else
-            {
-                try
-                {
-                    response = new ProjectController().GetProjectForStudent(int.Parse(projectID), int.Parse(employeeID));
-                }
-                catch (ValidationExceptions e)
-                {
-                    response = UnprocessableEntity(new { errors = e.SubExceptions.Select(x => x.Message) });
-                }
-            }
+        //    if (exceptions.SubExceptions.Count > 0)
+        //    {
+        //        response = UnprocessableEntity(new { errors = exceptions.SubExceptions.Select(x => x.Message) });
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            response = new ProjectController().GetProjectForStudent(int.Parse(projectID), int.Parse(employeeID));
+        //        }
+        //        catch (ValidationExceptions e)
+        //        {
+        //            response = UnprocessableEntity(new { errors = e.SubExceptions.Select(x => x.Message) });
+        //        }
+        //    }
 
-            return response;
-        }
+        //    return response;
+        //}
 
         [HttpPatch("Student/Update")]
         public ActionResult<ProjectDTO> UpdateProject(string projectID, string design, string doing, string codeReview, string testing, string deliverables)
@@ -290,90 +290,90 @@ namespace Timesheet_Tracker.Controllers
             return new ProjectController().GetAllProjects();
         }
 
-        [Authorize(Roles = Roles.Instructor)]
-        [HttpGet("Instructor/Cohort")]
-        // filtered by cohort
-        public ActionResult<List<ProjectDTO>> GetAllProjectByCohort(string cohort)
-        {
-            cohort = cohort != null ? cohort.Trim().ToLower() : null;
-            if (!string.IsNullOrEmpty(cohort))
-            {
-                return StatusCode(400, "Please enter a cohort.");
-            }
-            else
-            if (!float.TryParse(cohort, out float _cohort))
-            {
-                return StatusCode(400, "Cohort has to be a number format.");
-            }
-            else
-            {
-                try
-                {
-                    return new ProjectController().GetAllProjectByCohort(_cohort);
-                }
-                catch (Exception e)
-                {
-                    return StatusCode(422, e.Message);
-                }
-            }
+        //[Authorize(Roles = Roles.Instructor)]
+        //[HttpGet("Instructor/Cohort")]
+        //// filtered by cohort
+        //public ActionResult<List<ProjectDTO>> GetAllProjectByCohort(string cohort)
+        //{
+        //    cohort = cohort != null ? cohort.Trim().ToLower() : null;
+        //    if (!string.IsNullOrEmpty(cohort))
+        //    {
+        //        return StatusCode(400, "Please enter a cohort.");
+        //    }
+        //    else
+        //    if (!float.TryParse(cohort, out float _cohort))
+        //    {
+        //        return StatusCode(400, "Cohort has to be a number format.");
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            return new ProjectController().GetAllProjectByCohort(_cohort);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            return StatusCode(422, e.Message);
+        //        }
+        //    }
 
-        }
+        //}
 
-        // Filter by project name
-        [Authorize(Roles = Roles.Instructor)]
-        [HttpGet("Instructor/ProjectName")]
-        public ActionResult<List<ProjectDTO>> GetAllByProjectName(string projectName)
-        {
-            projectName = projectName != null ? projectName.Trim().ToLower() : null;
+        //// Filter by project name
+        //[Authorize(Roles = Roles.Instructor)]
+        //[HttpGet("Instructor/ProjectName")]
+        //public ActionResult<List<ProjectDTO>> GetAllByProjectName(string projectName)
+        //{
+        //    projectName = projectName != null ? projectName.Trim().ToLower() : null;
 
-            if (!string.IsNullOrEmpty(projectName))
-            {
-                return StatusCode(400, "Please enter a project name.");
-            }
-            else
-            {
-                try
-                {
-                    return new ProjectController().GetAllByProjectName(projectName);
-                }
-                catch (Exception e)
-                {
-                    return StatusCode(422, e.Message);
-                }
-            }
-        }
+        //    if (!string.IsNullOrEmpty(projectName))
+        //    {
+        //        return StatusCode(400, "Please enter a project name.");
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            return new ProjectController().GetAllByProjectName(projectName);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            return StatusCode(422, e.Message);
+        //        }
+        //    }
+        //}
 
-        // Filter by student name
-        [Authorize(Roles = Roles.Instructor)]
-        [HttpGet("Instructor/StudentName")]
-        public ActionResult<List<ProjectDTO>> GetAllProjectByStudentName(string studentName)
-        {
-            studentName = studentName != null ? studentName.Trim().ToLower() : null;
+        //// Filter by student name
+        //[Authorize(Roles = Roles.Instructor)]
+        //[HttpGet("Instructor/StudentName")]
+        //public ActionResult<List<ProjectDTO>> GetAllProjectByStudentName(string studentName)
+        //{
+        //    studentName = studentName != null ? studentName.Trim().ToLower() : null;
 
-            if (!string.IsNullOrEmpty(studentName))
-            {
-                return StatusCode(400, "Please enter a student name.");
-            }
-            else
-            {
-                try
-                {
-                    return new ProjectController().GetAllProjectByStudentName(studentName);
-                }
-                catch (Exception e)
-                {
-                    return StatusCode(422, e.Message);
-                }
-            }
-        }
+        //    if (!string.IsNullOrEmpty(studentName))
+        //    {
+        //        return StatusCode(400, "Please enter a student name.");
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            return new ProjectController().GetAllProjectByStudentName(studentName);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            return StatusCode(422, e.Message);
+        //        }
+        //    }
+        //}
 
-        // Order Hours by Descending
-        [Authorize(Roles = Roles.Instructor)]
-        [HttpGet("Instructor/OrderByTotalHours")]
-        public ActionResult<List<ProjectDTO>> GetAllProjectByTotalHours()
-        {
-            return new ProjectController().GetAllProjectByTotalHours();
-        }
+        //// Order Hours by Descending
+        //[Authorize(Roles = Roles.Instructor)]
+        //[HttpGet("Instructor/OrderByTotalHours")]
+        //public ActionResult<List<ProjectDTO>> GetAllProjectByTotalHours()
+        //{
+        //    return new ProjectController().GetAllProjectByTotalHours();
+        //}
 
         // Instructor to reacte project
         [Authorize(Roles = Roles.Instructor)]
@@ -494,26 +494,26 @@ namespace Timesheet_Tracker.Controllers
 
         }
 
-        // to view individual project.
-        [Authorize(Roles = Roles.Instructor)]
-        [HttpGet("Instructor/Detail")]
-        public ActionResult<ProjectDTO> ViewStudentByID(string projectID)
-        {
-            projectID = projectID != null ? projectID.Trim() : null;
+        //// to view individual project.
+        //[Authorize(Roles = Roles.Instructor)]
+        //[HttpGet("Instructor/Detail")]
+        //public ActionResult<ProjectDTO> ViewStudentByID(string projectID)
+        //{
+        //    projectID = projectID != null ? projectID.Trim() : null;
 
-            if (string.IsNullOrEmpty(projectID))
-            {
-                return StatusCode(400, "Please enter a project ID.");
-            }
-            else
-            if (!int.TryParse(projectID, out int _projectID))
-            {
-                return StatusCode(400, "Please enter a number format.");
-            }
-            else
-            {
-                return new ProjectController().ProjectDetail(_projectID);
-            }
-        }
+        //    if (string.IsNullOrEmpty(projectID))
+        //    {
+        //        return StatusCode(400, "Please enter a project ID.");
+        //    }
+        //    else
+        //    if (!int.TryParse(projectID, out int _projectID))
+        //    {
+        //        return StatusCode(400, "Please enter a number format.");
+        //    }
+        //    else
+        //    {
+        //        return new ProjectController().ProjectDetail(_projectID);
+        //    }
+        //}
     }
 }

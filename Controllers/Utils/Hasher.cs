@@ -9,6 +9,7 @@ namespace Timesheet_Tracker.Controllers.Utils
 {
     public static class Hasher
     {
+        // Insert References HERE
         public static Dictionary<string, string> HashWithSalt(string password)
         {
             // create an instance of the crypto service provider

@@ -49,12 +49,12 @@ namespace Timesheet_Tracker.Models
                     new Person() { ID = -3, Email = "gamora@guardians.com", FirstName = "Gamora", LastName = "Guardians", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 06, 15), Archive = false},
                     new Person() { ID = -4, Email = "rocketraccoon@guardians.com", FirstName = "Rocket", LastName = "Raccoon", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020,06, 15), Archive = false },
                     new Person() { ID = -5, Email = "drax@guardians.com", FirstName = "Drax", LastName = "Destroyer", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 06, 15), Archive = false},
-                    new Person() { ID = -6, Email = "tonystark@avengers.com", FirstName = "Tony", LastName = "Stark", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 10), Role = "Instructor", Archive = true, DateArchive = new DateTime(2020, 06, 01)},
+                    new Person() { ID = -6, Email = "tonystark@avengers.com", FirstName = "Tony", LastName = "Stark", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 10), Role = "Instructor", Archive = true},
                     new Person() { ID = -7, Email = "steverogers@avengers.com", FirstName = "Steve", LastName = "Rogers", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 10), Role = "Instructor", Archive = false},
-                    new Person() { ID = -8, Email = "hulk@avengers.com", FirstName = "Bruce", LastName = "Banner", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 15), Archive = true, DateArchive = new DateTime(2020, 06, 01) },
-                    new Person() { ID = -9, Email = "thor@avengers.com", FirstName = "Thor", LastName = "Thor", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 15), Archive = true, DateArchive = new DateTime(2020, 06, 01) },
-                    new Person() { ID = -10, Email = "blackwidow@avengers.com", FirstName = "Natasha", LastName = "Romanoff", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 15), Archive = true, DateArchive = new DateTime(2020, 06, 01) },
-                    new Person() { ID = -11, Email = "hawkeye@avengers.com", FirstName = "Clint", LastName = "Barton", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 15), Archive = true, DateArchive = new DateTime(2020, 06, 01) }
+                    new Person() { ID = -8, Email = "hulk@avengers.com", FirstName = "Bruce", LastName = "Banner", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 15), Archive = true },
+                    new Person() { ID = -9, Email = "thor@avengers.com", FirstName = "Thor", LastName = "Thor", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 15), Archive = true},
+                    new Person() { ID = -10, Email = "blackwidow@avengers.com", FirstName = "Natasha", LastName = "Romanoff", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 15), Archive = true },
+                    new Person() { ID = -11, Email = "hawkeye@avengers.com", FirstName = "Clint", LastName = "Barton", PasswordHash = "admin", PasswordSalt = "admin", DateCreated = new DateTime(2020, 02, 15), Archive = true }
                     );
             });
 
