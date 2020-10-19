@@ -334,21 +334,34 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // Calculate the average hours for each projectName
-        public void AverageHours(string projectName)
+        public List<AverageHoursDTO> AverageHours(string projectName)
         {
-            List<Project> target;
+            List<AverageHoursDTO> target;
+            List<Project> projects;
+
             float averageTotal, averageDesign, averageDoing, averageCodeReview, averageTesting, averageDeliverables;
             using (TimesheetContext context = new TimesheetContext())
             {
-                // Find the project
-                target = context.Projects.Where(x => x.ProjectName == projectName).ToList();
-                averageDesign = target.Average(x => x.DesignHours);
-                averageDoing = target.Average(x => x.DesignHours);
-                averageCodeReview = target.Average(x => x.CodeReviewHours);
-                averageTesting = target.Average(x => x.TestingHours);
-                averageDeliverables = target.Average(x => x.DeliverablesHours);
+                // Find the project based on name
+                projects = context.Projects.Where(x => x.ProjectName.ToLower() == projectName.ToLower()).ToList();
+
+                //Calculate average hours. 
+                averageDesign = projects.Average(x => x.DesignHours);
+                averageDoing = projects.Average(x => x.DesignHours);
+                averageCodeReview = projects.Average(x => x.CodeReviewHours);
+                averageTesting = projects.Average(x => x.TestingHours);
+                averageDeliverables = projects.Average(x => x.DeliverablesHours);
                 averageTotal = averageDesign + averageDoing + averageCodeReview + averageTesting + averageDeliverables;
+
+                // Sum the average and return a AverageHoursDTO for view.
+                target = projects.Select(x => new AverageHoursDTO()
+                {
+                    ID = x.ID,
+                    ProjectName = x.ProjectName,
+                    AverageHours = averageTotal
+                }).ToList();
             }
+            return target;
         }
 
     }
