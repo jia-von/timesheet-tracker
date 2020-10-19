@@ -48,7 +48,15 @@ PM> dotnet ef database update
 
 If there are any errors that occur during the migrations, kindly refer to the [EF Core tools reference](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet) to troubleshoot. The server should be populated with the database named **timesheet_tracker** as shown below:
 
-![timesheet_tracker_database](Planning/Images/timesheet_tracker_database.PNG)
+| Database Structure  | Person Table |
+| ------------- | ------------- |
+| ![timesheet_tracker_database](Planning/Images/timesheet_tracker_database.PNG)  | ![person_datable_database](Planning/Images/person_table_database.PNG)  |
+
+| Employee Table  | Project Table |
+| ------------- | ------------- |
+| ![employee_table](Planning/Images/employee_table_database.PNG)  | ![project_table](Planning/Images/project_table_database.PNG)  |
+
+
 
 ## Usage
 
