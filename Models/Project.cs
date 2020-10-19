@@ -11,8 +11,8 @@ namespace Timesheet_Tracker.Models
     [Table("project")]
     public partial class Project
     {
-        // Citation HERE
-        // This initializes an empty list so we don't get null reference exceptions for our list.
+        // Template from Tutorial: 4.1-ReactAPI @link: https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI
+
         [Key]
         [Column("id", TypeName = "int(10)")]
 
@@ -63,7 +63,7 @@ namespace Timesheet_Tracker.Models
         [Column("archive", TypeName = "tinyint(1)")]
         public bool Archive { get; set; }
 
-        // navigation FK_Project-Employee
+        // Navigation properties are below:
         [Required]
         [Column("employee_id", TypeName = "int(10)")]
         public int EmployeeID { get; set; }

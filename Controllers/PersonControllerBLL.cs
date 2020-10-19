@@ -19,14 +19,13 @@ namespace Timesheet_Tracker.Controllers
 {
     public class PersonController : Controller
     {
-        // Add the app settings to the Personcontroller -JasonWatmore
+        // This template is from 4.1-ReactAPI project @link: https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI/tree/master/Controllers
+        // Add the app settings to the Personcontroller -JasonWatmore @link: https://jasonwatmore.com/post/2019/10/16/aspnet-core-3-role-based-authorization-tutorial-with-example-api#authenticate-model-cs
         private readonly AppSettings _appSettings;
         public PersonController(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
         }
-
-        // Using CRUD system to develop a BLL for PersonController
 
         // Create an account that accept name, password, username, and email
 
@@ -107,7 +106,7 @@ namespace Timesheet_Tracker.Controllers
         }
 
         // READ
-        // Authetnntiate
+        // Authenticate
         // return a personDTO whose authentication info matches or throw an error
         public PersonDTO Authenticate(string email, string password)
         {
@@ -159,51 +158,6 @@ namespace Timesheet_Tracker.Controllers
             }
 
         }
-
-        //// Get a list of all person
-        //public List<Person> GetAllPerson()
-        //{
-        //    List<Person> target;
-        //    using (TimesheetContext context = new TimesheetContext())
-        //    {
-        //        target = context.Persons.Where(x => x.Archive == false).ToList();
-        //    }
-        //    return target;
-        //}
-
-        //// Get a person by ID
-        //public Person GetPersonByID(int id)
-        //{
-        //    Person target;
-        //    using (TimesheetContext context = new TimesheetContext())
-        //    {
-        //        target = context.Persons.Where(x => x.ID == id && x.Archive == false).SingleOrDefault();
-        //    }
-        //    return target;
-        //}
-
-        //// Get a person by name, first name and last name
-        //public Person GetPersonByName(string firstName, string lastName)
-        //{
-        //    Person target;
-
-        //    using (TimesheetContext context = new TimesheetContext())
-        //    {
-        //        target = context.Persons.Where(x => x.FirstName == firstName && x.LastName == lastName && x.Archive == false).SingleOrDefault();
-        //    }
-        //    return target;
-        //}
-
-        //// Get a person by email
-        //public Person GetPersonByEmail(string email)
-        //{
-        //    Person target;
-        //    using (TimesheetContext context = new TimesheetContext())
-        //    {
-        //        target = context.Persons.Where(x => x.Email == email && x.Archive == false).SingleOrDefault();
-        //    }
-        //    return target;
-        //}
 
         // Update
         public string UpdateAccount(int personID, string firstName, string lastName, string currentPassword, string newPassword, bool updatePassword)

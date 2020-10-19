@@ -1,4 +1,5 @@
 ﻿// declare constansts to be used to determine type for async reducer actions
+// Tutorial from 4.1-react-redux-to-do-app @link: https://github.com/TECHCareers-by-Manpower/4.1-react-redux-to-do-app
 const SIGN_IN_REQUEST = "SIGN_IN_REQUEST";
 const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
 const SIGN_IN_FAIL = "SIGN_IN_FAIL";

@@ -8,6 +8,7 @@ namespace Timesheet_Tracker.Models.DTO
     public class PersonDTO
     {
         // This is a DTO (Data Transfer Object), it's basically a copy-cat of the EF model, but allows for data to be moved around without loading full relational objects into memory.
+        // This template is modified from 4.1-ReactAPI @link: https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI/tree/master/Models
         public int ID { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }

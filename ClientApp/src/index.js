@@ -6,7 +6,6 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import timesheetTrackerReducer from "./reducers/timesheetTracker";
 import userAccountsReducer from "./reducers/userAccounts";
 import projectsReducer from "./reducers/projects";
 import employeesReducer from "./reducers/employees";
@@ -20,7 +19,6 @@ const rootElement = document.getElementById("root");
 // combine all reducers we want to use
 const combinedReducer = combineReducers({
     userAccountsReducer,
-    timesheetTrackerReducer,
     projectsReducer,
     employeesReducer
 })
@@ -43,14 +41,5 @@ const Root = (store) => (
 );
 
 ReactDOM.render(<Root store={timesheetTrackerStore} />, rootElement);
-
-/*
-// template from dotnet - react
-ReactDOM.render(
-<BrowserRouter basename={baseUrl}>
-<App />
-</BrowserRouter>,
-rootElement);
-*/
 
 registerServiceWorker();

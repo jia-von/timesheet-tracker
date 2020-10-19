@@ -150,17 +150,9 @@ namespace Timesheet_Tracker.Migrations
                         .HasColumnName("archive")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime?>("DateArchive")
-                        .HasColumnName("date_archive")
-                        .HasColumnType("date");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnName("date_created")
                         .HasColumnType("date");
-
-                    b.Property<DateTime?>("DateModifiedProfile")
-                        .HasColumnName("date_modified_profile")
-                        .HasColumnType("timestamp");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -266,7 +258,6 @@ namespace Timesheet_Tracker.Migrations
                         {
                             ID = -6,
                             Archive = true,
-                            DateArchive = new DateTime(2020, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateCreated = new DateTime(2020, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "tonystark@avengers.com",
                             FirstName = "Tony",
@@ -291,7 +282,6 @@ namespace Timesheet_Tracker.Migrations
                         {
                             ID = -8,
                             Archive = true,
-                            DateArchive = new DateTime(2020, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateCreated = new DateTime(2020, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "hulk@avengers.com",
                             FirstName = "Bruce",
@@ -303,7 +293,6 @@ namespace Timesheet_Tracker.Migrations
                         {
                             ID = -9,
                             Archive = true,
-                            DateArchive = new DateTime(2020, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateCreated = new DateTime(2020, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thor@avengers.com",
                             FirstName = "Thor",
@@ -315,7 +304,6 @@ namespace Timesheet_Tracker.Migrations
                         {
                             ID = -10,
                             Archive = true,
-                            DateArchive = new DateTime(2020, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateCreated = new DateTime(2020, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "blackwidow@avengers.com",
                             FirstName = "Natasha",
@@ -327,7 +315,6 @@ namespace Timesheet_Tracker.Migrations
                         {
                             ID = -11,
                             Archive = true,
-                            DateArchive = new DateTime(2020, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateCreated = new DateTime(2020, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "hawkeye@avengers.com",
                             FirstName = "Clint",
@@ -464,11 +451,11 @@ namespace Timesheet_Tracker.Migrations
                             ID = -5,
                             Archive = false,
                             CodeReviewHours = 1.25f,
-                            DateCreated = new DateTime(2020, 10, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateCreated = new DateTime(2020, 10, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             DeliverablesHours = 2f,
                             DesignHours = 0.5f,
                             DoingHours = 2f,
-                            DueDate = new DateTime(2020, 10, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             EmployeeID = -2,
                             ProjectName = "PHP API Assignment",
                             TestingHours = 0.5f
@@ -478,11 +465,11 @@ namespace Timesheet_Tracker.Migrations
                             ID = -6,
                             Archive = false,
                             CodeReviewHours = 1f,
-                            DateCreated = new DateTime(2020, 10, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateCreated = new DateTime(2020, 10, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             DeliverablesHours = 1f,
                             DesignHours = 1.5f,
                             DoingHours = 1f,
-                            DueDate = new DateTime(2020, 10, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             EmployeeID = -3,
                             ProjectName = "PHP API Assignment",
                             TestingHours = 1.5f
@@ -492,11 +479,11 @@ namespace Timesheet_Tracker.Migrations
                             ID = -7,
                             Archive = false,
                             CodeReviewHours = 2f,
-                            DateCreated = new DateTime(2020, 10, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateCreated = new DateTime(2020, 10, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             DeliverablesHours = 0.25f,
                             DesignHours = 2.5f,
                             DoingHours = 3f,
-                            DueDate = new DateTime(2020, 10, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             EmployeeID = -4,
                             ProjectName = "PHP API Assignment",
                             TestingHours = 1f
@@ -506,11 +493,11 @@ namespace Timesheet_Tracker.Migrations
                             ID = -8,
                             Archive = false,
                             CodeReviewHours = 3.25f,
-                            DateCreated = new DateTime(2020, 10, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateCreated = new DateTime(2020, 10, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             DeliverablesHours = 1f,
                             DesignHours = 0.75f,
                             DoingHours = 0.5f,
-                            DueDate = new DateTime(2020, 10, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            DueDate = new DateTime(2020, 10, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             EmployeeID = -5,
                             ProjectName = "PHP API Assignment",
                             TestingHours = 0.75f

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Timesheet_Tracker.Models
-{   //Code below are boilerplate clodes obtained from TECHCareers-by-Manpower 4.1 MVC project under PersonContext.cs
+{   //Code below are boilerplate clodes obtained from TECHCareers-by-Manpower 4.1 MVC project under PersonContext.cs @link: // Template from Tutorial: 4.1-ReactAPI @link: https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI
     public partial class TimesheetContext : DbContext
     {
         public TimesheetContext()

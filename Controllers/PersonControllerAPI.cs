@@ -17,6 +17,8 @@ namespace Timesheet_Tracker.Controllers
     [ApiController]
     public class PersonControllerAPI : ControllerBase
     {
+        // This template is from 4.1-ReactAPI project @link: https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI/tree/master/Controllers
+        // Authorization method is cited from ASP.NET Core 3.1 - Role Based Authorization Tutorial with Example API @link: https://jasonwatmore.com/post/2019/10/16/aspnet-core-3-role-based-authorization-tutorial-with-example-api#authenticate-model-cs
         // assign a private person controller which is set when an instance of this api controller is created
         // this will be used to interact with the person controller
         private PersonController _personController;
@@ -24,69 +26,6 @@ namespace Timesheet_Tracker.Controllers
         {
             _personController = personController;
         }
-
-        //// /Person => List of all entries in Person table
-        //[Authorize(Roles = Roles.Instructor)]
-        //[HttpGet("")]
-        //public ActionResult<List<Person>> GetAll()
-        //{
-        //    var people = _personController.GetAllPerson();
-        //    return people;
-        //}
-
-        //// /Person?id=1 => Person with the id = 1
-        //[HttpGet("ID")]
-        //public ActionResult<PersonDTO> GetPersonByID(string id)
-        //{
-        //    if (id != null)
-        //    {
-        //        // attempt to parse the id into an int
-        //        try
-        //        {
-        //            int ID = Convert.ToInt32(id);
-        //            //PersonController controller = new PersonController();
-        //            Person person = _personController.GetPersonByID(ID);
-
-        //            if (person == null)
-        //            {
-        //                return StatusCode(400, $"Person with ID: {id} was not found");
-        //            }
-        //            else
-        //            {
-        //                // create a DTO to prevent returning a person's authentication credentials
-        //                EmployeeController employeeController = new EmployeeController();
-        //                Employee employeeInfo = employeeController.GetEmployeeIDByPersonID(person.ID); // changed by Jia, October 12, 2020
-
-        //                // Jia added GET a list for projects belonging to this person, get a list of project related to the person.
-        //                ProjectController projectController = new ProjectController();
-        //                List<string> employeeProjects = projectController.GetProjectListForStudent(employeeInfo.ID).Select(x => x.ProjectName).ToList();
-
-        //                PersonDTO personDTO = new PersonDTO()
-        //                {
-        //                    ID = person.ID,
-        //                    Email = person.Email,
-        //                    FirstName = person.FirstName,
-        //                    LastName = person.LastName,
-        //                    Cohort = employeeInfo.Cohort,
-        //                    Instructor = employeeInfo.Instructor,
-        //                    // Projects = GET a list of projects belonging to this person
-        //                    // Added by Jia, October 12, 2020
-        //                    Projects = employeeProjects
-
-        //                };
-        //                return personDTO;
-        //            }
-
-        //        }
-        //        catch (Exception)
-        //        {
-        //            return StatusCode(400, $"ID: {id} is not valid. Use integers only");
-        //        }
-        //    } else
-        //    {
-        //        return StatusCode(400, "A valid id must be provided");
-        //    }
-        //}
 
 
         // /Person/Create?email=&firstName=&lastName=&password= => ID = {id of the new person created}

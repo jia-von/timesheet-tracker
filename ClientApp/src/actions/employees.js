@@ -1,6 +1,7 @@
 ﻿import * as actionType from "./constants";
 import axios from "axios";
 
+// Tutorial from 4.1-react-redux-to-do-app @link: https://github.com/TECHCareers-by-Manpower/4.1-react-redux-to-do-app
 // returns a list of employees by role (instructor or student) 
 // returns all employees if role doesnt match an available role & isnt empty/whitespace
 const getEmployees = async (dispatch, role, key) => {
