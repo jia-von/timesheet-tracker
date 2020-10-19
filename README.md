@@ -18,7 +18,7 @@ $ git clone https://github.com/TECHCareers-by-Manpower/capstone-project-input-ou
 $ cd capstone-project-input-output
 $ devenv start
 ```
-It is not necessary to install packages and libraries after cloning the project, however depending on computer and software, at times packages need to installed manually. If you have encountered issues running this application you may proceed with the instructions below:
+It is not necessary to install packages and libraries after cloning the project, however depending on computer and software, at times packages need to be installed manually. If you have encountered issues running this application you may proceed with the instructions below:
 
 
 Installations of Entity Framework Core can be done either through [NuGet Package Manager for Solution...](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio) or through Visual Studio 2019 [NuGet Package Manager Console](https://docs.microsoft.com/en-us/ef/core/get-started/install/) (Package Manager), check for `Program.cs` in the file directory, within the same directory, run these commands
