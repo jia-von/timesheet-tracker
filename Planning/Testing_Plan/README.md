@@ -21,7 +21,11 @@ When the creation of an account is a success, the user will be redirected to the
 
 ## Sign In
 
-After an account was created, the user can sign in based on the email and password sign up. The instructor can view the list of assignments created and assigned to students. Project name, hours, date created and date ended can be viewed in the list form. 
+After an account was created, the user can sign in based on the email and password sign up. The user will be redirected to pages depending on the role, Instructor or Student. 
+
+## Instructor
+
+The instructor can view list of projects created and assigned to student, charts, update account, create project and sign out. 
 
 ### Charts
 
@@ -37,8 +41,18 @@ There are three charts available for instructor to view.
 This is a example from [Mike Yi](https://chartio.com/learn/charts/histogram-complete-guide/) indicating the variety of histogram shapes.
 ![histogram variety](Screenshots/histogram-variaties.png)
 
+### Create Project
 
+Below show the fields required to be entered to create a project, eg. JavaScript DOM Assignment that is due on October 22, 2020 at 9:00 am. The instructor will have a choice to either assign the project to a student based or to a cohort. A message will return if the project is succesfully created. 
 
+| Assign to a Student  | Assign to a Cohort | Success Message |
+| ------------- | ------------- | ------------- |
+| ![To a Student](Screenshots/create_project_individual.PNG)  | ![To a Cohort](Screenshots/create_project_cohort.PNG)  | ![Project Success Message](Screenshots/create_project_success.PNG)
 
+### Update Account
+
+The instructor can update their name, password, and email on their account as shown below:
+
+![Update Account](Screenshots/update_account.PNG)
  
 
