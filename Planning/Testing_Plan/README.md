@@ -38,16 +38,16 @@ There are three charts available for instructor to view.
 | ------------- | ------------- | ------------- |
 | ![doughnut](Screenshots/doughnut_chart.PNG)  | ![bar](Screenshots/bar_chart.PNG)  | ![histogram](Screenshots/Histogram_Chart.PNG) |
 
-This is a example from [Mike Yi](https://chartio.com/learn/charts/histogram-complete-guide/) indicating the variety of histogram shapes.
+This is an example from [Mike Yi](https://chartio.com/learn/charts/histogram-complete-guide/) indicating the variety of histogram shapes.
 ![histogram variety](Screenshots/histogram-variaties.png)
 
 ### Create Project
 
-Below show the fields required to be entered to create a project, eg. JavaScript DOM Assignment that is due on October 22, 2020 at 9:00 am. The instructor will have a choice to either assign the project to a student based or to a cohort. A message will return if the project is succesfully created. 
+The figures below, show the fields required to be entered to create a project, eg. JavaScript DOM Assignment that is due on October 22, 2020 at 9:00 am. The instructor will have a choice to either assign the project to a student based or to a cohort. A message will return if the project is succesfully created. 
 
 | Assign to a Student  | Assign to a Cohort | Success Message |
 | ------------- | ------------- | ------------- |
-| ![To a Student](Screenshots/create_project_individual.PNG)  | ![To a Cohort](Screenshots/create_project_cohort.PNG)  | ![Project Success Message](Screenshots/create_project_success.PNG)
+| ![To a Student](Screenshots/create_project_individual.PNG)  | ![To a Cohort](Screenshots/create_project_cohort.PNG)  | ![Project Success Message](Screenshots/create_project_success.PNG) |
 
 ### Update Account
 
@@ -55,4 +55,17 @@ The instructor can update their name, password, and email on their account as sh
 
 ![Update Account](Screenshots/update_account.PNG)
  
+## Student
+
+The student can view list of projects that were assigned to them. Student can update hours for their project, update account, and sign out. 
+
+### Update Hours
+
+Student is able to update the hours and track the hours accumulated. Bar chart display will help student evaluate the hours accumulated for the type of task. Additionally, student is able to mark the project as completed and archive the project using delete project button. The figures below show the input fields and chart available for student.
+
+| Update Hours Field  | Update Success | Bar Chart |
+| ------------- | ------------- | ------------- |
+| ![Update Hours Field](Screenshots/student_update_hours.PNG)  | ![Update Hours Success](Screenshots/updated_hours_success.PNG)  | ![Student Hours Chart](Screenshots/student_hours_chart.PNG) |
+
+
 
