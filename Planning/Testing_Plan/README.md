@@ -1,4 +1,4 @@
-﻿# Application Guide
+﻿# User Guide
 This document will guide the user to operate the Timesheet Tracker application within the ASP.NET Core application. Installation instructions and guides are provided within README.md repository on GitHub. The objectives of this guide are to operate Timesheet Tracker and to test the application using Arrange, Act, and Assert concept.
 
 ## Startup
@@ -61,6 +61,8 @@ Student is able to update the hours and track the hours accumulated. Bar chart d
 | Update Hours Field  | Update Success | Bar Chart |
 | ------------- | ------------- | ------------- |
 | ![Update Hours Field](Screenshots/student_update_hours.PNG)  | ![Update Hours Success](Screenshots/updated_hours_success.PNG)  | ![Student Hours Chart](Screenshots/student_hours_chart.PNG) |
+
+# Testing Plan
 
 
 

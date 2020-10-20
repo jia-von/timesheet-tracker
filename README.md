@@ -57,7 +57,6 @@ If there are any errors that occur during the migrations, kindly refer to the [E
 | ![employee_table](Planning/Images/employee_table_database.PNG)  | ![project_table](Planning/Images/project_table_database.PNG)  |
 
 
-
 ## Usage
 
 Once the installations of Timesheet Tracker has been completed without any issues, you may start the application following these steps: 
@@ -65,6 +64,8 @@ Once the installations of Timesheet Tracker has been completed without any issue
 2. Within Visual Studio 2019, select **Timesheet_Tracker** project and Start Debugging (F5)
 3. A browser should pop-up after it has completed building and compiling
 4. You may choose to interact with the pages and test it using Postman
+
+For further information operating this application, kindly refer to the [User Guide](Planning/Testing_Plan#user-guide)
 
 ## Testing/Instructions
 
