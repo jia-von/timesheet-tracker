@@ -50,7 +50,7 @@ There are three charts available for the instructor to view.
 | --- | --- | --- |
 | ![doughnut filtered](Screenshots/doughnut_chart_filtered.PNG) | ![bar filtered](Screenshots/bar_chart_filtered.PNG) | ![bar filtered](Screenshots/Histogram_Chart_Filtered.PNG) |
 
-Note 1: A good assignment should have shape symmetry. Skewing left or skewing right could indicate that the assignment is either too difficult or too easy. This is an example from [Mike Yi](https://chartio.com/learn/charts/histogram-complete-guide/) indicating the variety of histogram shapes.
+Note 1: A good assignment should have symmetric shape. Skewing left or skewing right could indicate that the assignment is either too difficult or too easy. This is an example from [Mike Yi](https://chartio.com/learn/charts/histogram-complete-guide/) indicating the variety of histogram shapes.
 
 ![histogram variety](Screenshots/histogram-variaties.png)
 
@@ -81,7 +81,7 @@ The **person** table update as shown in database update.
 The student can view list of projects that were assigned to them. Student can update hours for their project, update account, and sign out. 
 
 ### Student List
-The student has an identical view as the instructor on the homepage. However, the key difference is that the student is only able to view projects that were assigned to them. The colour-coded projects have similar meanings as stated in the subsection, [List](Testing_Plan#instructor-list) above.
+The student has an identical view as the instructor on the homepage. However, the key difference is that the student is only able to view projects that were assigned to them. The colour-coded projects have similar meanings as stated in the subsection, [List](#instructor-list) above.
 ![Student List View](Screenshots/student_list_completed.PNG)
 
 ### Student Update Hours
@@ -96,7 +96,7 @@ The hours updated in the **project** table within the database.
 ![Person table database update](Screenshots/database_project_created.PNG)
 
 ### Student Update Account
-Updating account format is similar to instructor as shown [above](Testing_Plan#instructor-update-account). 
+Updating account format is similar to instructor as shown [above](#instructor-update-account). 
 
 # Testing Plan
 The User Guide above has provided steps to successfully execute create, update, read, and delete actions in the applications. Therefore the testing plan below will show integration tests that will evaluate features of Timesheet Tracker. 
