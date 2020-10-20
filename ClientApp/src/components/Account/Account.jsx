@@ -224,7 +224,7 @@ class Account extends React.Component {
 
         return (
             <div className="account">
-                <Nav />
+                <Nav locationUrl={this.props.location.pathname} />
                 <div className="headerText"> <h1>Account</h1> </div>
                 <div className="accountContainer">
                     <form onSubmit={(e) => this.handleSubmit(e)}>
@@ -259,7 +259,7 @@ class Account extends React.Component {
                                 <div className={`editPassword ${this.state.passwordActive}`}>
                                     <div className="inputGroup">
                                         <label htmlFor="password">New Password</label>
-                                        <input className={this.state.passwordError.length > 0 ? "error" : ""} lastName type="password" name="password" id="password" value={this.state.password} onChange={(e) => this.handleInputchange(e)} />
+                                        <input className={this.state.passwordError.length > 0 ? "error" : ""}  type="password" name="password" id="password" value={this.state.password} onChange={(e) => this.handleInputchange(e)} />
                                         <div className="error-message">{this.state.passwordError}</div>
                                     </div>
                                     <div className="inputGroup">

@@ -92,8 +92,8 @@ const filterProjectsByName = (projectName, projects) => {
 }
 
 // return an array of projects which match the cohort
-const  filterProjectsByCohort = (cohort, projects) => {
-    return projects.filter(project => project.cohort == cohort);
+const filterProjectsByCohort = (cohort, projects) => {
+    return projects.filter(project => project.cohort.toString().toLowerCase() === cohort.toString().toLowerCase());
 }
 
 
@@ -127,6 +127,10 @@ const renderDoughnut = (projectData, filterName, cohort) => {
             labels: {
                 boxWidth: 20
             }
+        },
+        title: {
+            display: true,
+            text: "Average Hours Spent Per Task"
         }
     }
 
@@ -155,6 +159,10 @@ const renderBar = (projectData, filterName, cohort) => {
             labels: {
                 boxWidth: 10
             }
+        },
+        title: {
+            display: true,
+            text: "Max, Avg and Min Total Hours Across Projects"
         }
     }
 
@@ -183,10 +191,14 @@ const renderHistogram = (projectData, filterName, cohort) => {
             labels: {
                 boxWidth: 10
             }
+        },
+        title: {
+            display: true,
+            text: "Frequency vs. Total Hours Spent On Projects"
         }
     }
 
     return < Bar data={data} options={options} />;
 }
 
-export { renderDoughnut, renderBar, renderHistogram };
+export { renderDoughnut, renderBar, renderHistogram, filterProjectsByName, filterProjectsByCohort };

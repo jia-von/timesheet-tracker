@@ -10,6 +10,11 @@
     backdrop-filter: blur(5px);
 }
 
+/* style the link of the current page */
+.navBar .currentPage{
+    text-decoration: underline;
+}
+
 /* style the main content of the nav bar */
     .navBar .primary {
         display: flex;

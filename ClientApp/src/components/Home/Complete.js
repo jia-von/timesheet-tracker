@@ -3,10 +3,10 @@
 const Complete = ({ className }) => {
     return (
         <svg className={className} viewBox="0 0 515 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect y="37.0826" width="353.112" height="266.546" transform="rotate(-0.0134095 0 37.0826)" fill="#F2F2F2" fill-opacity="0.6" />
-            <rect x="234" y="316.066" width="280" height="155.868" transform="rotate(-0.0134095 234 316.066)" fill="#FFECEC" fill-opacity="0.6" />
-            <rect x="287" y="0.0368042" width="157.307" height="375.01" transform="rotate(-0.0134095 287 0.0368042)" fill="#FFFFEC" fill-opacity="0.6" />
-            <circle cx="152.5" cy="395.5" r="116.5" fill="#ECFFF0" fill-opacity="0.6" />
+            <rect y="37.0826" width="353.112" height="266.546" transform="rotate(-0.0134095 0 37.0826)" fill="#F2F2F2" fillOpacity="0.6" />
+            <rect x="234" y="316.066" width="280" height="155.868" transform="rotate(-0.0134095 234 316.066)" fill="#FFECEC" fillOpacity="0.6" />
+            <rect x="287" y="0.0368042" width="157.307" height="375.01" transform="rotate(-0.0134095 287 0.0368042)" fill="#FFFFEC" fillOpacity="0.6" />
+            <circle cx="152.5" cy="395.5" r="116.5" fill="#ECFFF0" fillOpacity="0.6" />
             <path d="M76.7375 230.721H253.839V230.725H275.723C263.636 230.725 253.259 220.927 252.544 208.841L249.033 149.528H50.0527L53.5631 208.841C54.2787 220.929 64.6505 230.721 76.7375 230.721Z" fill="#406FBF" />
             <path d="M98.6202 230.721H142.383V230.717H98.6202V230.721Z" fill="#A4C3E9" />
             <path d="M76.7375 230.721C64.6505 230.721 54.2787 220.929 53.5631 208.841L50.0527 149.528H93.815L97.3254 208.837C98.0412 220.924 88.8235 230.721 76.7375 230.721" fill="#A4C3E9" />

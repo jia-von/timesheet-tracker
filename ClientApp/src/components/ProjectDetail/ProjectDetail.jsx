@@ -181,13 +181,14 @@ class ProjectDetail extends React.Component {
 
         return (
             <div className="projectDetail">
-                <Nav />
+                <Nav locationUrl={this.props.location.pathname} />
                 <div>
                     <div className="headerText"> <h1>{project.projectName}</h1> </div>
                     <div className="projectDetailContainer">
                         {this.generateBarChart(project)}
 
                         <h2>Project Summary</h2>
+                        <p className="projectInfo">Student: {project.fullName}</p>
                         <p className="projectInfo">Time spent: {project.totalHours} hours </p>
                         <p className="projectInfo">Created on: {createdOn.toUTCString()}</p>
                         <p className="projectInfo">Due on: {dueOn.toUTCString()}</p>

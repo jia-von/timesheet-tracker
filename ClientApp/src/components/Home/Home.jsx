@@ -60,14 +60,23 @@ class Home extends React.Component {
         }
     }
 
+    // render the student name if this is an instructor
+    renderStudentName(isInstructor, studentName) {
+        if (isInstructor) return (<p>{`Student ${studentName}`}</p>);
+    }
+
     renderProjects() {
         let projects = this.props.projects.projects;
+        // use the utils method to filter project names and cohorts
+        let filteredProjects = this.state.filterByName === "" ? projects.data : utils.filterProjectsByName(this.state.filterByName, projects.data);
+        filteredProjects = this.state.filterByCohort === "" ? filteredProjects : utils.filterProjectsByCohort(this.state.filterByCohort, filteredProjects);
         let errors = this.props.projects.projects.error;
+        //let studentInfo = this.props.authentication.signIn.data.isInstructor ? <p>`Student ${project.fullName}`</p> : "";
 
         if (errors === null) {
             // if loading is complete and results were received, display them
             if (projects.data.length > 0 && projects.isCompleted) {
-                return projects.data.map(
+                return filteredProjects.map(
                     (project) => {
                         // parse the dates and complete/overdue stati
                         let createdOn = new Date(project.dateCreated);
@@ -90,6 +99,7 @@ class Home extends React.Component {
                                 <div className="projectCheck" onClick={(e) => { e.stopPropagation(); this.props.completeProject(project.id, this.props.authentication.signIn.data.token) }} ><div className={checked} ></div></div>
                                 <div className="projectTitle">
                                     <h3>{project.projectName}</h3>
+                                    {this.renderStudentName(this.props.authentication.signIn.data.instructor, project.fullName)}
                                     <p>Time spent: {project.totalHours} hours </p>
                                     <p>{createdOn.toUTCString()}</p>
                                     <p>{dueOn.toUTCString()}</p>
@@ -141,7 +151,7 @@ class Home extends React.Component {
 
         return (
             <div className="home">
-                <Nav />
+                <Nav locationUrl={ this.props.location.pathname }/>
                 <div>
                     <div className="headerText"> <h1>Projects</h1> </div>
                     <div className="projectsContainer">
@@ -153,13 +163,13 @@ class Home extends React.Component {
                                 <button className={doughnutClass} onClick={() => this.handleChartChange("Doughnut")}>Doughnut</button>
                                 <button className={barClass} onClick={() => this.handleChartChange("Bar")}>Bar</button>
                                 <button className={histogramClass} onClick={() => this.handleChartChange("Histogram")}>Histogram</button>
-                                <button className={filterClass} onClick={() => this.handleFilterChange()}><i class="fas fa-filter"></i></button>
+                                <button className={filterClass} onClick={() => this.handleFilterChange()}><i className="fas fa-filter"></i></button>
                             </div>
                             <div className={`filterRow ${filterClass}`}>
-                                <label class="sr-only" for="projectName">Filter By Project Name</label>
+                                <label className="sr-only" htmlFor="projectName">Filter By Project Name</label>
                                 <input type="text" name="projectName" placeholder="Filter by project name" id="projectName" value={this.state.filterByName} onChange={(e) => this.setState({ filterByName: e.target.value })} />
 
-                                <label class="sr-only" for="cohort">Filter By Cohort</label>
+                                <label className="sr-only" htmlFor="cohort">Filter By Cohort</label>
                                 <input type="text" name="cohort" placeholder="Filter by cohort" id="cohort" value={this.state.filterByCohort} onChange={(e) => this.setState({ filterByCohort: e.target.value })} />
                             </div>
 

@@ -139,7 +139,7 @@ class CreateProject extends React.Component {
 
         return (
             <div className="createProject">
-                <Nav />
+                <Nav locationUrl={this.props.location.pathname} />
                 <div>
                     <div className="headerText"> <h1>Create A Project</h1> </div>
                     <div className="createProjectContainer">

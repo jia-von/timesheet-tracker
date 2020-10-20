@@ -17,8 +17,8 @@ const IO = ({ className }) => {
 				<circle cx="37.4118" cy="9.41177" r="3.41177" fill="#0FA50C" />
 			</g>
 			<defs>
-				<filter id="filter0_d" x="33" y="46" width="31" height="14" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-					<feFlood flood-opacity="0" result="BackgroundImageFix" />
+				<filter id="filter0_d" x="33" y="46" width="31" height="14" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+					<feFlood floodOpacity="0" result="BackgroundImageFix" />
 					<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
 					<feOffset dy="4" />
 					<feGaussianBlur stdDeviation="2" />
@@ -26,8 +26,8 @@ const IO = ({ className }) => {
 					<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
 					<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
 				</filter>
-				<filter id="filter1_d" x="4" y="22" width="37" height="39.6164" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-					<feFlood flood-opacity="0" result="BackgroundImageFix" />
+				<filter id="filter1_d" x="4" y="22" width="37" height="39.6164" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+					<feFlood floodOpacity="0" result="BackgroundImageFix" />
 					<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
 					<feOffset dy="4" />
 					<feGaussianBlur stdDeviation="2" />
@@ -35,8 +35,8 @@ const IO = ({ className }) => {
 					<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
 					<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
 				</filter>
-				<filter id="filter2_d" x="30" y="4" width="37" height="14.8235" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-					<feFlood flood-opacity="0" result="BackgroundImageFix" />
+				<filter id="filter2_d" x="30" y="4" width="37" height="14.8235" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+					<feFlood floodOpacity="0" result="BackgroundImageFix" />
 					<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
 					<feOffset dy="2" />
 					<feGaussianBlur stdDeviation="2" />
