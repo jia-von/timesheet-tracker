@@ -11,7 +11,7 @@ The figure shows the application homepage, in this page, the user can sign-in or
 3. When the creation of an account is a success, the user will be redirected to the homepage. 
 
 | Homepage  | Sign Up | Instructor Sign Up  | Student Sign Up|
-| ------------- | ------------- |
+| ------------- | ------------- | ------------- | ------------- |
 | ![homepage](Screenshots/homepage.PNG) | ![signup](Screenshots/signup.PNG) | ![instructor signup](Screenshots/instructor_signup.PNG) | ![student signup](Screenshots/student_signup.PNG) |
 
 ## Sign In
