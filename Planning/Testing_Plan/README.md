@@ -169,3 +169,21 @@ Fill in the fields, select a student or cohort and click "Save Changes".
 | Cannot be null | Wrong format | 
 | --- | --- |
 | ![Update Account Test](TestingShots/UpdateAccount/null.PNG) | ![Update Account Test](TestingShots/UpdateAccount/format.PNG) |
+
+## Update Hours
+
+### Arrange
+
+There are two potential inputs identified for Update Account feature:
+- Null as shown in the field: *whitespace or empty*
+- Wrong format for hours as shown in the field: *one, two, three, four, five*
+- Input hours format that is not quarterly as shown in Deliverables field: *0.17*
+
+### Act
+
+Fill in the fields and click "Update Hours".
+
+### Assert
+| Cannot be null | Wrong format | Has to be quaterly format |
+| --- | --- | --- |
+| ![Update Hours Null](TestingShots/UpdateHours/null.PNG) | ![Update Hours Format](TestingShots/UpdateHours/format.PNG) | ![Update Hours Quarterly](TestingShots/UpdateHours/quarterly.PNG) |
