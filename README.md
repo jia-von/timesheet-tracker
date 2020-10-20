@@ -62,7 +62,7 @@ If there are any errors that occur during the migrations, kindly refer to the [E
 
 Once the installations of Timesheet Tracker has been completed without any issues, you may start the application following these steps: 
 1. Start the server, in our case it is through XAMPP developer tools
-2. Within Visual Studio 2019, select *Timesheet_Tracker* project and Start Debugging (F5)
+2. Within Visual Studio 2019, select **Timesheet_Tracker** project and Start Debugging (F5)
 3. A browser should pop-up after it has completed building and compiling
 4. You may choose to interact with the pages and test it using Postman
 

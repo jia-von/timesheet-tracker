@@ -5,19 +5,14 @@ This document will guide the user to operate the Timesheet Tracker application w
 Following instructions provided in the README.md, debug the Timesheet Tracked application within Visual Studio Community. It may take a couple of minutes for the application to start due to the npm installations dependencies. However, this only will run once when the application first starts. 
 
 ## Create Account
-The figure shows the application Homepage, in this page, the user can sign-in or create an account. To create an account, click “Create an account”.
+The figure shows the application homepage, in this page, the user can sign-in or create an account. 
+1. To create an account, click “Create an account”.
+2. There are two options to create an account based on roles, Instructors or Student.
+3. When the creation of an account is a success, the user will be redirected to the homepage. 
 
-| Homepage  | Sign Up |
+| Homepage  | Sign Up | Instructor Sign Up  | Student Sign Up|
 | ------------- | ------------- |
-| ![homepage](Screenshots/homepage.PNG) | ![signup](Screenshots/signup.PNG) |
-
-There are two options to create an account based on roles, Instructors or Student. The examples are shown below:
-
-| Instructor  | Student |
-| ------------- | ------------- |
-| ![instructor signup](Screenshots/instructor_signup.PNG) | ![student signup](Screenshots/student_signup.PNG) |
-
-When the creation of an account is a success, the user will be redirected to the homepage. 
+| ![homepage](Screenshots/homepage.PNG) | ![signup](Screenshots/signup.PNG) | ![instructor signup](Screenshots/instructor_signup.PNG) | ![student signup](Screenshots/student_signup.PNG) |
 
 ## Sign In
 
