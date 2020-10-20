@@ -1,11 +1,10 @@
 ﻿import React from "react";
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
-//import {} from "../../actions/timesheetTracker";
 import Workers from "./Workers";
 import Metrics from "./Metrics";
 import "./Index.css";
-// import the function factories so we can use them when mapping dispatch to props
+// import the function "factories" so we can use them when mapping dispatch to props
 import { signInFunc, signUpFunc } from "../../actions/userAccounts";
 
 class Index extends React.Component {
@@ -14,7 +13,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
       this.state = {
-        redirect: null,
+      redirect: null,
       emailSignIn: "",
       passwordSignIn: "",
       emailSignInError: "",
@@ -38,7 +37,7 @@ class Index extends React.Component {
     };
   }
 
-  // validate sign in form and dispatch redux action on 
+  // validate sign in form and dispatch redux action
   handleSignIn(event) {
     event.preventDefault();
       let isInvalid = this.validateSignIn();
@@ -47,7 +46,7 @@ class Index extends React.Component {
 
   }
 
-  // validate sign up form and dispatch redux action on 
+  // validate sign up form and dispatch redux action 
   handleSignUp(event) {
       event.preventDefault();
       // if the form fields arent invalid, dispatch the signUp from props

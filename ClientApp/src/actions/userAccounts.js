@@ -16,7 +16,7 @@ const signIn = async (dispatch, email, password) => {
                 email,
                 password
             }
-        }); // TODO use email and password here
+        }); 
         const data = await response.data;
         dispatch({ type: actionType.SIGN_IN_SUCCESS, value: data });
     } catch (error) {
@@ -29,7 +29,7 @@ const signInFunc = dispatch => {
     return (email, password) => signIn(dispatch, email, password);
 }
 
-// create a function "factory" which will pass the handler action when called
+// create a function to handle sign out
 const signOutFunc = dispatch => {
     return () => dispatch({ type: actionType.SIGN_OUT });
 }

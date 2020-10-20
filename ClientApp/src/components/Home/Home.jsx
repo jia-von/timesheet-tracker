@@ -62,7 +62,7 @@ class Home extends React.Component {
 
     // render the student name if this is an instructor
     renderStudentName(isInstructor, studentName) {
-        if (isInstructor) return (<p>{`Student ${studentName}`}</p>);
+        if (isInstructor) return (<p>{`Student: ${studentName}`}</p>);
     }
 
     renderProjects() {
@@ -71,7 +71,6 @@ class Home extends React.Component {
         let filteredProjects = this.state.filterByName === "" ? projects.data : utils.filterProjectsByName(this.state.filterByName, projects.data);
         filteredProjects = this.state.filterByCohort === "" ? filteredProjects : utils.filterProjectsByCohort(this.state.filterByCohort, filteredProjects);
         let errors = this.props.projects.projects.error;
-        //let studentInfo = this.props.authentication.signIn.data.isInstructor ? <p>`Student ${project.fullName}`</p> : "";
 
         if (errors === null) {
             // if loading is complete and results were received, display them
