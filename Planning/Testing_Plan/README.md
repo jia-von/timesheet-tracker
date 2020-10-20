@@ -77,12 +77,12 @@ There are three potential inputs identified for Sign Up feature:
 - Password format is length less than 6 characters
 
 ### Act
-Select either instructor or cohort number to sign up. 
+Select either instructor or cohort number to sign up and click "Create Account".
 
 ### Assert
 
 | Cannot be null | Wrong name and password format | Wrong email format | Cannot signup with email recorded in database |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | ![sign up null](TestingShots/SignUp/null.PNG) | ![sign up format](TestingShots/SignUp/regex_password_length.PNG) | ![sign up email format](TestingShots/SignUp/email_format.PNG) | ![sign up email used](TestingShots/SignUp/email_used.PNG) |
 
 
@@ -106,5 +106,16 @@ Click "Go" button to act.
 
 ## Create Project
 
+### Arrange
+There are two potential inputs identified for Create Project feature:
+- Null: *whitespace or empty*
+- Due date cannot be in the past: *18/10/2020*
 
+### Act
+Select either individual assignment or cohort, then click "Create Project".
 
+### Assert
+
+| Cannot be null | Due date cannot be in the past |
+| --- | --- |
+| ![create project null](TestingShots/CreateProject/null.PNG) | ![Due date cannot be in the past](TestingShots/CreateProject/date.PNG)
