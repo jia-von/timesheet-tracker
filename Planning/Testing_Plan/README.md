@@ -16,7 +16,7 @@ The figure shows the application homepage, in this page, the user can sign-in or
 
 The **person** table as shown in the database.
 
-![person_table](Screenshots/database_person)
+![person_table](Screenshots/database_person.PNG)
 
 ## Sign In
 After an account was created, the user can sign in based on the email and password sign up. The user will be redirected to pages depending on the role, Instructor or Student. 
@@ -137,8 +137,11 @@ There are two potential inputs identified for Update Account feature:
 - Null as shown in First Name field: *whitespace or empty*
 - Wrong format for name as shown in Last Name field: *St4rk*
 
-### Arct
+### Act
 
 Fill in the fields, select a student or cohort and click "Save Changes".
 
-![Update Account Test](TestingShoes/UpdateAccount/null_wrong_format.PNG)
+### Assert
+| Cannot be null or wrong format |
+| --- |
+| ![Update Account Test](TestingShots/UpdateAccount/null_wrong_format.PNG) |
