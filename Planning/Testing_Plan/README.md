@@ -26,16 +26,13 @@ After an account was created, the user can sign in based on the email and passwo
 ### Charts
 
 There are three charts available for instructor to view.
+- Doughnut chart calculates the average hours per project type or assignment name, eg. PHP API Assignment.
+- The bar chart compares the maximum and minimum hours spent per project, eg. PHP API Assignment. The average bar allows the instructor to compare the differences between minimum and maximum values against the average student population. 
+- This histogram chart allows the instructor to analyze the difficulty of their assignment. A good assignment should have symmetric shape. Skewing left or skewing right could indicate that the assignment is either too difficult or too easy. 
 
-Doughnut chart calculates the average hours per project type or assignment name, eg. PHP API Assignment.
-
-![doughnut](Screenshots/doughnut_chart.PNG)
-
-The bar chart compares the maximum and minimum hours spent per project, eg. PHP API Assignment. The average bar allows the instructor to compare the differences between minimum and maximum values against the average student population. 
-![bar](Screenshots/bar_chart.PNG)
-
-This histogram chart allows the instructor to analyze the difficulty of their assignment. A good assignment should have symmetric shape. Skewing left or skewing right could indicate that the assignment is either too difficult or too easy. 
-![histogram](Screenshots/Histogram_Chart.PNG)
+| Doughnut  | Bar | Histogram |
+| ------------- | ------------- | ------------- |
+| ![doughnut](Screenshots/doughnut_chart.PNG)  | ![bar](Screenshots/bar_chart.PNG)  | ![histogram](Screenshots/Histogram_Chart.PNG) |
 
 This is a example from [Mike Yi](https://chartio.com/learn/charts/histogram-complete-guide/) indicating the variety of histogram shapes.
 ![histogram variety](histogram-variaties.png)
