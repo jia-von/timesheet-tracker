@@ -35,7 +35,7 @@ There are three charts available for instructor to view.
 | ![doughnut](Screenshots/doughnut_chart.PNG)  | ![bar](Screenshots/bar_chart.PNG)  | ![histogram](Screenshots/Histogram_Chart.PNG) |
 
 This is a example from [Mike Yi](https://chartio.com/learn/charts/histogram-complete-guide/) indicating the variety of histogram shapes.
-![histogram variety](histogram-variaties.png)
+![histogram variety](Screenshots/histogram-variaties.png)
 
 
 
