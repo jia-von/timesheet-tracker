@@ -71,6 +71,10 @@ Student is able to update the hours and track the hours accumulated. Bar chart d
 | ------------- | ------------- | ------------- |
 | ![Update Hours Field](Screenshots/student_update_hours.PNG)  | ![Update Hours Success](Screenshots/updated_hours_success.PNG)  | ![Student Hours Chart](Screenshots/student_hours_chart.PNG) |
 
+The hours updated in the **project** table within the database. 
+
+![Person table database update](Screenshots/database_project_created.PNG)
+
 ### Update Account
 Updating account format is similar to instructor as shown [above](Testing_Plan#update-account). 
 
