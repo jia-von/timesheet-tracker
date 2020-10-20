@@ -81,7 +81,7 @@ The **person** table update as shown in database update.
 The student can view list of projects that were assigned to them. Student can update hours for their project, update account, and sign out. 
 
 ### Student List
-The student has an identical view as the instructor on the homepage. However, the key difference is that the student is only able to view projects that were assigned to them. The colour-coded projects have similar meanings as stated in the subsection, [List](#instructor-list) above.
+The student has an identical view as the instructor on the homepage. However, the key difference is that the student is only able to view projects that were assigned to them. The colour-coded projects have similar meanings as stated in the subsection, [Instructor List](https://github.com/TECHCareers-by-Manpower/capstone-project-input-output/tree/master/Planning/Testing_Plan#instructor-list) above.
 ![Student List View](Screenshots/student_list_completed.PNG)
 
 ### Student Update Hours
@@ -96,7 +96,7 @@ The hours updated in the **project** table within the database.
 ![Person table database update](Screenshots/database_project_created.PNG)
 
 ### Student Update Account
-Updating account format is similar to instructor as shown [above](#instructor-update-account). 
+Updating account format is similar to instructor as shown [above](https://github.com/TECHCareers-by-Manpower/capstone-project-input-output/tree/master/Planning/Testing_Plan#instructor-update-account). 
 
 # Testing Plan
 The User Guide above has provided steps to successfully execute create, update, read, and delete actions in the applications. Therefore the testing plan below will show integration tests that will evaluate features of Timesheet Tracker. 
@@ -158,14 +158,14 @@ Select either individual assignment or cohort, then click "Create Project".
 ### Arrange
 
 There are two potential inputs identified for Update Account feature:
-- Null as shown in First Name field: *whitespace or empty*
-- Wrong format for name as shown in Last Name field: *St4rk*
+- Null as shown in the field: *whitespace or empty*
+- Wrong format for name as shown in the field: *T0ny St4rk*
 
 ### Act
 
 Fill in the fields, select a student or cohort and click "Save Changes".
 
 ### Assert
-| Cannot be null or wrong format |
-| --- |
-| ![Update Account Test](TestingShots/UpdateAccount/null_wrong_format.PNG) |
+| Cannot be null | Wrong format | 
+| --- | --- |
+| ![Update Account Test](TestingShots/UpdateAccount/null.PNG) | ![Update Account Test](TestingShots/UpdateAccount/format.PNG) |
