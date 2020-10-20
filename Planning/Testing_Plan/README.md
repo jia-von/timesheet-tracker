@@ -99,7 +99,7 @@ The hours updated in the **project** table within the database.
 Updating account format is similar to instructor as shown [above](https://github.com/TECHCareers-by-Manpower/capstone-project-input-output/tree/master/Planning/Testing_Plan#instructor-update-account). 
 
 # Testing Plan
-The User Guide above has provided steps to successfully execute create, update, read, and delete actions in the applications. Therefore the testing plan below will show integration tests that will evaluate features of Timesheet Tracker. 
+The User Guide above has provided steps to successfully execute create, update, read, and delete actions in the applications. Therefore the testing plan below will show integration tests that will evaluate features of Timesheet Tracker. This testing plan was developed using article written by [Automation Panda](https://automationpanda.com/2020/07/07/arrange-act-assert-a-pattern-for-writing-good-tests/) and suggestions provided by TECHCareers Instructor. 
 
 ## Sign Up
 

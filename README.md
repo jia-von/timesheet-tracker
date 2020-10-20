@@ -73,6 +73,8 @@ Arrange, Act, and Assert testing will be conducted against seed data provided in
 ## Project Management 
 This project was completed using [Kanban](https://en.wikipedia.org/wiki/Kanban) scheduling system and [Trello](https://trello.com/en) application was used to assist our scheduling. Here is the link, [Capstone Project](https://trello.com/b/5xoeCihL/capstone-project) to our Kanban board for Input/Output team. 
 
+![trello board](Planning/Images/trello.PNG)
+
 ## Contributors
 - Jia Then
   - [GitHub](https://github.com/jia-von)
@@ -92,6 +94,7 @@ Timesheet Tracker is part of a Capstone Project issued by TECHCareers for studen
 ## References
 - [4.1-react-redux-to-do-app](https://github.com/TECHCareers-by-Manpower/4.1-react-redux-to-do-app)
 - [4.1-ReactAPI by TECHCareers](https://github.com/TECHCareers-by-Manpower/4.1-ReactAPI)
+- [Arrange-Act-Assert: A Pattern for Writting Good Tests](https://automationpanda.com/2020/07/07/arrange-act-assert-a-pattern-for-writing-good-tests/)
 - [ASP.NET Core 3.1 - Simple API for Authentication, Registration and User Management by Jason Watmore](https://jasonwatmore.com/post/2019/10/14/aspnet-core-3-simple-api-for-authentication-registration-and-user-management)
 - [ASP.NET Core 3 and React by Carl Rippon](https://github.com/PacktPublishing/ASP.NET-Core-3-and-React)
 - [Basic writing and formatting syntax by GitHub](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/basic-writing-and-formatting-syntax#lists)
