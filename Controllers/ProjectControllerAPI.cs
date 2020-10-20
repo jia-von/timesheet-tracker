@@ -168,7 +168,6 @@ namespace Timesheet_Tracker.Controllers
                 {
                     new ProjectController().UpdateHours(int.Parse(projectID), float.Parse(design), float.Parse(doing), float.Parse(codeReview), float.Parse(testing), float.Parse(deliverables));
                     response = StatusCode(200, "Hours updated.");
-                    // TODO need to re-direct somewhere...... 
                 }
             }
             return response;

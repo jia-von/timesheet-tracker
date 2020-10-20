@@ -118,8 +118,9 @@ namespace Timesheet_Tracker.Controllers
                     DoingHours = x.DoingHours,
                     CodeReviewHours = x.CodeReviewHours,
                     TestingHours = x.TestingHours,
-                    DeliverablesHours = x.DeliverablesHours
-                }
+                    DeliverablesHours = x.DeliverablesHours,
+                    Cohort = x.Employee.Cohort
+               }
                 ).ToList();
             }
             return target;

@@ -139,7 +139,6 @@ namespace Timesheet_Tracker.Controllers
                 };
                 SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
-                //returnUser.Token = tokenHandler.WriteToken(token); // TODO add a string token field for user tokens varchar needs to be long (100?)
 
                 PersonDTO authenticatedUser = new PersonDTO()
                 {
