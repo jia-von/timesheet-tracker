@@ -48,18 +48,27 @@ PM> dotnet ef database update
 
 If there are any errors that occur during the migrations, kindly refer to the [EF Core tools reference](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet) to troubleshoot. The server should be populated with the database named **timesheet_tracker** as shown below:
 
-![timesheet_tracker_database](Planning/Images/timesheet_tracker_database.PNG)
+| Database Structure  | Person Table |
+| ------------- | ------------- |
+| ![timesheet_tracker_database](Planning/Images/timesheet_tracker_database.PNG)  | ![person_datable_database](Planning/Images/person_table_database.PNG)  |
+
+| Employee Table  | Project Table |
+| ------------- | ------------- |
+| ![employee_table](Planning/Images/employee_table_database.PNG)  | ![project_table](Planning/Images/project_table_database.PNG)  |
+
 
 ## Usage
 
 Once the installations of Timesheet Tracker has been completed without any issues, you may start the application following these steps: 
 1. Start the server, in our case it is through XAMPP developer tools
-2. Within Visual Studio 2019, select *Timesheet_Tracker* project and Start Debugging (F5)
+2. Within Visual Studio 2019, select **Timesheet_Tracker** project and Start Debugging (F5)
 3. A browser should pop-up after it has completed building and compiling
 4. You may choose to interact with the pages and test it using Postman
 
-## Testing/Instructions
+For further information operating this application, kindly refer to the [User Guide](Planning/Testing_Plan#user-guide).
 
+## Testing Instructions
+Arrange, Act, and Assert testing will be conducted against seed data provided in Code First Migration. The mock database and server will be required to execute this planning procedure.  The testing document is thorough therefore it is written in a separate document, kindly refer to [Testing Plan](Planning/Testing_Plan#testing-plan).
 
 ## Project Management 
 This project was completed using [Kanban](https://en.wikipedia.org/wiki/Kanban) scheduling system and [Trello](https://trello.com/en) application was used to assist our scheduling. Here is the link, [Capstone Project](https://trello.com/b/5xoeCihL/capstone-project) to our Kanban board for Input/Output team. 
