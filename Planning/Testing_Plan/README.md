@@ -64,5 +64,47 @@ Student is able to update the hours and track the hours accumulated. Bar chart d
 
 # Testing Plan
 
+The User Guide above has provided steps to successfully execute create, update, read, and delete actions in the applications. Therefore the testing plan below will show integration tests that will evaluate features of Timesheet Tracker. 
+
+## Sign Up
+
+### Arrange
+There are three potential inputs identified for Sign Up feature:
+- Null: *whitespace of empty*
+- Format for name: *St3v3 R0g3rs*
+- Format for email: *captainamerica.email.com*
+- Cannot sign up with email already recorded in database: *gamora@guardians.com*
+- Password format is length less than 6 characters
+
+### Act
+Select either instructor or cohort number to sign up. 
+
+### Assert
+
+| Cannot be null | Wrong name and password format | Wrong email format | Cannot signup with email recorded in database |
+| --- | --- | --- | --- | --- |
+| ![sign up null](TestingShots/SignUp/null.PNG) | ![sign up format](TestingShots/SignUp/regex_password_length.PNG) | ![sign up email format](TestingShots/SignUp/email_format.PNG) | ![sign up email used](TestingShots/SignUp/email_used.PNG) |
+
+
+## Sign In
+
+### Arrange
+There are four potential inputs identified for Sign In feature:
+- Null: *whitespace or empty*
+- Format: *batman*
+- Email not recorded in the database: *hulk@marvel.com*
+- Incorrect password input
+
+### Act
+Click "Go" button to act. 
+
+### Assert
+
+| Cannot be null | Wrong format | Email not in database | Incorrect password |
+| --- | --- | --- | --- |
+| ![sign in null](TestingShots/SignIn/null.PNG) | ![sign in format](TestingShots/SignIn/format.PNG) | ![sign in email](TestingShots/SignIn/email_not_found.PNG) | ![sign in email](TestingShots/SignIn/password_not_match.PNG) |
+
+## Create Project
+
 
 

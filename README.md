@@ -65,10 +65,10 @@ Once the installations of Timesheet Tracker has been completed without any issue
 3. A browser should pop-up after it has completed building and compiling
 4. You may choose to interact with the pages and test it using Postman
 
-For further information operating this application, kindly refer to the [User Guide](Planning/Testing_Plan#user-guide)
+For further information operating this application, kindly refer to the [User Guide](Planning/Testing_Plan#user-guide).
 
-## Testing/Instructions
-
+## Testing Instructions
+Arrange, Act, and Assert testing will be conducted against seed data provided in Code First Migration. The mock database and server will be required to execute this planning procedure.  The testing document is thorough therefore it is written in a separate document, kindly refer to [Testing Plan](Planning/Testing_Plan#testing-plan).
 
 ## Project Management 
 This project was completed using [Kanban](https://en.wikipedia.org/wiki/Kanban) scheduling system and [Trello](https://trello.com/en) application was used to assist our scheduling. Here is the link, [Capstone Project](https://trello.com/b/5xoeCihL/capstone-project) to our Kanban board for Input/Output team. 
