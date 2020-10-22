@@ -1,5 +1,4 @@
 ﻿# Timesheet Tracker
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 Jia and Osa from Input/Output submitted a [proposal](Planning/Design/ProposalforCapstoneProject.pdf) on September 30, 2020, to develop a Timesheet Tracker application that will replace the current format of [4.1] Master TECHCareers Timesheet Tracker (Master Timesheet). Master Timesheet was created using the Google Sheet platform and was released on July 15, 2020.  Since the release of the Master Timesheet, it has been inconvenient for students to use as it requires initial training, students to search their tabs and dates to enter their hours in specified columns. Additionally, instructors have difficulties tracking hours submitted by students and to analyze which student requires the most help based on hours submitted for a project. Timesheet Tracker will simplify timesheet submission for students and analyses for instructors by using a full-stack web application. 
 
